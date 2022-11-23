@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} A New Chocolate Experience{% endblock %}
+{% block content %}
+<section class="row">
+  <div class="col s12 px-0">
+    <div class="owl-carousel owl-theme" id="home-carousel">
+      <div class="item py-5 valign-wrapper" id="home-carousel-1">
+        <div class="center w-100 white-text">
+          <h1 class="font-250">A NEW CHOCOLATE EXPERIENCE</h1>
+          <h2 class="font-250 bold">
+            ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
+          </h2>
+        </div>
+      </div>
+      <div class="item py-5 valign-wrapper" id="home-carousel-2">
+        <div class="center w-100 white-text">
+          <h2 class="font-250 bold">
+            TRY OUR FINEST CHOCOLATES
+          </h2>
+        </div>
+      </div>
+      <div class="item py-5 valign-wrapper" id="home-carousel-3">
+        <div class="center w-100 white-text">
+          <h2 class="font-250 bold text-uppercase">
+            A complete experience in your mouth
+          </h2>
+        </div>
+      </div>
+
+    </div>
+
+    <nav class="transparent" id="home-nav">
+      <div class="nav-wrapper container">
+        <a href="/" class="brand-logo center"><img src="{% static 'images/main-logo.png' %}" width="60px"/></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+
+        <ul id="nav-home" class="left hide-on-med-and-down">
+          <li><a href="/">Home</a></li>
+          <li><a href="https://store.casspea.co.uk/">Store</a></li>
+          <li><a href="https://landing.casspea.co.uk/">Flavours</a></li>
+        </ul>
+
+        <ul id="nav-home2" class="right hide-on-med-and-down">
+          <!--          <li><a href="#">Personaliza</a></li>-->
+          <!--          <li><a href="#">Nosotros</a></li>-->
+          <!--          <li><a href="#">Contacto</a></li>-->
+        </ul>
+
+        <ul class="sidenav" id="mobile-demo">
+          <a href="/" class="responsive-img mt-5"><img src="{% static 'images/main-logo.png' %}" width="60px"/></a>
+
+          <li><a href="/">Home</a></li>
+          <li><a href="https://store.casspea.co.uk/">Store</a></li>
+          <li><a href="https://landing.casspea.co.uk/">Flavours</a></li>
+        </ul>
+
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section id="home-section-2" class="my-yellow">
+  <div class="container ">
+    <div class="row">
+      <div class="col s12 py-5">
+        <p id="home-section-2-text">
+          It is not only the high quality of our products that separate us from the competition, it is our fun and
+          efficient ordering process.
+
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="position-relative">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 m8 offset-m1">
+        <p id="home-section-3-text">
+          We have streamlined our ordering experience to make it as simple and fun as possible. Whether you are ordering
+          a single box for a friend or a thousand personalised chocolates for an event, the process for both is just as
+          easy.
+
+        </p>
+
+      </div>
+    </div>
+  </div>
+  <img src="{% static 'images/home/iso-morado.png' %}" id="home-iso-morado">
+  <img src="{% static 'images/home/home-section-3-paint.png' %}" id="home-section-3-paint">
+</section>
+
+<section id="home-section-4">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <p class="white-text font-250 center">
+          SHOW OFF YOUR AMAZING AND UNIQUE PERSONALITY
+        </p>
+        <p class="white-text font-250 center bold">
+          WITH <span class="yellow-text">OUR PERSONALISED</span> CHOCOLATE SECTION
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="home-section-5">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 d-none d-md-block">
+        <img src="{% static 'images/home/proceso.png' %}" class="responsive-img">
+      </div>
+      <div class="col s12 d-md-none">
+        <img src="{% static 'images/home/proceso-movil.png' %}" class="responsive-img px-5">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="">
+  <div class="container">
+    <div class="row">
+      <div class="col s12 my-5">
+        <div class="owl-carousel owl-theme" id="home-carousel-gallery">
+          <div class="item">
+            <img src="{% static 'images/home/gallery/1.jpg' %}" class="responsive-img">
+          </div>
+          <div class="item">
+            <img src="{% static 'images/home/gallery/2.jpg' %}" class="responsive-img">
+          </div>
+          <div class="item">
+            <img src="{% static 'images/home/gallery/3.jpg' %}" class="responsive-img">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col s12 center">
+        <p class="d-inline-block">
+          <a href="https://www.instagram.com/casspea_/"><i class="fa-brands fa-instagram black-text font-300"></i></a>
+        </p>
+        <p class="d-inline-block">
+          <a href="https://www.instagram.com/casspea_/"><span class="my-purple-text font-200 bold ">@casspea_</span></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<style>
+  #site-nav {
+   display:none;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+{% endblock %}
