@@ -29,7 +29,7 @@ DEBUG = True
 STATIC_LOCAL = False
 
 
-ALLOWED_HOSTS = ['casspea.herokuapp.com', 'www.casspea.co.uk', 'www2.casspea.co.uk']
+ALLOWED_HOSTS = ['casspea.herokuapp.com', 'www.casspea.co.uk', 'www2.casspea.co.uk', 'casspea2.herokuapp.com']
 
 # Application definition
 
