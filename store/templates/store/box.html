@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Box Flavours{% endblock %}
+
+{% block content %}
+
+{% url 'store:add_boxes' as add_boxes_url %}
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 my-5">
+      <h1 class="center">Select your Flavours</h1>
+    </div>
+
+    <div class="row">
+      <div class="col s12">
+        <h2>{{ size }} Pieces Box</h2>
+
+        <form method="POST" action="{{ add_boxes_url }}"> {% csrf_token %}
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="box_quantity" type="number" name="box_quantity" class="validate" required min="0">
+              <label for="box_quantity">How many boxes of {{ quantity }} pieces?</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s6 m3">
+              <p>
+                <label onclick="showPreBuiltCol()">
+                  <input name="format" type="radio" value="{{ PRE_BUILT }}"/>
+                  <span>Pre Built</span>
+                </label>
+              </p>
+            </div>
+            <div class="col s6 m3">
+              <p>
+                <label onclick="showPickAndMixCol()">
+                  <input name="format" type="radio" value="{{ PICK_AND_MIX }}"/>
+                  <span>Pick and Mix</span>
+                </label>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s12 m6" id="preBuiltCol">
+              {% for obj in PRE_BUILDS_FLAVOURS %}
+              <p>
+                <label>
+                  <input class="with-gap" name="{{ PRE_BUILT }}" type="radio" value="{{ obj.1 }}"/>
+                  <span>{{ obj.0 }}</span>
+                </label>
+              </p>
+              {% endfor %}
+
+            </div>
+            <div class="col s12 m6" id="pickAndMixCol">
+              {% for flavour in flavours %}
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="{{ flavour.1 }}" type="number" name="{{ flavour.1 }}">
+                  <label for="{{ flavour.1 }}">{{ flavour.0 }}</label>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <input type="hidden" value="{{ size }}" name="size">
+          <button type="submit" class="btn btn-primary">Add Boxes to Cart</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js_extra %}
+
+<script>
+  const preBuiltCol = document.getElementById('preBuiltCol')
+  const pickAndMixCol = document.getElementById('pickAndMixCol')
+  preBuiltCol.style.display = 'none';
+  pickAndMixCol.style.display = 'none';
+
+  function showPreBuiltCol() {
+      pickAndMixCol.style.display = 'none';
+      preBuiltCol.style.display = 'block';
+  }
+
+  function showPickAndMixCol() {
+    preBuiltCol.style.display = 'none';
+    pickAndMixCol.style.display = 'block';
+  }
+
+</script>
+
+{% endblock %}

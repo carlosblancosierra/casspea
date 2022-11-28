@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Store{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h1>Pick a box size</h1>
+      <form method="POST"> {% csrf_token %}
+        <input type="hidden" name="size" value="9">
+        <button type="submit" class="btn btn-primary">Box of 9</button>
+      </form>
+
+      <form method="POST"> {% csrf_token %}
+        <input type="hidden" name="size" value="15">
+        <button type="submit" class="btn btn-primary">Box of 15</button>
+      </form>
+
+      <form method="POST"> {% csrf_token %}
+        <input type="hidden" name="size" value="24">
+        <button type="submit" class="btn btn-primary">Box of 24</button>
+      </form>
+
+      <form method="POST"> {% csrf_token %}
+        <input type="hidden" name="size" value="48">
+        <button type="submit" class="btn btn-primary">Box of 48</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
