@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .models import FLAVOURS, PRE_BUILDS_FLAVOURS, PRE_BUILT, PICK_AND_MIX
+from flavours.models import PreBuildFlavour
 
 
 # Create your views here.
@@ -17,10 +18,12 @@ def home_page(request):
 
 
 def box_page(request, size=None):
+    prebuilds = PreBuildFlavour.objects.filter(active=True)
+
     context = {
         "size": size,
         "flavours": FLAVOURS,
-        "PRE_BUILDS_FLAVOURS": PRE_BUILDS_FLAVOURS,
+        "prebuilds": prebuilds,
         "PRE_BUILT": PRE_BUILT,
         "PICK_AND_MIX": PICK_AND_MIX
     }

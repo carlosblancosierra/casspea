@@ -46,11 +46,11 @@
           </div>
           <div class="row">
             <div class="col s12 m6" id="preBuiltCol">
-              {% for obj in PRE_BUILDS_FLAVOURS %}
+              {% for obj in prebuilds %}
               <p>
                 <label>
-                  <input class="with-gap" name="{{ PRE_BUILT }}" type="radio" value="{{ obj.1 }}"/>
-                  <span>{{ obj.0 }}</span>
+                  <input class="with-gap" name="{{ PRE_BUILT }}" type="radio" value="{{ obj.slug }}"/>
+                  <span>{{ obj.name }}</span>
                 </label>
               </p>
               {% endfor %}
