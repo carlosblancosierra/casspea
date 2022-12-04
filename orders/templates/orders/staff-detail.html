@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% url 'orders:address' as order_address_url %}
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="text-lblue font-200">Detalles de la orden</h1>
+      <div class="span bg-lblue py-1"></div>
+    </div>
+
+    <div class="col s12 m6">
+      <p class="font-150">Identificador: {{ order.order_id }}</p>
+      <p class="font-150">Usuario: {{ order.user }}</p>
+      <p class="font-150">Fecha: {{ order.timestamp }}</p>
+    </div>
+
+    <div class="col s12 m6">
+      <h4 class="text-lblue">Estatus: {{ order.status }}</h4>
+      <div class="card cart-card p-3 m-2">
+        <form class="" method="POST"> {% csrf_token %}
+          <div class="input-field col s12">
+            <select name="order-status">
+              {% for status in STATUS_CHOICES %}
+              {% if status.0 == order.status %}
+              <option value="{{status.0}}" selected>{{ status.0 }}</option>
+              {% else %}
+              <option value="{{status.0}}">{{ status.0 }}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            <label>Cambiar estatus</label>
+          </div>
+          <p class="text-right">
+            <button type="submit" class="btn bg-blue">Actualizar</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col s12 m6 px-4">
+      <h4 class="text-lblue">Pedido</h4>
+
+      <table>
+        <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Sku</th>
+          <th>Precio U</th>
+          <th class="d-none d-md-table-cell">Descripción</th>
+          <th>Cantidad</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in entries %}
+        <tr>
+          <td>
+            {% if obj.sku_product.master.image %}
+            <img src="{{ obj.sku_product.master.image.url }}" width="50px"/>
+            {% else %}
+            <img src="{% static 'images/placeholder.jpg' %}" width="50px"/>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ obj.sku_product.master.get_absolute_url }}" class="font-weight-bold">
+              {{ obj.sku_product.sku }}
+            </a>
+          </td>
+          <td>${{ obj.sku_product.master.costo }}</td>
+          <td class="d-none d-md-table-cell">
+            {{ obj.sku_product.master.descripcion }} /
+            {{ obj.sku_product.color }} /
+            {{ obj.sku_product.talla }}
+          </td>
+          <td>
+            {{ obj.quantity }}
+          </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col s12 m6 px-4">
+
+      <h4 class="text-lblue">Dirección de envío</h4>
+
+      <div class="card cart-card p-3">
+        <p class="m-0 p-0">{{ address.nombre_completo }}, {{ address.telefono }}</p>
+        <p class="m-0 p-0">
+          {{ address.calle_numero }},
+          {{ address.estado }},
+          {{ address.ciudad }},
+          {{ address.colonia }},
+          {{ address.pais }},
+          {{ address.codigo_postal }}.
+        </p>
+      </div>
+
+      <h4 class="text-lblue mt-4">Resumen</h4>
+
+      <div class="card cart-card px-5">
+        <div class="row">
+          <div class="col s6">
+            <p class="font-150 mb-2">Subtotal:</p>
+          </div>
+          <div class="col s6">
+            <p class="text-right font-150 mb-2">${{ order.total }}</p>
+          </div>
+        </div>
+        <div class="row font-weight-bold">
+          <div class="col s6">
+            <p class="font-150 mt-2">Total:</p>
+          </div>
+          <div class="col s6">
+            <p class="text-right font-150 mt-2">${{ order.total }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

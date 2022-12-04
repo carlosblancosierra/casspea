@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% url 'orders:address' as order_address_url %}
+
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="text-lblue center">Felicidades</h1>
+      <p class="center font-150">Su pedido a sido creado con exito, le contactaremos pronto</p>
+      <div class="span bg-lblue py-1"></div>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col s12 ">
+      <h2 class="text-lblue center">Detalles del pedido</h2>
+      <h4 class="center">Identificador: {{ order.order_id }}</h4>
+      <h4 class="text-lblue">Enviar a:</h4>
+
+      <div class="card cart-card p-3">
+        <p class="m-0 p-0">{{ order.direccion_entrega.nombre_completo }},
+          {{ order.direccion_entrega.telefono }}</p>
+        <p class="m-0 p-0">
+          {{ order.direccion_entrega.calle_numero }},
+          {{ order.direccion_entrega.estado }},
+          {{ order.direccion_entrega.ciudad }},
+          {{ order.direccion_entrega.colonia }},
+          {{ order.direccion_entrega.pais }},
+          {{ order.direccion_entrega.codigo_postal }}.
+        </p>
+      </div>
+      <h4 class="text-lblue">Productos:</h4>
+
+      <table>
+        <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>Sku</th>
+          <th>Precio U</th>
+          <th class="d-none d-md-table-cell">Descripción</th>
+          <th>Cantidad</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in order.cart_entries.all %}
+        <tr>
+          <td>
+            {% if obj.sku_product.master.image %}
+            <img src="{{ obj.sku_product.master.image.url }}" width="50px"/>
+            {% else %}
+            <img src="{% static 'images/placeholder.jpg' %}" width="50px"/>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ obj.sku_product.master.get_absolute_url }}" class="font-weight-bold">
+              {{ obj.sku_product.sku }}
+            </a>
+          </td>
+          <td>${{ obj.sku_product.master.costo }}</td>
+          <td class="d-none d-md-table-cell">
+            {{ obj.sku_product.master.descripcion }} /
+            {{ obj.sku_product.color }} /
+            {{ obj.sku_product.talla }}
+          </td>
+          <td>
+            {{ obj.quantity }}
+          </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+
+      {% for obj in order.cart_entries.all %}
+<!--      <div class="row card py-2 d-flex valign-wrapper cart-card mx-0">-->
+
+<!--        <div class="col s12 m2">-->
+<!--          {% if obj.sku_product.master.image %}-->
+<!--          <img src="{{ obj.sku_product.master.image.url }}" alt="" class="responsive-img"/>-->
+<!--          {% else %}-->
+<!--          <img src="{% static 'images/placeholder.jpg' %}" alt="" class="responsive-img"/>-->
+<!--          {% endif %}-->
+<!--        </div>-->
+
+<!--        <div class="col s12 m6">-->
+<!--          <p class="m-0 font-weight-bold">SKU: {{ obj.sku_product.sku }}</p>-->
+<!--          <p class="mt-2">-->
+<!--            <a href="{{ obj.sku_product.master.get_absolute_url }}">-->
+<!--              {{ obj.sku_product.master.descripcion }} /-->
+<!--              {{ obj.sku_product.color }} /-->
+<!--              {{ obj.sku_product.talla }}-->
+<!--            </a>-->
+<!--          </p>-->
+<!--        </div>-->
+
+<!--        <div class="col s12 m3">-->
+<!--          <p class="font-weight-bold text-right w-100 font-125">${{ obj.sku_product.master.costo }} </p>-->
+<!--          <p class="right my-0">Cantidad: {{ obj.quantity }} <br>-->
+<!--          </p>-->
+<!--        </div>-->
+
+<!--        <div class="col s12 m1">-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+      {% endfor %}
+
+      <div class="px-5">
+<!--        <div class="row">-->
+<!--          <div class="col s6">-->
+<!--            <p class="font-150 mb-2">Subtotal:</p>-->
+<!--          </div>-->
+<!--          <div class="col s6">-->
+<!--            <p class="text-right font-150 mb-2">${{ order.subtotal }}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+        <div class="row font-weight-bold">
+          <div class="col s6">
+            <p class="font-150 mt-2">Total:</p>
+          </div>
+          <div class="col s6">
+            <p class="text-right font-150 mt-2">${{ order.total }}</p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

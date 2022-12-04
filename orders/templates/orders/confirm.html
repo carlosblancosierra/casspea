@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% url 'orders:address' as order_address_url %}
+
+<div class="container my-5 d-none d-md-block">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="center">Confirm Order</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5 d-md-none">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="text-lblue font-200 center">Confirmar orden</h1>
+      <div class="col s12">
+        <div class="progress bg-lblue2">
+          <div class="determinate bg-lblue" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col s12 m12 px-md-4">
+      <h4 class="text-lblue">Products</h4>
+
+      <table>
+        <thead>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in entries %}
+
+        <tr>
+
+          <td>{{ obj.product.size }}</td>
+          <td>{{ obj.product.get_flavour_format_display }}: {{ obj.product.pre_built }}</td>
+          <td>{{ obj.quantity }}</td>
+          <td>
+            <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
+              <input type="hidden" value="{{ obj.id }}" name="obj_id">
+              <button type="submit">X</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+
+
+        </tbody>
+      </table>
+
+    </div>
+    <div class="col s12 m12 px-4">
+      <h4 class="text-lblue">Shipping Address</h4>
+
+      <div class="card cart-card p-3">
+        <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
+        <p class="m-0 p-0">
+          {{ address.street }},
+          {{ address.city }},
+          {{ address.country }},
+          {{ address.postal_code }}.
+        </p>
+        <a class="cart-qty-link" href="{{ order_address_url }}">Update</a>
+
+      </div>
+
+      <h4 class="text-lblue mt-4">Summary</h4>
+
+      <div class="card cart-card px-5">
+        <div class="row font-weight-bold p-0">
+          <div class="col s6">
+            <p class="font-150 mt-2">Total:</p>
+          </div>
+          <div class="col s6">
+            <p class="text-right font-150 mt-2">${{ total }}</p>
+          </div>
+        </div>
+      </div>
+      <form method="POST"> {% csrf_token %}
+        <button class="waves-effect waves-light btn-large bg-blue w-100 text-capitalize font-150">
+          Create Order
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

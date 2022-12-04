@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+<div class="container my-5 d-none d-md-block">
+  <div class="row">
+    <div class="col s12">
+      <h1>Shipping Address</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col s12 m6 px-4">
+      <form method="POST" action=""> {% csrf_token %}
+
+        <h4 class="text-lblue mt-0">
+          {% if address %} Update {% else %} New {% endif %}Address
+        </h4>
+
+        <div class="input-field">
+          <input id="full_name" type="text" class="" name="full_name"
+                 value="{{ address.full_name }}">
+          <label for="full_name">Full Name</label>
+        </div>
+
+        <div class="input-field">
+          <input id="street" type="text" class="" name="street"
+                 value="{{ address.street }}">
+          <label for="street">Street</label>
+        </div>
+
+        <div class="input-field">
+          <input id="tel" type="text" class="" name="tel"
+                 value="{{ address.tel }}">
+          <label for="tel">Telephone</label>
+        </div>
+
+        <div class="input-field">
+          <input id="postal_code" type="text" class="" name="postal_code"
+                 value="{{ address.postal_code }}">
+          <label for="postal_code">Postal Code</label>
+        </div>
+
+        <div class="input-field">
+          <input id="city" type="text" class="" name="city"
+                 value="{{ address.city }}">
+          <label for="city">City</label>
+        </div>
+
+        <div class="input-field">
+          <input id="country" type="text" class="" name="country"
+                 value="{{ address.country }}">
+          <label for="country">Country</label>
+        </div>
+
+        <input type="hidden" value="{{ address.id }}" name="update_address_id">
+        <button type="submit" class="waves-effect waves-light btn bg-blue w-100 f text-capitalize">
+          {% if address %} Update {% else %} Add {% endif %} Address
+        </button>
+      </form>
+
+    </div>
+
+    {% if addresses %}
+    <div class="col s12 m6 px-4">
+      <h4 class="">Saved Addresses</h4>
+      <div class="row">
+        {% for address in addresses %}
+        <div class="col s12 m6">
+          <div class="card p-3">
+            <form method="POST" action=""> {% csrf_token %}
+              <div class="">
+                <p class="m-0 p-0 font-150"><strong>{{ address.full_name }}</strong></p>
+                <p class="m-0 p-0"><strong>Telephone:</strong> {{ address.tel }}</p>
+                <p class="m-0 p-0"><strong>Street:</strong> {{ address.street }}</p>
+                <p class="m-0 p-0"><strong>City:</strong> {{ address.city }}</p>
+                <p class="m-0 p-0"><strong>Country:</strong> {{ address.country }}</p>
+                <p class="m-0 p-0"><strong>Postal Code:</strong> {{ address.postal_code }}</p>
+                <input type="hidden" name="reuse_address_id" value="{{ address.id }}">
+                <button type="submit"
+                        class="waves-effect waves-light btn bg-blue w-100 f text-capitalize mt-3">
+                  Use Address
+                </button>
+              </div>
+            </form>
+
+            <form method="POST" action="" class="mt-3">{% csrf_token %}
+              <input type="hidden" name="delete_address_id" value="{{ address.id }}">
+              <p class="">
+                <button type="submit" class="w-100">
+                  Delete address
+                </button>
+              </p>
+
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Entries -->
+<!-- list -->
+<!-- Totals -->
+<!-- Shipping Address -->
+<!-- Add or Select -->
+<!-- Contacto-->
+
+{% endblock %}

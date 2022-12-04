@@ -8,6 +8,8 @@
 
 {% url 'store:add_boxes' as add_boxes_url %}
 {% url 'store:remove_boxes' as remove_boxes_url %}
+{% url 'orders:address' as address_url %}
+
 
 
 <section class="container">
@@ -53,6 +55,7 @@
         </tbody>
       </table>
 
+      <p><a href="{{ address_url }}">Checkout</a></p>
 
     </div>
   </div>

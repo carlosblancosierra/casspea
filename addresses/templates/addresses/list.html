@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col s12">
+            <h1 class="text-lblue font-200">Direcciones</h1>
+            <div class="span bg-lblue py-1"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% for address in addresses %}
+        <div class="col s4 card p-3">
+            <p class="m-0 p-0 font-150"><strong>{{ address.nombre_completo }}</strong></p>
+            <p class="m-0 p-0"><strong>Teléfono:</strong> {{ address.telefono }}</p>
+            <p class="m-0 p-0"><strong>Calle:</strong> {{ address.calle_numero }}</p>
+            <p class="m-0 p-0"><strong>Colonia:</strong> {{ address.colonia }}</p>
+            <p class="m-0 p-0"><strong>Ciudad:</strong> {{ address.ciudad }}</p>
+            <p class="m-0 p-0"><strong>Estado:</strong> {{ address.estado }}</p>
+            <p class="m-0 p-0"><strong>País:</strong> {{ address.pais }}</p>
+            <p class="m-0 p-0"><strong>Código Postal:</strong> {{ address.codigo_postal }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
