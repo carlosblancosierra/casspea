@@ -16,3 +16,4 @@ PRE_BUILDS_FLAVOURS = (
 
 PRE_BUILT = 'pre_built'
 PICK_AND_MIX = 'pick_and_mix'
+FLAVOUR_FORMAT = "flavour_format"

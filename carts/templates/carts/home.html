@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Box Flavours{% endblock %}
+
+{% block content %}
+
+{% url 'store:add_boxes' as add_boxes_url %}
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h1>Cart</h1>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+
+      <table>
+        <thead>
+        <tr>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Quantity</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in entries %}
+
+        <tr>
+
+          <td>{{ obj.product.size }}</td>
+          <td>{{ obj.product.get_flavour_format_display }}: {{ obj.product.pre_built }}</td>
+          <td>{{ obj.quantity }}</td>
+        </tr>
+        {% endfor %}
+
+
+        </tbody>
+      </table>
+
+
+    </div>
+  </div>
+</section>
+{% endblock %}
