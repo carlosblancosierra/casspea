@@ -66,6 +66,22 @@ class CartEntryManager(models.Manager):
                 quantity=quantity
             )
 
+    def entries(self, request):
+        cart_id = request.session.get('cart_id', None)
+        if cart_id:
+            entries = self.filter(active=True, cart__id=cart_id)
+            return entries
+        else:
+            messages.error("No cart id")
+
+    def set_inactive(self, request, id):
+        qs = self.filter(id=id)
+        if len(qs) == 1:
+            obj = qs.first()
+            obj.active = False
+            obj.save()
+            print(obj.active)
+
     #
     # def new_or_update(self, request, sku_product_id, quantity):
     #

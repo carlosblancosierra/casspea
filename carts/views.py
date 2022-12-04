@@ -6,8 +6,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def home_page(request):
-    cart_id = request.session.get("cart_id", None)
-    entries = CartEntry.objects.filter(cart__id=cart_id)
+    entries = CartEntry.objects.entries(request)
 
     total = 0
     # for entry in entries:

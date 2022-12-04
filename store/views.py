@@ -63,7 +63,7 @@ def add_box_to_cart(request):
         pre_built_qs = PreBuildFlavour.objects.filter(active=True, slug=pre_built)
         print(pre_built_qs)
 
-        if len(pre_built_qs) is not 1:
+        if len(pre_built_qs) != 1:
             return redirect('store:home')
 
         pre_built_obj = pre_built_qs.first()
@@ -79,4 +79,14 @@ def add_box_to_cart(request):
         print(cart_entry)
 
     context = {}
+    return redirect('carts:home')
+
+
+def remove_box_from_cart(request):
+    form = request.POST
+
+    if form:
+        obj_id = form.get('obj_id', None)
+        CartEntry.objects.set_inactive(request, id=obj_id)
+
     return redirect('carts:home')

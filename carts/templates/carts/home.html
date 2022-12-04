@@ -7,6 +7,8 @@
 {% block content %}
 
 {% url 'store:add_boxes' as add_boxes_url %}
+{% url 'store:remove_boxes' as remove_boxes_url %}
+
 
 <section class="container">
   <div class="row">
@@ -26,6 +28,7 @@
           <th>Item</th>
           <th>Description</th>
           <th>Quantity</th>
+          <th>Delete</th>
         </tr>
         </thead>
 
@@ -37,6 +40,12 @@
           <td>{{ obj.product.size }}</td>
           <td>{{ obj.product.get_flavour_format_display }}: {{ obj.product.pre_built }}</td>
           <td>{{ obj.quantity }}</td>
+          <td>
+            <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
+              <input type="hidden" value="{{ obj.id }}" name="obj_id">
+              <button type="submit">X</button>
+            </form>
+          </td>
         </tr>
         {% endfor %}
 
