@@ -29,7 +29,11 @@ DEBUG = True
 STATIC_LOCAL = False
 
 
-ALLOWED_HOSTS = ['casspea.herokuapp.com', 'www.casspea.co.uk', 'www2.casspea.co.uk', 'casspea2.herokuapp.com']
+ALLOWED_HOSTS = ['casspea.herokuapp.com',
+                 'www.casspea.co.uk',
+                 'www2.casspea.co.uk',
+                 'casspea2.herokuapp.com',
+                 ]
 
 # Application definition
 
@@ -40,6 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'addresses',
+    'boxes',
+    'carts',
+    'flavours',
+    'orders',
+    'store',
 ]
 
 MIDDLEWARE = [
@@ -176,3 +187,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # FORCE HTTPS
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
+
+STRIPE_PUBLIC_KEY = "pk_test_51MBMy0JiuFqKKcn6FsLlAE48ndzF9oruq219dkZArcnR6E0GN0Irv2X2ErvnPFbrgZyP1CP8Ay1hAdJNnnf7pa7Z00G3bxqyKY"
+STRIPE_SECRET_KEY = "sk_test_51MBMy0JiuFqKKcn69O4Fc8Sz7UpmLoRoaxXbqxwO8CD20P2craNClm173MKMwO7ZyyvblMfifmupuPgrWKycMV7p00qiMAW9aX"
