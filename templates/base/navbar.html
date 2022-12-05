@@ -1,6 +1,7 @@
 {% load static %}
 
 {% url 'store:home' as store_url %}
+{% url 'carts:home' as cart_url %}
 
 <nav class="grey" id="site-nav">
   <div class="nav-wrapper container">
@@ -12,9 +13,7 @@
     </ul>
 
     <ul id="nav-mobile2" class="right hide-on-med-and-down">
-      <li><a href="#">Sass</a></li>
-      <li><a href="#">Components</a></li>
-      <li><a href="#">JavaScript</a></li>
+      <li><a href="{{ cart_url }}">Cart</a></li>
     </ul>
   </div>
 </nav>

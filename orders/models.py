@@ -11,6 +11,7 @@ User = settings.AUTH_USER_MODEL
 STATUS_CHOICES = (
     ('created', 'created'),
     ('cancelled', 'cancelled'),
+    ('paid', 'paid'),
     ('delivered', 'delivered'),
 )
 
@@ -19,9 +20,11 @@ class Order(models.Model):
     order_id = models.CharField(max_length=120, blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     shipping_address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.SET_NULL)
-    status = models.CharField(max_length=120, blank=True, default="INICIADA", choices=STATUS_CHOICES)
+    status = models.CharField(max_length=120, blank=True, default="created", choices=STATUS_CHOICES)
+    payment_status = models.CharField(max_length=120, blank=True)
     total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
+    stripe_data = models.TextField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -34,15 +37,15 @@ class Order(models.Model):
     class Meta:
         ordering = ['-timestamp']
 
-    def subtotal(self):
-        subtotal = 0
-        for entry in self.cart_entries.all():
-            item_total = entry.sku_product.master.costo * entry.quantity
-            subtotal += item_total
-        return subtotal
-
-    def total(self):
-        return self.subtotal()
+    # def subtotal(self):
+    #     subtotal = 0
+    #     for entry in self.cart_entries.all():
+    #         item_total = entry.sku_product.master.costo * entry.quantity
+    #         subtotal += item_total
+    #     return subtotal
+    #
+    # def total(self):
+    #     return self.subtotal()
 
     def get_staff_url(self):
         return f"/orders/staff/{self.order_id}"
@@ -53,7 +56,7 @@ class Order(models.Model):
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):
     if not instance.order_id:
-        instance.order_id = "JM" + str(instance.id)
+        instance.order_id = "CP" + str(instance.id)
         instance.save()
 
 

@@ -71,8 +71,6 @@ class CartEntryManager(models.Manager):
         if cart_id:
             entries = self.filter(active=True, cart__id=cart_id)
             return entries
-        else:
-            messages.error("No cart id")
 
     def set_inactive(self, request, id):
         qs = self.filter(id=id)
