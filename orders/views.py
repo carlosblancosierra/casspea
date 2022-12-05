@@ -6,8 +6,17 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 from .models import Order, STATUS_CHOICES
+
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+endpoint_secret = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
 
 
 # from .emails import nueva_orden_mail_staff, nueva_orden_mail_client
@@ -111,29 +120,13 @@ def confirm_page(request):
 
     total = 0
     # for entry in entries:
-        # subtotal = entry.sku_product.master.costo * entry.quantity
-        # total += subtotal
+    # subtotal = entry.sku_product.master.costo * entry.quantity
+    # total += subtotal
 
     address = None
     address_qs = Address.objects.filter(id=address_id)
     if len(address_qs) == 1:
         address = address_qs.first()
-
-    form = request.POST
-    if form:
-        order = Order(user=request.user, direccion_entrega=address)
-        order.save()
-        request.session['order_id'] = order.id
-
-        for entry in entries:
-            order.cart_entries.add(entry)
-
-        request.session['cart_id'] = None
-        request.session['address_id'] = None
-
-        # nueva_orden_mail_staff(order)
-        # nueva_orden_mail_client(order)
-        return redirect('orders:created')
 
     context = {
         "address": address,
@@ -144,17 +137,109 @@ def confirm_page(request):
     return render(request, "orders/confirm.html", context)
 
 
-@login_required
-def created_page(request):
-    order = None
-    order_id = request.session.get("order_id")
-    order_qs = Order.objects.filter(id=order_id)
-    if len(order_qs) == 1:
-        order = order_qs.first()
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        # create order
+        cart_entries = CartEntry.objects.entries(request)
+        address_id = request.session.get("address_id", None)
+        shipping_address_qs = Address.objects.filter(id=address_id)
+        shipping_address = None
+        if len(shipping_address_qs) != 1:
+            return redirect('carts:home')
+        shipping_address = shipping_address_qs.first()
 
-    print(order)
+        order = Order(user=request.user, shipping_address=shipping_address)
+        order.save()
+        order.cart_entries.set(cart_entries)
+        order_id = order.order_id
+        line_items = []
+        for entry in cart_entries:
+            line_items.append({
+                'price': str(entry.product.size.price_id),
+                'quantity': str(entry.quantity),
+            })
+
+        customer_email = request.user.email
+
+        # send order id to stripe
+        domain = "https://casspea.co.uk.com"
+        if settings.DEBUG:
+            domain = "http://127.0.0.1:8000"
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            customer_email=customer_email,
+            currency='GBP',
+            mode='payment',
+            client_reference_id=order_id,
+            success_url=domain + '/orders/success',
+            cancel_url=domain + '/orders/cancel',
+        )
+        return redirect(checkout_session.url)
+
+
+@csrf_exempt
+def my_webhook_view(request):
+    payload = request.body
+
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+        # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+        session = stripe.checkout.Session.retrieve(
+            event['data']['object']['id'],
+            expand=['line_items'],
+        )
+
+        # print('session')
+        # print(session)
+
+        # set order to paid
+        order_id = session['client_reference_id']
+        order_obj_qs = Order.objects.filter(order_id=order_id)
+        if len(order_obj_qs) != 1:
+            messages.error('Order Error')
+            return redirect('carts:home')
+        order = order_obj_qs.first()
+        order.stripe_data = session
+        order.payment_status = session['payment_status']
+        order.save()
+
+        # save stripe session info
+        # save other extra info
+
+        # amount_subtotal
+        # amount_total
+        # "payment_status":"paid",
+
+    # Passed signature verification
+    return HttpResponse(status=200)
+
+
+def success_page(request):
+    try:
+        cart_id = request.session.get('cart_id', None)
+        Cart.objects.filter(id=cart_id).active = False
+    except:
+        messages.error(request, 'Cart error')
+
+    request.session['cart_id'] = None
+    request.session['address_id'] = None
+
     context = {
-        "order": order,
     }
 
     return render(request, "orders/created.html", context)

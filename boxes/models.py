@@ -12,6 +12,7 @@ class BoxSize(models.Model):
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    price_id = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return "Box of {} pieces".format(self.size)
@@ -32,6 +33,8 @@ class Box(models.Model):
     flavour_format = models.CharField(max_length=30, choices=FLAVOURS_FORMAT_CHOICES, default=PRE_BUILT)
     pre_built = models.ForeignKey(PreBuildFlavour, on_delete=models.PROTECT, null=True)
     # flavours = models.ManyToManyField(FlavourEntrySelection)
+
+    price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)

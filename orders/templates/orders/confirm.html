@@ -7,6 +7,7 @@
 {% block content %}
 
 {% url 'orders:address' as order_address_url %}
+{% url 'orders:checkout-session' as checkout_session_url %}
 
 <div class="container my-5 d-none d-md-block">
   <div class="row">
@@ -95,10 +96,10 @@
           </div>
         </div>
       </div>
-      <form method="POST"> {% csrf_token %}
-        <button class="waves-effect waves-light btn-large bg-blue w-100 text-capitalize font-150">
-          Create Order
-        </button>
+
+      <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
+        <button class="waves-effect waves-light btn-large bg-blue w-100 text-capitalize font-150"
+                type="submit" id="checkout-button">Checkout</button>
       </form>
     </div>
   </div>
