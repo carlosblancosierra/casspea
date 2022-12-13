@@ -78,7 +78,12 @@ class CartEntryManager(models.Manager):
             obj = qs.first()
             obj.active = False
             obj.save()
-            print(obj.active)
+            # print(obj.active)
+
+    def empty_cart(self, request):
+        if not self.entries(request):
+            return True
+        return False
 
     #
     # def new_or_update(self, request, sku_product_id, quantity):

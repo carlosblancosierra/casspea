@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %} Iniciar Sesión | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="font-200">Log in</h1>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row my-5">
+    <div class="col m6 offset-m3">
+      <div class="card p-5">
+        <p class="font-150 mt-0">Returning User</p>
+        <form method="POST"> {% csrf_token %}
+          {{ form }}
+          <input type="hidden" name="next_url" value="{{ next_url }}">
+          <button type="submit" class="btn-large bg-blue mt-3 w-100">Log in</button>
+        </form>
+        {% if error %}
+        <p class="text-red">{{ error }}</p>
+        {% endif %}
+      </div>
+      <div class="card p-5">
+        <p class="font-150 mt-0">New user?</p>
+        <a class="btn-large bg-lblue w-100 mt-4"
+           href="/register{% if next_url %}?next_url={{ next_url }}{% endif %}">
+          Register</a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

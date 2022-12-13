@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'accounts',
     'addresses',
     'boxes',
     'carts',
@@ -48,6 +49,11 @@ INSTALLED_APPS = [
     'orders',
     'store',
 ]
+
+LOGIN_URL = '/login'
+LOGIN_URL_REDIRECT = '/'
+LOGOUT_URL = '/logout'
+LOGOUT_REDIRECT_URL = '/login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

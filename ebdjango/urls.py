@@ -16,20 +16,28 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
-from . import views
+from django.contrib.auth.views import LogoutView
+from accounts.views import login_page, register_page_local
 
+from . import views
 
 urlpatterns = [
     path('', views.home_page, name='home'),
+
+    path('accounts/', include('accounts.urls')),
+    path('accounts/', include('accounts.passwords.urls')),
     path('addresses/', include('addresses.urls')),
     path('cart/', include('carts.urls')),
     path('orders/', include('orders.urls')),
     path('store/', include('store.urls')),
 
+    path('logout', LogoutView.as_view(), name='logout'),
+    path('login', login_page, name="login"),
+    path('register', register_page_local, name="register"),
+
     path('admin/', admin.site.urls),
 
 ]
-
 
 if settings.STATIC_LOCAL:
     # test mode

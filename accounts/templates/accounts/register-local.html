@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8 offset-m2 mt-5">
+            <h1 class="font-200 text-blue center mb-5">Register</h1>
+            <form method="post" class="card px-5 py-3">
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                <input type="hidden" name="next_url" value="{{ next_url }}">
+                <p class="center"><button type="submit" class="btn-large bg-blue">Send</button></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

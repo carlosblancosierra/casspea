@@ -8,7 +8,10 @@
 
 {% url 'store:add_boxes' as add_boxes_url %}
 {% url 'store:remove_boxes' as remove_boxes_url %}
+{% url 'store:home' as store_home_url %}
+
 {% url 'orders:address' as address_url %}
+{% url 'carts:home' as cart_url %}
 
 
 
@@ -19,6 +22,20 @@
     </div>
   </div>
 </section>
+
+{% if empty %}
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <p>Empty Cart, Add something</p>
+        <p><a href="{{ store_home_url }}" class="btn btn-primary">Store</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% elif not empty %}
 
 <section class="container">
   <div class="row">
@@ -60,4 +77,6 @@
     </div>
   </div>
 </section>
+
+{% endif %}
 {% endblock %}

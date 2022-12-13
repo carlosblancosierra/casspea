@@ -30,7 +30,7 @@ def address_page(request):
         return redirect('/login?next=/orders/address')
 
     entries = CartEntry.objects.entries(request)
-    if not entries.exists():
+    if not entries:
         return redirect("carts:home")
 
     user = request.user
@@ -111,9 +111,8 @@ def address_page(request):
 
 @login_required
 def confirm_page(request):
-    cart_id = request.session.get("cart_id", None)
     address_id = request.session.get("address_id", None)
-    entries = CartEntry.objects.filter(cart__id=cart_id)
+    entries = CartEntry.objects.entries(request)
 
     if not entries.exists():
         return redirect("carts:home")

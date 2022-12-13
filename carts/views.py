@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required
 def home_page(request):
     entries = CartEntry.objects.entries(request)
 
@@ -13,8 +12,7 @@ def home_page(request):
     #     subtotal = entry.sku_product.master.costo * entry.quantity
     #     total += subtotal
     #
-    if not entries:
-        empty = True
+    empty = CartEntry.objects.empty_cart(request)
 
     context = {
         "empty": empty,
