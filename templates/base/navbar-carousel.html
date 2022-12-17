@@ -1,0 +1,31 @@
+{% load static %}
+{% url 'carts:home' as cart_url %}
+{% url 'store:home' as store_url %}
+
+<nav class="transparent inner-nav">
+  <div class="nav-wrapper container">
+    <a href="/" class="brand-logo center"><img src="{% static 'images/main-logo.png' %}" width="60px"/></a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+
+    <ul id="nav-home" class="left hide-on-med-and-down">
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ store_url }}">Store</a></li>
+      <li><a href="https://landing.casspea.co.uk/flavours-casspea">Flavours</a></li>
+    </ul>
+
+    <ul id="nav-home2" class="right hide-on-med-and-down">
+      <!--          <li><a href="#">Personaliza</a></li>-->
+      <!--          <li><a href="#">Nosotros</a></li>-->
+                <li><a href="{{ cart_url }}">Cart</a></li>
+    </ul>
+
+    <ul class="sidenav" id="mobile-demo">
+      <a href="/" class="responsive-img mt-5"><img src="{% static 'images/main-logo.png' %}" width="60px"/></a>
+
+      <li><a href="/">Home</a></li>
+      <li><a href="https://store.casspea.co.uk/">Store</a></li>
+      <li><a href="https://landing.casspea.co.uk/flavours-casspea">Flavours</a></li>
+    </ul>
+
+  </div>
+</nav>

@@ -45,6 +45,7 @@ def address_page(request):
         addresses = addresses.exclude(id=address_id)
 
     context = {
+        "title": 'Checkout',
         "addresses": addresses,
         "address": address_to_update,
     }
@@ -112,15 +113,17 @@ def address_page(request):
 @login_required
 def confirm_page(request):
     address_id = request.session.get("address_id", None)
+    gift_message = request.session.get("gift_message", None)
     entries = CartEntry.objects.entries(request)
 
     if not entries.exists():
         return redirect("carts:home")
 
-    total = 0
-    # for entry in entries:
-    # subtotal = entry.sku_product.master.costo * entry.quantity
-    # total += subtotal
+    total = CartEntry.objects.cart_total(request)
+    shipping_cost = 5.99
+    shipping_free = CartEntry.objects.shipping_free(request)
+    if shipping_free:
+        shipping_cost = 0
 
     address = None
     address_qs = Address.objects.filter(id=address_id)
@@ -128,9 +131,13 @@ def confirm_page(request):
         address = address_qs.first()
 
     context = {
+        "title": 'Checkout',
         "address": address,
         "entries": entries,
         "total": total,
+        "shipping_free": shipping_free,
+        "gift_message": gift_message,
+        "shipping_cost": shipping_cost,
     }
 
     return render(request, "orders/confirm.html", context)
@@ -141,16 +148,26 @@ class CreateCheckoutSessionView(View):
         # create order
         cart_entries = CartEntry.objects.entries(request)
         address_id = request.session.get("address_id", None)
+        gift_message = request.session.get("gift_message", None)
         shipping_address_qs = Address.objects.filter(id=address_id)
         shipping_address = None
         if len(shipping_address_qs) != 1:
             return redirect('carts:home')
-        shipping_address = shipping_address_qs.first()
+        elif len(shipping_address_qs) == 1:
+            shipping_address = shipping_address_qs.first()
 
-        order = Order(user=request.user, shipping_address=shipping_address)
+        order = Order(user=request.user,
+                      shipping_address=shipping_address,
+                      gift_message=gift_message
+                      )
+
         order.save()
         order.cart_entries.set(cart_entries)
         order_id = order.order_id
+
+        request.session['address_id'] = None
+        request.session['gift_message'] = None
+        request.session['order_id'] = order_id
         line_items = []
         for entry in cart_entries:
             line_items.append({
@@ -163,7 +180,7 @@ class CreateCheckoutSessionView(View):
         # send order id to stripe
         domain = "https://casspea.co.uk.com"
         if settings.DEBUG:
-            domain = "http://127.0.0.1:8000"
+            domain = "http://127.0.0.1:9000"
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=line_items,
@@ -203,9 +220,6 @@ def my_webhook_view(request):
             expand=['line_items'],
         )
 
-        # print('session')
-        # print(session)
-
         # set order to paid
         order_id = session['client_reference_id']
         order_obj_qs = Order.objects.filter(order_id=order_id)
@@ -217,28 +231,32 @@ def my_webhook_view(request):
         order.payment_status = session['payment_status']
         order.save()
 
-        # save stripe session info
-        # save other extra info
+        order_entries = order.cart_entries
+        if len(order_entries) > 0:
+            cart = order_entries.first().cart
+            cart.active = False
+            cart.save()
 
-        # amount_subtotal
-        # amount_total
-        # "payment_status":"paid",
-
-    # Passed signature verification
     return HttpResponse(status=200)
 
 
 def success_page(request):
-    try:
-        cart_id = request.session.get('cart_id', None)
-        Cart.objects.filter(id=cart_id).active = False
-    except:
-        messages.error(request, 'Cart error')
+    order_id = request.session.get('order_id', None)
+    order_qs = Order.objects.filter(order_id=order_id)
+    if len(order_qs) == 1:
+        order = order_qs.first()
+    else:
+        return redirect('carts:home')
 
     request.session['cart_id'] = None
     request.session['address_id'] = None
-
+    request.session['order_id'] = None
     context = {
+        "order": order,
+        "address": order.shipping_address,
+        "entries": order.cart_entries,
+        "gift_message": order.gift_message,
+        "shipping_cost": order.shipping_cost,
     }
 
     return render(request, "orders/created.html", context)
@@ -298,7 +316,7 @@ def detail_page(request, order_id):
 
     context = {
         "order": order,
-        "address": order.direccion_entrega,
+        "address": order.shipping_address,
         "entries": order.cart_entries.all,
     }
 

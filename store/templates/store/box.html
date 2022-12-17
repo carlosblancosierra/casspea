@@ -8,60 +8,117 @@
 
 {% url 'store:add_boxes' as add_boxes_url %}
 
+{% include "base/inner-banner.html" %}
+
+
 <div class="container">
   <div class="row">
-    <div class="col s12 my-5">
-      <h1 class="center">Select your Flavours</h1>
-    </div>
+    <div class="row mt-5">
 
-    <div class="row">
-      <div class="col s12">
-        <h2>{{ size }} Pieces Box</h2>
+      <div class="col s12 m6 ">
+        {% if box_obj.image %}
+        <img src="{{ box_obj.image.url }}" class="responsive-img">
+        {% endif %}
 
+        <div class="row">
+          {% if box_obj.image %}
+          <div class="col s6">
+            <img src="{{ box_obj.image2.url }}" class="responsive-img">
+          </div>
+          {% endif %}
+
+          {% if box_obj.image %}
+          <div class="col s6">
+            <img src="{{ box_obj.image3.url }}" class="responsive-img">
+          </div>
+          {% endif %}
+
+          {% if box_obj.image %}
+          <div class="col s6">
+            <img src="{{ box_obj.image4.url }}" class="responsive-img">
+          </div>
+          {% endif %}
+
+          {% if box_obj.image %}
+          <div class="col s6">
+            <img src="{{ box_obj.image5.url }}" class="responsive-img">
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="col s12 m6">
+        <h1 class="font-250">{{ size }} Pieces Box</h1>
+        {% if box_obj.description %}
+        <p>{{ box_obj.description }}</p>
+        {% endif %}
         <form method="POST" action="{{ add_boxes_url }}"> {% csrf_token %}
           <div class="row">
-            <div class="input-field col s12">
-              <input id="box_quantity" type="number" name="box_quantity" class="validate" required min="0">
-              <label for="box_quantity">How many boxes of {{ quantity }} pieces?</label>
+            <!--            <label for="box_quantity">How many boxes of {{ quantity }} pieces?</label>-->
+
+            <div class="col s12">
+              <button class="btn btn-green btn-number"
+                      data-type="minus" data-field="box_quantity"
+              >-
+              </button>
+
+              <input id="box_quantity" type="number"
+                     name="box_quantity" class="validate center browser-default"
+                     required min="0" value="1" max="100">
+
+              <button class="btn btn-green btn-number"
+                      data-type="plus" data-field="box_quantity"
+              >+
+              </button>
             </div>
+
+
           </div>
 
           <div class="row">
-            <div class="col s6 m3">
+            <div class="col s12">
+              <p>Pick your flavour</p>
+            </div>
+            <div class="col s6">
               <p>
-                <label onclick="showPreBuiltCol()">
-                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PRE_BUILT }}"/>
+                <label onclick="showPreBuiltCol()" class="btn boxes-radio-green-btn">
+                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PRE_BUILT }}"
+                         required/>
                   <span>Pre Built</span>
                 </label>
               </p>
             </div>
-            <div class="col s6 m3">
+            <div class="col s6">
               <p>
-                <label onclick="showPickAndMixCol()">
-                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PICK_AND_MIX }}"/>
+                <label onclick="showPickAndMixCol()" class="btn boxes-radio-green-btn">
+                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PICK_AND_MIX }}" required/>
                   <span>Pick and Mix</span>
                 </label>
               </p>
             </div>
+
           </div>
+
+
           <div class="row">
-            <div class="col s12 m6" id="preBuiltCol">
+            <div class="col s12" id="preBuiltCol">
               {% for obj in prebuilds %}
-              <p>
+              <p class="box-flavour-radio">
                 <label>
-                  <input class="with-gap" name="{{ PRE_BUILT }}" type="radio" value="{{ obj.slug }}"/>
+                  <input class="" name="{{ PRE_BUILT }}" type="radio" value="{{ obj.slug }}"/>
                   <span>{{ obj.name }}</span>
                 </label>
               </p>
               {% endfor %}
 
             </div>
-            <div class="col s12 m6" id="pickAndMixCol">
+            <div class="col s12 m6 offset-m3" id="pickAndMixCol">
               {% for flavour in flavours %}
               <div class="row">
                 <div class="input-field col s10">
-                  <input id="{{ flavour.1 }}" type="number" name="{{ flavour.1 }}">
-                  <label for="{{ flavour.1 }}">{{ flavour.0 }}</label>
+                  <input id="{{ flavour.slug }}" type="number" name="{{ flavour.alug }}">
+                  <label for="{{ flavour.slug }}">{{ flavour.name }}</label>
                 </div>
               </div>
               {% endfor %}
@@ -69,7 +126,10 @@
           </div>
 
           <input type="hidden" value="{{ size }}" name="size">
-          <button type="submit" class="btn btn-primary">Add Boxes to Cart</button>
+          <p class="center">
+            <button type="submit" class="btn-large btn-orange">Add Boxes to Cart</button>
+          </p>
+
         </form>
       </div>
     </div>
@@ -94,6 +154,66 @@
     preBuiltCol.style.display = 'none';
     pickAndMixCol.style.display = 'block';
   }
+
+
+$('.btn-number').click(function(e){
+    e.preventDefault();
+
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
+
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+
+        } else if(type == 'plus') {
+
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the maximum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+
+
+});
+
+
 
 </script>
 

@@ -6,18 +6,26 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home_page(request):
     entries = CartEntry.objects.entries(request)
-
-    total = 0
-    # for entry in entries:
-    #     subtotal = entry.sku_product.master.costo * entry.quantity
-    #     total += subtotal
-    #
     empty = CartEntry.objects.empty_cart(request)
+    gift_message = request.session.get('gift_message', None)
+    total = 0
+    if not empty:
+        for entry in entries:
+            subtotal = entry.total
+            total += subtotal
+
+    if request.POST:
+        gift_message = request.POST.get('gift_message', None)
+        request.session['gift_message'] = gift_message
+
+        return redirect('orders:address')
 
     context = {
+        "title": "Cart",
         "empty": empty,
         "entries": entries,
         "total": total,
+        "gift_message": gift_message
     }
 
     return render(request, "carts/home.html", context)

@@ -1,21 +1,56 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
+from imagekit.models import ImageSpecField
 
 from flavours.models import PreBuildFlavour
 
 
 # Create your models here.
+def upload_location(instance, filename):
+    return "box-size-img/%s/%s" % (instance.id, filename)
+
+
+class BoxSizeManager(models.Manager):
+    def active(self):
+        return self.filter(active=True)
 
 
 class BoxSize(models.Model):
     size = models.PositiveIntegerField()
+    description = models.TextField(blank=True, null=True)
+    price_id = models.CharField(max_length=200, null=True, blank=True)
+    price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    active = models.BooleanField(default=True)
 
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    active = models.BooleanField(default=True)
-    price_id = models.CharField(max_length=200, null=True, blank=True)
+
+    image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                processors=[ResizeToFill(1500, 998)],
+                                format='JPEG',
+                                options={'quality': 95})
+    image2 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                 processors=[ResizeToFill(1500, 998)],
+                                 format='JPEG',
+                                 options={'quality': 95})
+    image3 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                 processors=[ResizeToFill(1500, 998)],
+                                 format='JPEG',
+                                 options={'quality': 95})
+    image4 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                 processors=[ResizeToFill(1500, 998)],
+                                 format='JPEG',
+                                 options={'quality': 95})
+    image5 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                 processors=[ResizeToFill(1500, 998)],
+                                 format='JPEG',
+                                 options={'quality': 95})
 
     def __str__(self):
         return "Box of {} pieces".format(self.size)
+
+    objects = BoxSizeManager()
 
 
 class Box(models.Model):
@@ -42,3 +77,11 @@ class Box(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.size, self.flavour_format)
+
+    @property
+    def image(self):
+        return self.size.image
+
+    @property
+    def price(self):
+        return self.size.price

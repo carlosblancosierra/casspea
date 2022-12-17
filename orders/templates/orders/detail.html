@@ -7,15 +7,16 @@
 {% block content %}
 
 {% url 'orders:address' as order_address_url %}
+{% include "base/inner-banner.html" %}
 
 
 <div class="container mt-5">
   <div class="row">
     <div class="col s12">
-      <h1 class="text-lblue font-200">Detalles de la orden</h1>
+      <h1 class="text-lblue font-200">Order details</h1>
       <div class="span bg-lblue py-1"></div>
-      <p class="font-150">Identificador: {{ order.order_id }}</p>
-      <p class="font-150">Fecha: {{ order.timestamp }}</p>
+      <p class="font-150">Order Id: {{ order.order_id }}</p>
+      <p class="font-150">Date: {{ order.timestamp }}</p>
     </div>
   </div>
 </div>
@@ -25,117 +26,78 @@
   <div class="row">
 
     <div class="col s12 m12 px-md-4">
-      <h4 class="text-lblue">Pedido</h4>
+      <h4 class="text-lblue">Products</h4>
 
       <table>
         <thead>
         <tr>
-          <th>Imagen</th>
-          <th>Sku</th>
-          <th>Precio U</th>
-          <th class="d-none d-md-table-cell">Descripción</th>
-          <th>Cantidad</th>
+          <th></th>
+          <th></th>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
         </tr>
         </thead>
 
         <tbody>
         {% for obj in entries %}
+
         <tr>
+          <td></td>
           <td>
-            {% if obj.sku_product.master.image %}
-            <img src="{{ obj.sku_product.master.image.url }}" width="50px"/>
-            {% else %}
-            <img src="{% static 'images/placeholder.jpg' %}" width="50px"/>
+            {% if obj.product.image %}
+            <img src="{{ obj.product.image.url }}" width="150px">
             {% endif %}
           </td>
-          <td>
-            <a href="{{ obj.sku_product.master.get_absolute_url }}" class="font-weight-bold">
-              {{ obj.sku_product.sku }}
-            </a>
-          </td>
-          <td>${{ obj.sku_product.master.costo }}</td>
-          <td class="d-none d-md-table-cell">
-            {{ obj.sku_product.master.descripcion }} /
-            {{ obj.sku_product.color }} /
-            {{ obj.sku_product.talla }}
-          </td>
-          <td>
-            {{ obj.quantity }}
-          </td>
+          <td>{{ obj.product.size }}</td>
+          <td>{{ obj.product.price }}</td>
+          <td>{{ obj.quantity }}</td>
+          <td>£{{ obj.total }} GBP</td>
         </tr>
         {% endfor %}
+
 
         </tbody>
       </table>
 
-
-      {% for obj in entries %}
-<!--      <div class="row card py-2 d-flex valign-wrapper cart-card">-->
-
-<!--        <div class="col s12 m2">-->
-<!--          <img src="{% static 'images/playera-placeholder.jpg' %}" alt="" class="responsive-img">-->
-<!--        </div>-->
-
-<!--        <div class="col s12 m6">-->
-<!--          <p>-->
-<!--            <a href="{{ obj.sku_product.master.get_absolute_url }}">-->
-<!--              {{ obj.sku_product.master.descripcion }} /-->
-<!--              {{ obj.sku_product.color }} /-->
-<!--              {{ obj.sku_product.talla }}-->
-<!--            </a>-->
-<!--          </p>-->
-<!--        </div>-->
-
-<!--        <div class="col s12 m3">-->
-<!--          <p class="font-weight-bold text-right w-100 font-125">${{ obj.sku_product.master.costo }} </p>-->
-<!--          <p class="right my-0">Cantidad: {{ obj.quantity }} <br>-->
-<!--          </p>-->
-<!--        </div>-->
-
-<!--        <div class="col s12 m1">-->
-<!--        </div>-->
-
-<!--      </div>-->
-
-      {% endfor %}
     </div>
-    <div class="col s12 m6 px-4">
+    <h4 class="mt-4 font-150 bold">Summary</h4>
 
-      <h4 class="text-lblue">Dirección de envío</h4>
-
-      <div class="card cart-card p-3">
-        <p class="m-0 p-0">{{ address.nombre_completo }}, {{ address.telefono }}</p>
-        <p class="m-0 p-0">
-          {{ address.calle_numero }},
-          {{ address.estado }},
-          {{ address.ciudad }},
-          {{ address.colonia }},
-          {{ address.pais }},
-          {{ address.codigo_postal }}.
-        </p>
-      </div>
-
-      <h4 class="text-lblue mt-4">Resumen</h4>
-
-      <div class="card cart-card px-5">
-<!--        <div class="row">-->
-<!--          <div class="col s6">-->
-<!--            <p class="font-150 mb-2">Subtotal:</p>-->
-<!--          </div>-->
-<!--          <div class="col s6">-->
-<!--            <p class="text-right font-150 mb-2">${{ order.total }}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-        <div class="row font-weight-bold">
-          <div class="col s6">
-            <p class="font-150 mt-2">Total:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-150 mt-2">${{ order.total }}</p>
-          </div>
+    <div class="">
+      <div class="row p-0">
+        {% if order.gift_message %}
+        <div class="col s6">
+          <p class="font-100 mt-2">Gift Message:</p>
+        </div>
+        <div class="col s6">
+          <p class="text-right font-100 mt-2">
+            {{ order.gift_message }}
+          </p>
+        </div>
+        {% endif %}
+        <div class="col s6">
+          <p class="font-100 mt-2">Shipping:</p>
+        </div>
+        <div class="col s6">
+          <p class="text-right font-100 mt-2">
+            {% if order.shipping_free %}
+            Free
+            {% else %}
+            £{{ order.shipping_cost }} GBP
+            {% endif %}
+          </p>
+        </div>
+        <div class="col s6">
+          <p class="font-100 mt-2 font-150 bold">Total:</p>
+        </div>
+        <div class="col s6">
+          <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
         </div>
       </div>
+
     </div>
+
   </div>
 </div>
 

@@ -4,30 +4,47 @@
 
 {% block head_title %}{{ block.super }} Store{% endblock %}
 {% block content %}
+{% include "base/inner-banner.html" %}
+
+
 <div class="container mt-5">
   <div class="row">
     <div class="col s12">
-      <h1>Pick a box size</h1>
-      <form method="POST"> {% csrf_token %}
-        <input type="hidden" name="size" value="9">
-        <button type="submit" class="btn btn-primary">Box of 9</button>
-      </form>
+      <h2 class="bold font-200 center">How many chocolates do you want?</h2>
 
-      <form method="POST"> {% csrf_token %}
-        <input type="hidden" name="size" value="15">
-        <button type="submit" class="btn btn-primary">Box of 15</button>
-      </form>
+      <!--      <form method="POST"> {% csrf_token %}-->
+      <!--        <input type="hidden" name="size" value="15">-->
+      <!--        <button type="submit" class="btn btn-primary">Box of 15</button>-->
+      <!--      </form>-->
 
-      <form method="POST"> {% csrf_token %}
-        <input type="hidden" name="size" value="24">
-        <button type="submit" class="btn btn-primary">Box of 24</button>
-      </form>
+      <!--      <form method="POST"> {% csrf_token %}-->
+      <!--        <input type="hidden" name="size" value="24">-->
+      <!--        <button type="submit" class="btn btn-primary">Box of 24</button>-->
+      <!--      </form>-->
 
-      <form method="POST"> {% csrf_token %}
-        <input type="hidden" name="size" value="48">
-        <button type="submit" class="btn btn-primary">Box of 48</button>
-      </form>
+      <!--      <form method="POST"> {% csrf_token %}-->
+      <!--        <input type="hidden" name="size" value="48">-->
+      <!--        <button type="submit" class="btn btn-primary">Box of 48</button>-->
+      <!--      </form>-->
     </div>
   </div>
 </div>
+
+<section class="container mt-5">
+  <div class="row">
+    {% for obj in qs %}
+    <div class="col s6 m3">
+      <form method="POST"> {% csrf_token %}
+        <input type="hidden" name="size" value="{{ obj.size }}">
+        {% if obj.image %}
+        <img src="{{ obj.image.url }}" class="responsive-img">
+        {% endif %}
+        <button type="submit" class="btn btn-outline-green">
+          {{ obj }}
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}

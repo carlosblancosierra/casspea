@@ -6,24 +6,22 @@
 
 {% block content %}
 
-<div class="container my-5 d-none d-md-block">
+{% include "base/inner-banner.html" %}
+
+
+<div class="container my-5">
+
   <div class="row">
-    <div class="col s12">
-      <h1>Shipping Address</h1>
+
+    <div class="col s12 center">
+      <h2 class="bold font-200 center">Shipping Addresses</h2>
     </div>
-  </div>
-</div>
 
-<div class="container">
-
-  <div class="row">
-
-    <div class="col s12 m6 px-4">
-      <form method="POST" action=""> {% csrf_token %}
-
-        <h4 class="text-lblue mt-0">
+    <div class="col s12 m6 px-4 mt-5">
+      <h4 class="mt-0 font-150 bold">
           {% if address %} Update {% else %} New {% endif %}Address
         </h4>
+      <form method="POST" action="" class="pr-md-5"> {% csrf_token %}
 
         <div class="input-field">
           <input id="full_name" type="text" class="" name="full_name"
@@ -62,16 +60,16 @@
         </div>
 
         <input type="hidden" value="{{ address.id }}" name="update_address_id">
-        <button type="submit" class="waves-effect waves-light btn bg-blue w-100 f text-capitalize">
-          {% if address %} Update {% else %} Add {% endif %} Address
+        <button type="submit" class="waves-effect waves-light btn btn-green w-100 f text-capitalize">
+          Save Address
         </button>
       </form>
 
     </div>
 
     {% if addresses %}
-    <div class="col s12 m6 px-4">
-      <h4 class="">Saved Addresses</h4>
+    <div class="col s12 m6 px-4 mt-5">
+      <h4 class="mt-0 font-150 bold">Saved Addresses</h4>
       <div class="row">
         {% for address in addresses %}
         <div class="col s12 m6">
@@ -86,8 +84,8 @@
                 <p class="m-0 p-0"><strong>Postal Code:</strong> {{ address.postal_code }}</p>
                 <input type="hidden" name="reuse_address_id" value="{{ address.id }}">
                 <button type="submit"
-                        class="waves-effect waves-light btn bg-blue w-100 f text-capitalize mt-3">
-                  Use Address
+                        class="waves-effect waves-light btn btn-green w-100 f text-capitalize mt-3">
+                  Use this address
                 </button>
               </div>
             </form>
@@ -96,7 +94,7 @@
               <input type="hidden" name="delete_address_id" value="{{ address.id }}">
               <p class="">
                 <button type="submit" class="w-100">
-                  Delete address
+                  Delete
                 </button>
               </p>
 

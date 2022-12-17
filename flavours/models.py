@@ -1,7 +1,13 @@
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
+
+
 # Create your models here.
+
+class FlavourManager(models.Manager):
+    def active(self):
+        return self.filter(active=True)
 
 
 class Flavour(models.Model):
@@ -13,6 +19,11 @@ class Flavour(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
+
+    objects = FlavourManager()
 
 
 class PreBuildFlavour(models.Model):

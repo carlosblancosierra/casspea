@@ -85,6 +85,34 @@ class CartEntryManager(models.Manager):
             return True
         return False
 
+    def cart_subtotal(self, request):
+        entries = self.entries(request)
+        total = 0
+        for entry in entries:
+            subtotal = entry.total
+            total += subtotal
+        return total
+
+    def shipping_free(self, request):
+        cart_subtotal = self.cart_subtotal(request)
+        if cart_subtotal >= 45:
+            return True
+        else:
+            return False
+
+    def cart_shipping_cost(self, request):
+        if self.shipping_free(request):
+            return 0.00
+        else:
+            return 5.99
+
+    def cart_total(self, request):
+        cart_subtotal = float(self.cart_subtotal(request))
+        cart_shipping_cost = float(self.cart_shipping_cost(request))
+        total = cart_subtotal + cart_shipping_cost
+
+        return round(total, 2)
+
     #
     # def new_or_update(self, request, sku_product_id, quantity):
     #
@@ -152,7 +180,7 @@ class CartEntry(models.Model):
     product = GenericForeignKey('content_type', 'object_id')
 
     cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE)
-    total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    # total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
 
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -163,9 +191,6 @@ class CartEntry(models.Model):
     def __str__(self):
         return "{}".format(self.id)
 
-
-def pre_save_entry_receiver(sender, instance, *args, **kwargs):
-    pass
-
-
-pre_save.connect(pre_save_entry_receiver, sender=CartEntry)
+    @property
+    def total(self):
+        return self.product.price * self.quantity

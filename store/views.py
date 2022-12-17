@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from flavours.models import PreBuildFlavour
+from flavours.models import PreBuildFlavour, Flavour
 
 from boxes.models import Box, BoxSize
 from carts.models import CartEntry
@@ -15,7 +15,11 @@ def home_page(request):
         if size:
             return redirect("store:boxes", size=size)
 
+    qs = BoxSize.objects.active()
+
     context = {
+        "title": "PICK YOUR BOX",
+        "qs": qs,
     }
 
     return render(request, "store/home.html", context)
@@ -23,14 +27,22 @@ def home_page(request):
 
 def box_page(request, size=None):
     prebuilds = PreBuildFlavour.objects.filter(active=True)
+    flavours = Flavour.objects.active()
+    box_size_qs = BoxSize.objects.filter(size=size)
+
+    box_obj = None
+    if len(box_size_qs) == 1:
+        box_obj = box_size_qs.first()
 
     context = {
         "size": size,
-        "flavours": FLAVOURS,
+        "flavours": flavours,
         "prebuilds": prebuilds,
         "PRE_BUILT": Box.PRE_BUILT,
         "PICK_AND_MIX": Box.PICK_AND_MIX,
         "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
+        "title": "BOXES",
+        "box_obj": box_obj,
     }
 
     return render(request, "store/box.html", context)

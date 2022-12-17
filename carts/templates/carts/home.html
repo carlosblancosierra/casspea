@@ -14,22 +14,17 @@
 {% url 'carts:home' as cart_url %}
 
 
-
-<section class="container">
-  <div class="row">
-    <div class="col s12">
-      <h1>Cart</h1>
-    </div>
-  </div>
-</section>
+{% include "base/inner-banner.html" %}
 
 {% if empty %}
-<section>
+<section class="mt-5">
   <div class="container">
     <div class="row">
       <div class="col s12">
-        <p>Empty Cart, Add something</p>
-        <p><a href="{{ store_home_url }}" class="btn btn-primary">Store</a></p>
+        <p class="center">Empty Cart, Add something</p>
+        <p class="center">
+          <a href="{{ store_home_url }}" class="btn-large btn-orange">Store</a>
+        </p>
       </div>
     </div>
   </div>
@@ -37,17 +32,20 @@
 
 {% elif not empty %}
 
-<section class="container">
+<section class="container mt-5">
   <div class="row">
     <div class="col s12">
 
       <table>
         <thead>
         <tr>
-          <th>Item</th>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Delete</th>
+          <th></th>
+          <th></th>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
+          <th></th>
         </tr>
         </thead>
 
@@ -55,10 +53,16 @@
         {% for obj in entries %}
 
         <tr>
-
+          <td></td>
+          <td>
+            {% if obj.product.image %}
+            <img src="{{ obj.product.image.url }}" width="150px">
+            {% endif %}
+          </td>
           <td>{{ obj.product.size }}</td>
-          <td>{{ obj.product.get_flavour_format_display }}: {{ obj.product.pre_built }}</td>
+          <td>{{ obj.product.price }}</td>
           <td>{{ obj.quantity }}</td>
+          <td>£{{ obj.total }} GBP</td>
           <td>
             <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
               <input type="hidden" value="{{ obj.id }}" name="obj_id">
@@ -68,14 +72,48 @@
         </tr>
         {% endfor %}
 
+        <tr>
+          <td colspan="4"></td>
+          <td>Total:</td>
+          <td>£{{ total }} GBP</td>
+        </tr>
+
 
         </tbody>
       </table>
-
-      <p><a href="{{ address_url }}">Checkout</a></p>
+      <p class="left">
+        <a class="btn btn-green px-5" href="{{ store_home_url }}">Continue Shopping</a>
+      </p>
 
     </div>
   </div>
+</section>
+
+<section class="container">
+  <form method="POST"> {% csrf_token %}
+    <div class="row">
+      <div class="col s12 m6">
+        <h4 class="font-150 bold">Gift Message</h4>
+        <div class="input-field">
+          <textarea id="gift_message"
+                    name="gift_message"
+                    class="materialize-textarea browser-default"
+                    data-length="120"
+                    rows="2"
+          >{% if gift_message %}{{ gift_message }}{% endif %}
+          </textarea>
+          <label for="gift_message">Add your Message (optional)</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <p class="right">
+          <button type="submit" class="btn btn-orange px-5">Proceed to Checkout</button>
+        </p>
+      </div>
+    </div>
+  </form>
 </section>
 
 {% endif %}

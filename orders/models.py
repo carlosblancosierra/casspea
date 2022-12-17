@@ -18,11 +18,13 @@ STATUS_CHOICES = (
 
 class Order(models.Model):
     order_id = models.CharField(max_length=120, blank=True, null=True)
+    gift_message = models.CharField(max_length=500, blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     shipping_address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=120, blank=True, default="created", choices=STATUS_CHOICES)
     payment_status = models.CharField(max_length=120, blank=True)
-    total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    # total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    # shipping_cost = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
     stripe_data = models.TextField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -52,6 +54,33 @@ class Order(models.Model):
 
     def get_absolute_url(self):
         return f"/orders/{self.order_id}"
+
+    @property
+    def subtotal(self):
+        entries = self.cart_entries.all()
+        subtotal = 0
+        for entry in entries:
+            subtotal += entry.total
+        return subtotal
+
+    @property
+    def shipping_free(self):
+        subtotal = self.subtotal
+        if subtotal >= 45:
+            return True
+        else:
+            return False
+
+    @property
+    def shipping_cost(self):
+        if self.shipping_free:
+            return 0
+        else:
+            return 5.99
+
+    @property
+    def total(self):
+        return round(float(self.subtotal) + float(self.shipping_cost),2)
 
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):

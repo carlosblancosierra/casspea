@@ -8,42 +8,28 @@
 
 {% url 'orders:address' as order_address_url %}
 {% url 'orders:checkout-session' as checkout_session_url %}
+{% url 'carts:home' as cart_url %}
 
-<div class="container my-5 d-none d-md-block">
-  <div class="row">
-    <div class="col s12">
-      <h1 class="center">Confirm Order</h1>
-    </div>
-  </div>
-</div>
+{% include "base/inner-banner.html" %}
 
-<div class="container my-5 d-md-none">
-  <div class="row">
-    <div class="col s12">
-      <h1 class="text-lblue font-200 center">Confirmar orden</h1>
-      <div class="col s12">
-        <div class="progress bg-lblue2">
-          <div class="determinate bg-lblue" style="width: 100%"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
+<section class="container mt-3 mb-5">
 
   <div class="row">
 
-    <div class="col s12 m12 px-md-4">
-      <h4 class="text-lblue">Products</h4>
+    <div class="col s12 m12">
+      <h1 class="bold font-200 center">Confirm Order</h1>
+
+      <h4 class="bold font-150">Products</h4>
 
       <table>
         <thead>
         <tr>
-          <th>Item</th>
-          <th>Description</th>
-          <th>Quantity</th>
-          <th>Delete</th>
+          <th></th>
+          <th></th>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
         </tr>
         </thead>
 
@@ -51,16 +37,16 @@
         {% for obj in entries %}
 
         <tr>
-
-          <td>{{ obj.product.size }}</td>
-          <td>{{ obj.product.get_flavour_format_display }}: {{ obj.product.pre_built }}</td>
-          <td>{{ obj.quantity }}</td>
+          <td></td>
           <td>
-            <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
-              <input type="hidden" value="{{ obj.id }}" name="obj_id">
-              <button type="submit">X</button>
-            </form>
+            {% if obj.product.image %}
+            <img src="{{ obj.product.image.url }}" width="150px">
+            {% endif %}
           </td>
+          <td>{{ obj.product.size }}</td>
+          <td>{{ obj.product.price }}</td>
+          <td>{{ obj.quantity }}</td>
+          <td>£{{ obj.total }} GBP</td>
         </tr>
         {% endfor %}
 
@@ -68,11 +54,12 @@
         </tbody>
       </table>
 
-    </div>
-    <div class="col s12 m12 px-4">
-      <h4 class="text-lblue">Shipping Address</h4>
 
-      <div class="card cart-card p-3">
+    </div>
+    <div class="col s12 m6 ">
+      <h4 class="font-150 bold">Shipping Address</h4>
+
+      <div class="">
         <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
         <p class="m-0 p-0">
           {{ address.street }},
@@ -80,29 +67,53 @@
           {{ address.country }},
           {{ address.postal_code }}.
         </p>
-        <a class="cart-qty-link" href="{{ order_address_url }}">Update</a>
-
+        <a class="btn btn-green mt-3" href="{{ order_address_url }}">Update</a>
       </div>
 
-      <h4 class="text-lblue mt-4">Summary</h4>
+      <h4 class="font-150 bold">Gift Message</h4>
 
-      <div class="card cart-card px-5">
-        <div class="row font-weight-bold p-0">
+      <p class="mt-2">
+        {% if gift_message %}{{ gift_message }}{% else %} None {% endif %}
+      </p>
+      <a class="btn btn-green mt-1" href="{{ cart_url }}">
+        {% if gift_message %}Change{% else %} Add {% endif %}
+        Message
+      </a>
+
+    </div>
+    <div class="col s12 m6 px-4">
+
+      <h4 class="mt-4 font-150 bold">Summary</h4>
+
+      <div class="">
+        <div class="row p-0">
           <div class="col s6">
-            <p class="font-150 mt-2">Total:</p>
+            <p class="font-100 mt-2">Shipping:</p>
           </div>
           <div class="col s6">
-            <p class="text-right font-150 mt-2">${{ total }}</p>
+            <p class="text-right font-100 mt-2">
+              {% if shipping_free %}
+              Free
+              {% else %}
+              £{{ shipping_cost }} GBP
+              {% endif %}
+            </p>
+          </div>
+          <div class="col s6">
+            <p class="font-100 mt-2 font-150 bold">Total:</p>
+          </div>
+          <div class="col s6">
+            <p class="text-right font-150 mt-2 bold">£{{ total }} GBP</p>
           </div>
         </div>
+        <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
+          <button class="waves-effect waves-light btn-large btn-orange w-100 text-capitalize font-150"
+                  type="submit" id="checkout-button">Proceed to Payment
+          </button>
+        </form>
       </div>
-
-      <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
-        <button class="waves-effect waves-light btn-large bg-blue w-100 text-capitalize font-150"
-                type="submit" id="checkout-button">Checkout</button>
-      </form>
     </div>
   </div>
-</div>
+</section>
 
 {% endblock %}
