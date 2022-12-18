@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from flavours.models import PreBuildFlavour, Flavour
+from flavours.models import PreBuildFlavour, Flavour, FlavourChoice
 
 from boxes.models import Box, BoxSize
 from carts.models import CartEntry
@@ -56,33 +56,48 @@ def add_box_to_cart(request):
         # get box data
         size = form.get('size', None)
         flavour_format = form.get(FLAVOUR_FORMAT, None)
-        print(flavour_format)
-        pre_built = form.get(Box.PRE_BUILT, None)
 
         # Check if Size obj exists
         if not size:
             return redirect('store:home')
         size_qs = BoxSize.objects.filter(active=True, size=size)
-        print(size_qs)
 
         if len(size_qs) is not 1:
             return redirect('store:home')
         size_obj = size_qs.first()
 
-        # Check if Prebuilt obj exists
-        if not pre_built:
+        if flavour_format == Box.PRE_BUILT:
+            selected_prebuilts = []
+            prebuilds = PreBuildFlavour.objects.filter(active=True)
+            for obj in prebuilds:
+                selected = form.get(obj.slug, None)
+                if selected:
+                    selected_prebuilts.append(obj)
+
+            # create box
+            new_box = Box(size=size_obj, flavour_format=flavour_format)
+            new_box.save()
+            new_box.selected_prebuilts.set(selected_prebuilts)
+
+        elif flavour_format == Box.PICK_AND_MIX:
+            flavours = Flavour.objects.active()
+            selected_flavours = []
+            for obj in flavours:
+                quantity = form.get(obj.slug, 0)
+                print(obj.slug, quantity)
+
+                if int(quantity) > 0:
+                    flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
+                    flavour_choice_obj.save()
+                    selected_flavours.append(flavour_choice_obj)
+
+            print(selected_flavours)
+
+            new_box = Box(size=size_obj, flavour_format=flavour_format)
+            new_box.save()
+            new_box.selected_flavours.set(selected_flavours)
+        else:
             return redirect('store:home')
-        pre_built_qs = PreBuildFlavour.objects.filter(active=True, slug=pre_built)
-        print(pre_built_qs)
-
-        if len(pre_built_qs) != 1:
-            return redirect('store:home')
-
-        pre_built_obj = pre_built_qs.first()
-
-        # create box
-        new_box = Box(size=size_obj, flavour_format=flavour_format, pre_built=pre_built_obj)
-        new_box.save()
 
         # create entry
         box_quantity = form.get('box_quantity', None)
@@ -90,7 +105,6 @@ def add_box_to_cart(request):
         print("cart_entry")
         print(cart_entry)
 
-    context = {}
     return redirect('carts:home')
 
 

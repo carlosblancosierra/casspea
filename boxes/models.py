@@ -3,7 +3,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from imagekit.models import ImageSpecField
 
-from flavours.models import PreBuildFlavour
+from flavours.models import PreBuildFlavour, FlavourChoice
 
 
 # Create your models here.
@@ -67,7 +67,8 @@ class Box(models.Model):
     size = models.ForeignKey(BoxSize, on_delete=models.PROTECT, null=True)
     flavour_format = models.CharField(max_length=30, choices=FLAVOURS_FORMAT_CHOICES, default=PRE_BUILT)
     pre_built = models.ForeignKey(PreBuildFlavour, on_delete=models.PROTECT, null=True)
-    # flavours = models.ManyToManyField(FlavourEntrySelection)
+    selected_prebuilts = models.ManyToManyField(PreBuildFlavour, blank=True, related_name="selected_prebuilts")
+    selected_flavours = models.ManyToManyField(FlavourChoice, blank=True, related_name="selected_flavours")
 
     price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 

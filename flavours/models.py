@@ -26,6 +26,17 @@ class Flavour(models.Model):
     objects = FlavourManager()
 
 
+class FlavourChoice(models.Model):
+    flavour = models.ForeignKey(Flavour, on_delete=models.PROTECT)
+    quantity = models.PositiveIntegerField()
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return "{} of {}".format(self.quantity, self.flavour)
+
+
 class PreBuildFlavour(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(unique=True, blank=True, max_length=255)
