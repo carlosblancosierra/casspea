@@ -181,7 +181,7 @@ class CreateCheckoutSessionView(View):
         customer_email = request.user.email
 
         # send order id to stripe
-        domain = "https://casspea.co.uk"
+        domain = "https://www.casspea.co.uk/"
         if settings.STATIC_LOCAL:
             domain = "http://127.0.0.1:9000"
         checkout_session = stripe.checkout.Session.create(
