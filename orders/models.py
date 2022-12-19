@@ -23,8 +23,7 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=120, blank=True, default="created", choices=STATUS_CHOICES)
     payment_status = models.CharField(max_length=120, blank=True)
-    # total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
-    # shipping_cost = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    delivery_date = models.DateField(verbose_name="Delivery Date", null=True)
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
     stripe_data = models.TextField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)
@@ -80,7 +79,7 @@ class Order(models.Model):
 
     @property
     def total(self):
-        return round(float(self.subtotal) + float(self.shipping_cost),2)
+        return round(float(self.subtotal) + float(self.shipping_cost), 2)
 
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):

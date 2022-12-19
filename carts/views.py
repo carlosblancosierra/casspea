@@ -8,6 +8,8 @@ def home_page(request):
     entries = CartEntry.objects.entries(request)
     empty = CartEntry.objects.empty_cart(request)
     gift_message = request.session.get('gift_message', None)
+    delivery_date = request.session.get("delivery_date", None)
+
     total = 0
     if not empty:
         for entry in entries:
@@ -18,6 +20,10 @@ def home_page(request):
         gift_message = request.POST.get('gift_message', None)
         request.session['gift_message'] = gift_message
 
+        delivery_date = request.POST.get('delivery_date', None)
+        request.session['delivery_date'] = delivery_date
+        print("delivery_date:", delivery_date)
+
         return redirect('orders:address')
 
     context = {
@@ -25,7 +31,8 @@ def home_page(request):
         "empty": empty,
         "entries": entries,
         "total": total,
-        "gift_message": gift_message
+        "gift_message": gift_message,
+        "delivery_date": delivery_date,
     }
 
     return render(request, "carts/home.html", context)

@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from carts.models import Cart, CartEntry
-from addresses.models import Address
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseForbidden
 from django.contrib import messages
@@ -10,9 +9,11 @@ from django.conf import settings
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-
+import datetime
 from .models import Order, STATUS_CHOICES
 
+from carts.models import Cart, CartEntry
+from addresses.models import Address
 import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -116,6 +117,8 @@ def address_page(request):
 def confirm_page(request):
     address_id = request.session.get("address_id", None)
     gift_message = request.session.get("gift_message", None)
+    delivery_date = request.session.get("delivery_date", None)
+
     entries = CartEntry.objects.entries(request)
 
     if not entries.exists():
@@ -140,6 +143,7 @@ def confirm_page(request):
         "shipping_free": shipping_free,
         "gift_message": gift_message,
         "shipping_cost": shipping_cost,
+        "delivery_date": delivery_date,
     }
 
     return render(request, "orders/confirm.html", context)
@@ -158,9 +162,16 @@ class CreateCheckoutSessionView(View):
         elif len(shipping_address_qs) == 1:
             shipping_address = shipping_address_qs.first()
 
+        delivery_date = request.session.get("delivery_date", None)
+        delivery_date_obj = None
+        if delivery_date:
+            delivery_date_obj = datetime.datetime.strptime('Dec 28, 2022', '%b %d, %Y')
+            delivery_date_obj = delivery_date_obj.date()
+
         order = Order(user=request.user,
                       shipping_address=shipping_address,
-                      gift_message=gift_message
+                      gift_message=gift_message,
+                      delivery_date=delivery_date_obj
                       )
 
         order.save()

@@ -88,6 +88,16 @@
         <a class="btn btn-green mt-3" href="{{ order_address_url }}">Update</a>
       </div>
 
+      <h4 class="font-150 bold">Delivery Date</h4>
+
+      <p class="mt-2">
+        {% if delivery_date %}{{ delivery_date }}{% else %} ASAP {% endif %}
+      </p>
+      <a class="btn btn-green mt-1" href="{{ cart_url }}#gift-message-form">
+        {% if delivery_date %}Change{% else %} Add {% endif %}
+        Delivery Date
+      </a>
+
       <h4 class="font-150 bold">Gift Message</h4>
 
       <p class="mt-2">
