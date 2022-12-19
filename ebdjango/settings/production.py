@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-5=%aj2n#y80$(#k0*=s5hnlqob#sw&3#l4jv^0u5!nzr%syj#k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 STATIC_LOCAL = False
+STRIPE_TEST = True
 
 
 ALLOWED_HOSTS = ['casspea.herokuapp.com',
