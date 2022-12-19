@@ -17,8 +17,8 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
-endpoint_secret = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
-
+endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
+endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'
 
 
 # from .emails import nueva_orden_mail_staff, nueva_orden_mail_client
@@ -182,8 +182,36 @@ class CreateCheckoutSessionView(View):
 
         # send order id to stripe
         domain = "https://www.casspea.co.uk"
-        # if settings.STATIC_LOCAL:
-        #     domain = "http://127.0.0.1:9000"
+        if settings.STATIC_LOCAL:
+            domain = "http://127.0.0.1:9000"
+
+        shipping_free = {
+            "shipping_rate_data": {
+                "type": "fixed_amount",
+                "fixed_amount": {"amount": 0, "currency": "gbp"},
+                "display_name": "Free shipping",
+                # "delivery_estimate": {
+                #     "minimum": {"unit": "business_day", "value": 5},
+                #     "maximum": {"unit": "business_day", "value": 7},
+                # },
+            },
+        }
+
+        shipping_basic = {
+            "shipping_rate_data": {
+                "type": "fixed_amount",
+                "fixed_amount": {"amount": 599, "currency": "gbp"},
+                "display_name": "Free shipping",
+                # "delivery_estimate": {
+                #     "minimum": {"unit": "business_day", "value": 5},
+                #     "maximum": {"unit": "business_day", "value": 7},
+                # },
+            },
+        }
+
+        shipping_options = [shipping_basic]
+        if order.shipping_free:
+            shipping_options = [shipping_free]
 
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -191,6 +219,7 @@ class CreateCheckoutSessionView(View):
             customer_email=customer_email,
             currency='GBP',
             mode='payment',
+            shipping_options=shipping_options,
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
@@ -206,6 +235,12 @@ def my_webhook_view(request):
 
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
+
+    endpoint_secret = endpoint_secret_test
+    if settings.STRIPE_TEST:
+        endpoint_secret = endpoint_secret_live
+    elif settings.STATIC_LOCAL:
+        endpoint_secret = endpoint_secret_local
 
     try:
         event = stripe.Webhook.construct_event(
