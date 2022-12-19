@@ -23,11 +23,15 @@
     </ul>
 
     <ul class="sidenav" id="mobile-demo">
-      <a href="/" class="responsive-img mt-5"><img src="{% static 'images/main-logo.png' %}" width="60px"/></a>
+      <a href="/" class="responsive-img mt-5"><img src="{% static 'images/casspea-pink-logo.png' %}"
+                                                   class="responsive-img"/></a>
 
       <li><a href="/">Home</a></li>
-      <li><a href="https://store.casspea.co.uk/">Store</a></li>
-      <li><a href="https://landing.casspea.co.uk/flavours-casspea">Flavours</a></li>
+      <li><a href="{{ store_url }}">Store</a></li>
+      <li><a href="{{ flavours_url }}">Flavours</a></li>
+      <li><a href="{{ contact_url }}">Contact Us</a></li>
+      <li><a href="{{ about_url }}">About Us</a></li>
+      <li><a href="{{ cart_url }}" class="btn btn-orange">Cart</a></li>
     </ul>
 
   </div>

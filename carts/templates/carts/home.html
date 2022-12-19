@@ -42,9 +42,10 @@
           <th></th>
           <th></th>
           <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>TOTAL</th>
+          <th class="d-none d-md-table-cell">PRICE</th>
+          <th class="d-none d-md-table-cell">QUANTITY</th>
+          <th class="d-none d-md-table-cell">TOTAL</th>
+          <th class="d-md-none">DETAILS</th>
           <th></th>
         </tr>
         </thead>
@@ -56,7 +57,8 @@
           <td></td>
           <td>
             {% if obj.product.image %}
-            <img src="{{ obj.product.image.url }}" width="150px">
+            <img src="{{ obj.product.image.url }}" width="150px" class="d-none d-md-table-cell">
+            <img src="{{ obj.product.image.url }}" width="50px" class="d-md-none">
             {% endif %}
           </td>
           <td>
@@ -71,9 +73,17 @@
               {% endfor %}
             </ul>
           </td>
-          <td>{{ obj.product.price }}</td>
-          <td>{{ obj.quantity }}</td>
-          <td>£{{ obj.total }} GBP</td>
+          <td class="d-none d-md-table-cell">{{ obj.product.price }}</td>
+          <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
+          <td class="d-none d-md-table-cell">£{{ obj.total }} GBP</td>
+          <td class="d-md-none">
+            <span class="bold">Price:</span><br>
+            {{ obj.product.price }}<br>
+            <span class="bold">Quantity:</span><br>
+            {{ obj.quantity }}<br>
+            <span class="bold">Total:</span><br>
+            £{{ obj.total }} GBP
+          </td>
           <td>
             <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
               <input type="hidden" value="{{ obj.id }}" name="obj_id">
@@ -84,7 +94,8 @@
         {% endfor %}
 
         <tr>
-          <td colspan="4"></td>
+          <td colspan="2" class="d-md-none"></td>
+          <td colspan="4" class="d-none d-md-table-cell"></td>
           <td>Total:</td>
           <td>£{{ total }} GBP</td>
         </tr>
