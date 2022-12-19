@@ -167,6 +167,7 @@ class CreateCheckoutSessionView(View):
         order.cart_entries.set(cart_entries)
         order_id = order.order_id
 
+        request.session['cart_id'] = None
         request.session['address_id'] = None
         request.session['gift_message'] = None
         request.session['order_id'] = order_id
@@ -235,11 +236,11 @@ def my_webhook_view(request):
         order.payment_status = session['payment_status']
         order.save()
 
-        order_entries = order.cart_entries
-        if len(order_entries) > 0:
-            cart = order_entries.first().cart
-            cart.active = False
-            cart.save()
+        # order_entries = order.cart_entries.all()
+        # if len(order_entries) > 0:
+        #     cart = order_entries.first().cart
+        #     cart.active = False
+        #     cart.save()
 
     return HttpResponse(status=200)
 
