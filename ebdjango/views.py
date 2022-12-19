@@ -6,3 +6,10 @@ def home_page(request):
     }
 
     return render(request, "home.html", context)
+
+
+def contact_us_page(request):
+    context = {
+    }
+
+    return render(request, "contact_us.html", context)

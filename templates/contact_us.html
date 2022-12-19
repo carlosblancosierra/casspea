@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Contact Us{% endblock %}
+{% block content %}
+
+{% url 'store:home' as store_url %}
+{% include "base/inner-banner.html" %}
+
+<section class="container my-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="font-200 bold center my-purple-text">CONTACT US</h1>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col s12 m6">
+      <i class="material-icons my-eblue-text font-200 mt-2">phone</i>
+      <p class="font-150 d-inline ml-2">07859790386</p>
+    </div>
+    <div class="col s12 m6">
+      <i class="material-icons my-eblue-text font-200 mt-2">email</i>
+      <p class="font-150 d-inline ml-2">info@casspea.co.uk</p>
+    </div>
+
+    <div class="col s12 mt-5">
+      <div class="row">
+        <form class="col s12" method="POST">{% csrf_token %}
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="name" type="text" name="name" required>
+              <label for="name">Name</label>
+            </div>
+
+            <div class="input-field col s6">
+              <input id="email" type="email" class="validate" required>
+              <label for="email">Email</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <input id="phone" type="text" name="phone">
+              <label for="phone">Phone</label>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="message" class="materialize-textarea" required></textarea>
+              <label for="message">Message</label>
+            </div>
+            <button type="submit" class="btn-large btn-green font-150 right">Send Message</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
