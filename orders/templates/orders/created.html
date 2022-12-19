@@ -71,36 +71,42 @@
 
       <h4 class="mt-4 font-150 bold">Summary</h4>
 
-      <div class="">
-        <div class="row p-0">
-          {% if gift_message %}
-          <div class="col s6">
-            <p class="font-100 mt-2">Gift Message:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-100 mt-2">
-              {{ gift_message }}
-            </p>
-          </div>
-          {% endif %}
-          <div class="col s6">
-            <p class="font-100 mt-2">Shipping:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-100 mt-2">
-              {% if order.shipping_free %}
-              Free
-              {% else %}
-              £{{ order.shipping_cost }} GBP
-              {% endif %}
-            </p>
-          </div>
-          <div class="col s6">
-            <p class="font-100 mt-2 font-150 bold">Total:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
-          </div>
+      <div class="row p-0">
+
+        {% if gift_message %}
+        <div class="col s6">
+          <p class="font-100 mt-2">Gift Message:</p>
+        </div>
+        <div class="col s6">
+          <p class="text-right font-100 mt-2">
+            {{ gift_message }}
+          </p>
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="row p-0">
+        <div class="col s6">
+          <p class="font-100 mt-2">Shipping:</p>
+        </div>
+
+        <div class="col s6">
+          <p class="text-right font-100 mt-2">
+            {% if order.shipping_free %}
+            Free
+            {% else %}
+            £{{ order.shipping_cost }} GBP
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      <div class="row p-0">
+        <div class="col s6">
+          <p class="font-100 mt-2 font-150 bold">Total:</p>
+        </div>
+        <div class="col s6">
+          <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
         </div>
       </div>
 
