@@ -9,139 +9,165 @@
 {% url 'orders:address' as order_address_url %}
 {% url 'orders:checkout-session' as checkout_session_url %}
 {% url 'carts:home' as cart_url %}
+{% url 'store:remove_boxes' as remove_boxes_url %}
+
 
 {% include "base/inner-banner.html" %}
 
 <section class="container mt-3 mb-5">
-
   <div class="row">
+    <div class="col s12 l10 offset-l1">
+      <div class="row">
 
-    <div class="col s12 m12">
-      <h1 class="bold font-200 center">Confirm Order</h1>
+        <div class="col s12 m12">
+          <h1 class="bold font-200 center">Confirm Order</h1>
 
-      <h4 class="bold font-150">Products</h4>
+          <h4 class="bold font-150">Products</h4>
 
-      <table>
-        <thead>
-        <tr>
-          <th></th>
-          <th></th>
-          <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>TOTAL</th>
-        </tr>
-        </thead>
+          <table>
+            <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>PRODUCT</th>
+              <th>PRICE</th>
+              <th>QUANTITY</th>
+              <th>TOTAL</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        {% for obj in entries %}
+            <tbody>
+            {% for obj in entries %}
 
-        <tr>
-          <td></td>
-          <td>
-            {% if obj.product.image %}
-            <img src="{{ obj.product.image.url }}" width="150px">
-            {% endif %}
-          </td>
-          <td>
-            <p class="bold">{{ obj.product.size }}</p>
-            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
-            <ul class="m-0">
-              {% for obj in obj.product.selected_prebuilts.all %}
-              <li class="m-0">{{ obj }}</li>
-              {% endfor %}
-              {% for obj in obj.product.selected_flavours.all %}
-              <li class="m-0">{{ obj }}</li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td>{{ obj.product.price }}</td>
-          <td>{{ obj.quantity }}</td>
-          <td>£{{ obj.total }} GBP</td>
-          <td>
-            <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
-              <input type="hidden" value="{{ obj.id }}" name="obj_id">
-              <button type="submit">X</button>
-            </form>
-          </td>
-        </tr>
+            <tr>
+              <td></td>
+              <td>
+                {% if obj.product.image %}
+                <img src="{{ obj.product.image.url }}" width="150px">
+                {% endif %}
+              </td>
+              <td>
+                <p class="bold">{{ obj.product.size }}</p>
+                <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
+                <ul class="m-0">
+                  {% for obj in obj.product.selected_prebuilts.all %}
+                  <li class="m-0">{{ obj }}</li>
+                  {% endfor %}
+                  {% for obj in obj.product.selected_flavours.all %}
+                  <li class="m-0">{{ obj }}</li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td>{{ obj.product.price }}</td>
+              <td>{{ obj.quantity }}</td>
+              <td>£{{ obj.total }} GBP</td>
+              <td>
+                <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
+                  <input type="hidden" value="{{ obj.id }}" name="obj_id">
+                  <button type="submit">X</button>
+                </form>
+              </td>
+            </tr>
 
-        {% endfor %}
-
-
-        </tbody>
-      </table>
+            {% endfor %}
 
 
-    </div>
-    <div class="col s12 m6 ">
-      <h4 class="font-150 bold">Shipping Address</h4>
+            </tbody>
+          </table>
 
-      <div class="">
-        <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
-        <p class="m-0 p-0">
-          {{ address.street }},
-          {{ address.city }},
-          {{ address.country }},
-          {{ address.postal_code }}.
-        </p>
-        <a class="btn btn-green mt-3" href="{{ order_address_url }}">Update</a>
-      </div>
 
-      <h4 class="font-150 bold">Delivery Date</h4>
+        </div>
+        <div class="col s12 m6 ">
+          <h4 class="font-150 bold">Shipping Address</h4>
 
-      <p class="mt-2">
-        {% if delivery_date %}{{ delivery_date }}{% else %} ASAP {% endif %}
-      </p>
-      <a class="btn btn-green mt-1" href="{{ cart_url }}#gift-message-form">
-        {% if delivery_date %}Change{% else %} Add {% endif %}
-        Delivery Date
-      </a>
-
-      <h4 class="font-150 bold">Gift Message</h4>
-
-      <p class="mt-2">
-        {% if gift_message %}{{ gift_message }}{% else %} - {% endif %}
-      </p>
-      <a class="btn btn-green mt-1" href="{{ cart_url }}#gift-message-form">
-        {% if gift_message %}Change{% else %} Add {% endif %}
-        Message
-      </a>
-
-    </div>
-    <div class="col s12 m6 px-4">
-
-      <h4 class="mt-4 font-150 bold">Summary</h4>
-
-      <div class="">
-        <div class="row p-0">
-          <div class="col s6">
-            <p class="font-100 mt-2">Shipping:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-100 mt-2">
-              {% if shipping_free %}
-              Free
-              {% else %}
-              £{{ shipping_cost }} GBP
-              {% endif %}
+          <div class="">
+            <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
+            <p class="m-0 p-0">
+              {{ address.street }},
+              {{ address.city }},
+              {{ address.country }},
+              {{ address.postal_code }}.
             </p>
+            <a class="btn btn-green mt-3" href="{{ order_address_url }}">Update</a>
           </div>
-          <div class="col s6">
-            <p class="font-100 mt-2 font-150 bold">Total:</p>
-          </div>
-          <div class="col s6">
-            <p class="text-right font-150 mt-2 bold">£{{ total }} GBP</p>
+
+          <h4 class="font-150 bold">Delivery Date</h4>
+
+          <p class="mt-2">
+            {% if delivery_date %}{{ delivery_date }}{% else %} ASAP {% endif %}
+          </p>
+          <a class="btn btn-green mt-1" href="{{ cart_url }}#gift-message-form">
+            {% if delivery_date %}Change{% else %} Add {% endif %}
+            Delivery Date
+          </a>
+
+          <h4 class="font-150 bold">Gift Message</h4>
+
+          <p class="mt-2">
+            {% if gift_message %}{{ gift_message }}{% else %} - {% endif %}
+          </p>
+          <a class="btn btn-green mt-1" href="{{ cart_url }}#gift-message-form">
+            {% if gift_message %}Change{% else %} Add {% endif %}
+            Message
+          </a>
+
+        </div>
+        <div class="col s12 m6 px-4">
+
+          <h4 class="mt-4 font-150 bold">Summary</h4>
+
+          <div class="row p-0">
+
+            <table>
+              <thead>
+              <tr>
+                <th>Item</th>
+                <th class="right">Subtotal</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr>
+                <td>Products</td>
+                <td class="right">£{{ subtotal }} GBP</td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="">Shipping</span>
+                  <br class="">*Free if order over £45 GBP
+
+                </td>
+                <td class="right">
+                  {% if shipping_free %}
+                  Free
+                  {% else %}
+                  £{{ shipping_cost }} GBP
+                  <br>
+                  {% endif %}
+                </td>
+              </tr>
+
+              <tr>
+                <td class="bold font-150">Total</td>
+                <td class="right bold font-150">£{{ total }} GBP</td>
+              </tr>
+
+
+              </tbody>
+            </table>
+
+
+            <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
+              <button class="waves-effect waves-light btn-large btn-orange w-100 text-capitalize font-150"
+                      type="submit" id="checkout-button">Proceed to Payment
+              </button>
+            </form>
           </div>
         </div>
-        <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
-          <button class="waves-effect waves-light btn-large btn-orange w-100 text-capitalize font-150"
-                  type="submit" id="checkout-button">Proceed to Payment
-          </button>
-        </form>
       </div>
     </div>
   </div>
+
 </section>
 
 {% endblock %}

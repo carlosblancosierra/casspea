@@ -10,11 +10,12 @@ def home_page(request):
     gift_message = request.session.get('gift_message', None)
     delivery_date = request.session.get("delivery_date", None)
 
-    total = 0
-    if not empty:
-        for entry in entries:
-            subtotal = entry.total
-            total += subtotal
+    subtotal = CartEntry.objects.cart_subtotal(request)
+    total = CartEntry.objects.cart_total(request)
+    shipping_cost = 5.99
+    shipping_free = CartEntry.objects.shipping_free(request)
+    if shipping_free:
+        shipping_cost = 0
 
     if request.POST:
         gift_message = request.POST.get('gift_message', None)
@@ -33,6 +34,9 @@ def home_page(request):
         "total": total,
         "gift_message": gift_message,
         "delivery_date": delivery_date,
+        "subtotal": subtotal,
+        "shipping_cost": shipping_cost,
+
     }
 
     return render(request, "carts/home.html", context)

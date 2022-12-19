@@ -124,6 +124,7 @@ def confirm_page(request):
     if not entries.exists():
         return redirect("carts:home")
 
+    subtotal = CartEntry.objects.cart_subtotal(request)
     total = CartEntry.objects.cart_total(request)
     shipping_cost = 5.99
     shipping_free = CartEntry.objects.shipping_free(request)
@@ -144,6 +145,7 @@ def confirm_page(request):
         "gift_message": gift_message,
         "shipping_cost": shipping_cost,
         "delivery_date": delivery_date,
+        "subtotal":subtotal,
     }
 
     return render(request, "orders/confirm.html", context)
