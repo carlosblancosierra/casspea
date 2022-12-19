@@ -62,7 +62,7 @@ def add_box_to_cart(request):
             return redirect('store:home')
         size_qs = BoxSize.objects.filter(active=True, size=size)
 
-        if len(size_qs) is not 1:
+        if len(size_qs) != 1:
             return redirect('store:home')
         size_obj = size_qs.first()
 
