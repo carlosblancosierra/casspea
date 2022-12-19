@@ -53,6 +53,9 @@ class BoxSize(models.Model):
 
     objects = BoxSizeManager()
 
+    class Meta:
+        ordering = ['size']
+
     def get_absolute_url(self):
         return f"/store/box/{self.size}"
 
