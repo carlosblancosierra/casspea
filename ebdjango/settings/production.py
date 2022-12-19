@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5=%aj2n#y80$(#k0*=s5hnlqob#sw&3#l4jv^0u5!nzr%syj#k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 STATIC_LOCAL = False
-STRIPE_TEST = True
+STRIPE_TEST = False
 
 ALLOWED_HOSTS = ['casspea.herokuapp.com',
                  'www.casspea.co.uk',
@@ -185,3 +185,5 @@ SECURE_SSL_REDIRECT = True
 
 STRIPE_PUBLIC_KEY = "pk_test_51MBMy0JiuFqKKcn6FsLlAE48ndzF9oruq219dkZArcnR6E0GN0Irv2X2ErvnPFbrgZyP1CP8Ay1hAdJNnnf7pa7Z00G3bxqyKY"
 STRIPE_SECRET_KEY = "sk_test_51MBMy0JiuFqKKcn69O4Fc8Sz7UpmLoRoaxXbqxwO8CD20P2craNClm173MKMwO7ZyyvblMfifmupuPgrWKycMV7p00qiMAW9aX"
+STRIPE_SECRET_KEY_LIVE = "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"
+STRIPE_PUBLIC_KEY_LIVE = "pk_live_51MBMy0JiuFqKKcn6HYrAh3qBJz7x1Ajr5aqcKNzuKVQkr8xSYMdJVlQAV6uZ25HYRJ6kEsRyivTezDroICC3VeBq00q7edrNzB"

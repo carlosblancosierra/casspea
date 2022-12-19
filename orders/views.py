@@ -16,7 +16,10 @@ from carts.models import Cart, CartEntry
 from addresses.models import Address
 import stripe
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+if settings.STRIPE_TEST:
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+else:
+    stripe.api_key = settings.STRIPE_SECRET_KEY_LIVE
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
 endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
 endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'

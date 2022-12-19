@@ -24,31 +24,31 @@
       <form method="POST" action="" class="pr-md-5"> {% csrf_token %}
 
         <div class="input-field">
-          <input id="full_name" type="text" class="" name="full_name"
+          <input id="full_name" type="text" class="" name="full_name" required
                  value="{{ address.full_name }}">
           <label for="full_name">Full Name</label>
         </div>
 
         <div class="input-field">
-          <input id="street" type="text" class="" name="street"
+          <input id="street" type="text" class="" name="street" required
                  value="{{ address.street }}">
           <label for="street">Street</label>
         </div>
 
         <div class="input-field">
-          <input id="tel" type="text" class="" name="tel"
+          <input id="tel" type="text" class="" name="tel" required
                  value="{{ address.tel }}">
           <label for="tel">Telephone</label>
         </div>
 
         <div class="input-field">
-          <input id="postal_code" type="text" class="" name="postal_code"
+          <input id="postal_code" type="text" class="" name="postal_code" required
                  value="{{ address.postal_code }}">
           <label for="postal_code">Postal Code</label>
         </div>
 
         <div class="input-field">
-          <input id="city" type="text" class="" name="city"
+          <input id="city" type="text" class="" name="city" required
                  value="{{ address.city }}">
           <label for="city">City</label>
         </div>
@@ -61,14 +61,14 @@
         <!--        </div>-->
 
         <div class="input-field">
-          <select name="country" id="country">
+          <select name="country" id="country" required class="browser-default">
             <option value="" disabled selected>Choose your country</option>
             <option value="England">England</option>
             <option value="Scotland">Scotland</option>
             <option value="Wales">Wales</option>
             <option value="Northern Ireland">Northern Ireland</option>
           </select>
-          <label for="country">Country</label>
+<!--          <label for="country">Country</label>-->
         </div>
 
         <input type="hidden" value="{{ address.id }}" name="update_address_id">
