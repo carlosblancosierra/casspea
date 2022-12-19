@@ -17,7 +17,7 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
-endpoint_secret = 'we_1MGdiaJiuFqKKcn6EWPUPtsx'
+endpoint_secret = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
 
 
 
