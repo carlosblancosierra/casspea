@@ -13,10 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -28,7 +26,6 @@ SECRET_KEY = 'django-insecure-5=%aj2n#y80$(#k0*=s5hnlqob#sw&3#l4jv^0u5!nzr%syj#k
 DEBUG = True
 STATIC_LOCAL = False
 STRIPE_TEST = True
-
 
 ALLOWED_HOSTS = ['casspea.herokuapp.com',
                  'www.casspea.co.uk',
@@ -50,6 +47,7 @@ INSTALLED_APPS = [
     'boxes',
     'carts',
     'flavours',
+    'lots',
     'orders',
     'store',
 ]
@@ -84,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ebdjango.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -96,11 +93,10 @@ DATABASES = {
 }
 
 import dj_database_url
+
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['CONN_MAX_AGE'] = 500
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -120,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -133,7 +128,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
