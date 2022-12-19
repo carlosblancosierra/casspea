@@ -17,7 +17,7 @@ import stripe
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
-endpoint_secret = 'we_1MGcn0JiuFqKKcn6GdHevuFV'
+endpoint_secret = 'we_1MGdiaJiuFqKKcn6EWPUPtsx'
 
 
 
@@ -182,8 +182,9 @@ class CreateCheckoutSessionView(View):
 
         # send order id to stripe
         domain = "https://www.casspea.co.uk"
-        if settings.STATIC_LOCAL:
-            domain = "http://127.0.0.1:9000"
+        # if settings.STATIC_LOCAL:
+        #     domain = "http://127.0.0.1:9000"
+
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=line_items,
@@ -200,8 +201,8 @@ class CreateCheckoutSessionView(View):
 @csrf_exempt
 def my_webhook_view(request):
     payload = request.body
-    if settings.STATIC_LOCAL:
-        endpoint_secret = endpoint_secret_local
+    # if settings.STATIC_LOCAL:
+    #     endpoint_secret = endpoint_secret_local
 
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
     event = None
