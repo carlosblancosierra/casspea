@@ -12,12 +12,10 @@ from .models import FLAVOURS, FLAVOUR_FORMAT
 # Create your views here.
 def home_page(request):
     qs = BoxSize.objects.active()
-    lots = LotSize.objects.active()
 
     context = {
         "title": "PICK YOUR BOX",
         "qs": qs,
-        "lots": lots,
     }
 
     return render(request, "store/home.html", context)

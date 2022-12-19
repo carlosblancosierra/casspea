@@ -117,12 +117,13 @@
             </div>
           </div>
           <div class="col s12 m6">
-            <h4 class="font-150 bold">Delivery Date</h4>
+            <h4 class="font-150 bold">Shipping Date</h4>
             <div class="input-field">
-              <input type="text" class="datepicker" name="delivery_date" id="delivery_date"
-                     value="{% if delivery_date %}{{ delivery_date }}{% endif %}"
+              <input type="text" class="datepicker" name="shipping_date" id="shipping_date"
+                     value="{% if shipping_date %}{{ shipping_date }}{% endif %}"
               >
-              <label for="delivery_date">Pick a date (optional)</label>
+              <label for="shipping_date">Pick a date (Leave Blank for ASAP)</label>
+              <p class="grey-text lighten-2">Usually delivers within 1-2 days from delivery </p>
             </div>
           </div>
         </div>

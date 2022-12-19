@@ -23,6 +23,11 @@
         Welcome to our flavours page, here we show you all the great flavours that we have. We also include allergenic
         information for your convenience. If you would like further information please click here.
       </p>
+      <p class="center">
+        <a class="text-underline my-orange-text" href="#allergen-table">View Allergen table</a>
+      </p>
+
+
     </div>
 
     {% for obj in qs %}
@@ -49,6 +54,15 @@
 
     {% endfor %}
   </div>
+</section>
+
+<section class="container my-5" id="allergen-table">
+  <div class="row">
+    <div class="col s12 l8 offset-l2">
+      <img src="{% static 'images/flavours/allergen-table.jpg' %}" alt="allergens" class="responsive-img">
+    </div>
+  </div>
+
 </section>
 
 {% endblock %}

@@ -20,6 +20,7 @@ class BoxSize(models.Model):
     size = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
     price_id = models.CharField(max_length=200, null=True, blank=True)
+    color = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     active = models.BooleanField(default=True)
 
@@ -54,6 +55,22 @@ class BoxSize(models.Model):
 
     def get_absolute_url(self):
         return f"/store/box/{self.size}"
+
+    def images(self):
+        images = []
+
+        if self.image:
+            images.append(self.image)
+        if self.image2:
+            images.append(self.image2)
+        if self.image3:
+            images.append(self.image3)
+        if self.image4:
+            images.append(self.image4)
+        if self.image5:
+            images.append(self.image5)
+
+        return images
 
 
 class Box(models.Model):

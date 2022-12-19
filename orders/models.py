@@ -23,7 +23,7 @@ class Order(models.Model):
     shipping_address = models.ForeignKey(Address, blank=True, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=120, blank=True, default="created", choices=STATUS_CHOICES)
     payment_status = models.CharField(max_length=120, blank=True)
-    delivery_date = models.DateField(verbose_name="Delivery Date", null=True)
+    shipping_date = models.DateField(verbose_name="Shipping Date", null=True)
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
     stripe_data = models.TextField(blank=True, null=True)
     updated = models.DateTimeField(auto_now=True)

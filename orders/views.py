@@ -117,7 +117,7 @@ def address_page(request):
 def confirm_page(request):
     address_id = request.session.get("address_id", None)
     gift_message = request.session.get("gift_message", None)
-    delivery_date = request.session.get("delivery_date", None)
+    shipping_date = request.session.get("shipping_date", None)
 
     entries = CartEntry.objects.entries(request)
 
@@ -144,8 +144,8 @@ def confirm_page(request):
         "shipping_free": shipping_free,
         "gift_message": gift_message,
         "shipping_cost": shipping_cost,
-        "delivery_date": delivery_date,
-        "subtotal":subtotal,
+        "shipping_date": shipping_date,
+        "subtotal": subtotal,
     }
 
     return render(request, "orders/confirm.html", context)
@@ -164,16 +164,16 @@ class CreateCheckoutSessionView(View):
         elif len(shipping_address_qs) == 1:
             shipping_address = shipping_address_qs.first()
 
-        delivery_date = request.session.get("delivery_date", None)
-        delivery_date_obj = None
-        if delivery_date:
-            delivery_date_obj = datetime.datetime.strptime('Dec 28, 2022', '%b %d, %Y')
-            delivery_date_obj = delivery_date_obj.date()
+        shipping_date = request.session.get("shipping_date", None)
+        shipping_date_obj = None
+        if shipping_date:
+            shipping_date_obj = datetime.datetime.strptime(shipping_date, '%b %d, %Y')
+            shipping_date_obj = shipping_date_obj.date()
 
         order = Order(user=request.user,
                       shipping_address=shipping_address,
                       gift_message=gift_message,
-                      delivery_date=delivery_date_obj
+                      shipping_date=shipping_date_obj
                       )
 
         order.save()
@@ -226,6 +226,18 @@ class CreateCheckoutSessionView(View):
         if order.shipping_free:
             shipping_options = [shipping_free]
 
+        invoice_creation = {
+            "enabled": True,
+            "invoice_data": {
+                "description": "CassPea.co.uk Invoice",
+                "metadata": {"order": order_id},
+                # "account_tax_ids": [],
+                # "custom_fields": [{"name": "Purchase Order", "value": "PO-XYZ"}],
+                "rendering_options": {"amount_tax_display": "include_inclusive_tax"},
+                "footer": "CassPea",
+            },
+        }
+
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=line_items,
@@ -236,6 +248,7 @@ class CreateCheckoutSessionView(View):
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
+            invoice_creation=invoice_creation
         )
         return redirect(checkout_session.url)
 

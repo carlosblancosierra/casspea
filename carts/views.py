@@ -8,7 +8,7 @@ def home_page(request):
     entries = CartEntry.objects.entries(request)
     empty = CartEntry.objects.empty_cart(request)
     gift_message = request.session.get('gift_message', None)
-    delivery_date = request.session.get("delivery_date", None)
+    shipping_date = request.session.get("shipping_date", None)
 
     subtotal = CartEntry.objects.cart_subtotal(request)
     total = CartEntry.objects.cart_total(request)
@@ -21,9 +21,8 @@ def home_page(request):
         gift_message = request.POST.get('gift_message', None)
         request.session['gift_message'] = gift_message
 
-        delivery_date = request.POST.get('delivery_date', None)
-        request.session['delivery_date'] = delivery_date
-        print("delivery_date:", delivery_date)
+        shipping_date = request.POST.get('shipping_date', None)
+        request.session['shipping_date'] = shipping_date
 
         return redirect('orders:address')
 
@@ -33,9 +32,10 @@ def home_page(request):
         "entries": entries,
         "total": total,
         "gift_message": gift_message,
-        "delivery_date": delivery_date,
+        "shipping_date": shipping_date,
         "subtotal": subtotal,
         "shipping_cost": shipping_cost,
+        "shipping_free": shipping_free,
 
     }
 

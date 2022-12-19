@@ -107,6 +107,10 @@ h1, h2 {
   font-weight: 600;
 }
 
+.text-underline {
+    text-decoration:underline;
+}
+
 .mh-100 {
   min-height: 100vh !important;
 }
@@ -199,6 +203,10 @@ h1, h2 {
   background-color: var(--grey);
 }
 
+.my-grey-text {
+  color: #272729;
+}
+
 .btn-large, .btn {
   border-radius: 10px;
 }
@@ -223,6 +231,20 @@ h1, h2 {
   background-blend-mode: darken !important;
 }
 
+.btn-outline-pink {
+  color: var(--pink);
+  background-color: white;
+  text-transform: none;
+  border: solid 1px var(--pink);
+}
+
+.btn-outline-pink:hover {
+  background-color: var(--pink);
+  color: white;
+  text-transform: none;
+  border: solid 1px var(--pink);
+}
+
 .btn-outline-green {
   color: var(--green);
   background-color: white;
@@ -237,7 +259,33 @@ h1, h2 {
   border: solid 1px var(--green);
 }
 
+.btn-outline-orange {
+  color: var(--orange);
+  background-color: white;
+  text-transform: none;
+  border: solid 1px var(--orange);
+}
 
+.btn-outline-orange:hover {
+  background-color: var(--orange);
+  color: white;
+  text-transform: none;
+  border: solid 1px var(--orange);
+}
+
+.btn-outline-brown {
+  color: var(--brown);
+  background-color: white;
+  text-transform: none;
+  border: solid 1px var(--brown);
+}
+
+.btn-outline-brown:hover {
+  background-color: var(--brown);
+  color: white;
+  text-transform: none;
+  border: solid 1px var(--brown);
+}
 
 /* HOME */
 
@@ -487,4 +535,9 @@ h1, h2 {
 .navbar2-link {
     color:grey;
     text-transform:uppercase;
+}
+
+#box-carousel-dots .owl-dot {
+    background: none!important;
+    border: 1px solid white!important;
 }
