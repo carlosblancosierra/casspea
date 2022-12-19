@@ -1,0 +1,25 @@
+{% load static %}
+
+{% url 'store:home' as store_url %}
+{% url 'carts:home' as cart_url %}
+{% url 'flavours:home' as flavours_url %}
+{% url 'about' as about_url %}
+{% url 'contact' as contact_url %}
+
+<nav class="white" id="site-nav">
+  <div class="nav-wrapper container">
+    <a href="/" class="brand-logo center mt-2"><img src="{% static 'images/main-logo.png' %}" width="30px"/></a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a class="navbar2-link" href="/">Home</a></li>
+      <li><a class="navbar2-link" href="{{ store_url }}">Store</a></li>
+      <li><a class="navbar2-link" href="{{ flavours_url }}">Flavours</a></li>
+    </ul>
+
+    <ul id="nav-mobile2" class="right hide-on-med-and-down">
+      <li><a class="navbar2-link" href="{{ contact_url }}">Contact Us</a></li>
+      <li><a class="navbar2-link" href="{{ about_url }}">About Us</a></li>
+      <li><a class="navbar2-link" href="{{ cart_url }}">Cart</a></li>
+    </ul>
+  </div>
+</nav>

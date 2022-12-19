@@ -2,7 +2,8 @@
 {% url 'carts:home' as cart_url %}
 {% url 'store:home' as store_url %}
 {% url 'flavours:home' as flavours_url %}
-
+{% url 'about' as about_url %}
+{% url 'contact' as contact_url %}
 
 <nav class="transparent inner-nav">
   <div class="nav-wrapper container">
@@ -16,8 +17,8 @@
     </ul>
 
     <ul id="nav-home2" class="right hide-on-med-and-down">
-      <!--          <li><a href="#">Personaliza</a></li>-->
-      <!--          <li><a href="#">Nosotros</a></li>-->
+      <li><a href="{{ contact_url }}">Contact Us</a></li>
+      <li><a href="{{ about_url }}">About Us</a></li>
       <li><a href="{{ cart_url }}">Cart</a></li>
     </ul>
 

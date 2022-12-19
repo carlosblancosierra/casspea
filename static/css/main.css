@@ -478,3 +478,13 @@ h1, h2 {
 .box-flavour-radio[type="radio"].with-gap:checked+span:after {
   background-color: var(--pink);
 }
+
+.about-row-2 {
+    /* background-image:url('/static/images/about/banner-2.jpg');
+    background-size:cover; */
+}
+
+.navbar2-link {
+    color:grey;
+    text-transform:uppercase;
+}

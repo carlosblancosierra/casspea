@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Contact Us{% endblock %}
+{% block content %}
+
+{% url 'store:home' as store_url %}
+{% include "base/navbar-dark.html" %}
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col s12 m5 push-m6">
+      <img src="{% static 'images/about/banner-1.jpg' %}" class="responsive-img">
+    </div>
+    <div class="col s12 m4 pull-m4">
+      <h2 class="my-orange-text font-200 text-uppercase center bold">
+        WHO ARE WE
+      </h2>
+      <p class="text-justify">
+        We are a new company, created by a team of dedicated chefs with over a decade of experience in the chocolate
+        industry. We have worked in some amazing kitchens around the world, which taught us discipline and perfection in
+        our craft. We want you to enjoy eating our chocolates as much as we enjoy making them.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="row my-lblue p-5 about-row-2">
+    <div class="col s12 m12 ">
+      <img src="{% static 'images/casspea-pink-logo.png' %}" class="responsive-img w-50">
+      <p class="">
+        (which incidentally has nothing to do with peas) is a combination of my daughters' names. The project really
+        started about 7 years ago when as newly weds, my wife and I opened a small chocolate shop in Mexico city. With
+        little experience and a lot of passion we worked endlessly to establish a quality brand in Mexico. After 5 years
+        we decided to relocate back to the UK and start our lives with our little ones. After almost a year of being
+        back we decided that the time was right to start our enterprise again in London. We learned a lot from our
+        venture in Mexico, and we have brought much of that to CassPea. This is reflected in our decorations, flavours,
+        packaging and the way we do business.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="my-orange-text font-200 text-uppercase center bold">
+        Company’s Objective
+      </h2>
+      <p class="text-center">
+        CassPea is a brand that crafts artisan hand-painted chocolate bonbons. Each bonbon creates a fun experience and
+        evokes a sense of creativity and wonder. In CassPea we are convinced that high-level food can be inclusive and
+        fun to enjoy anytime and anywhere.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="row d-flex">
+    <div class="col s12 m6 my-eblue p-md-5">
+      <h2 class="font-200 my-brown-text text-uppercase center bold">
+        Mission</h2>
+      <p class="my-brown-text">
+        To change the perspective of gourmet chocolates, to make them fun and accessible. We want to use our expertise
+        in design, flavours and packaging to create a brand that is inclusive and warm.
+      </p>
+    </div>
+    <div class="col s12 m6 my-brown p-md-5">
+      <h2 class="font-200 my-eblue-text text-uppercase center bold">
+        Vision</h2>
+      <p class="my-eblue-text">
+        We want our chocolates to make someone’s day better. Regardless, if they buy them or follow them on social
+        media, we want it to be an experience that will enrich their day. Having suffered from mental health issues,
+        making something that can give someone even a split second of joy during a dark moment is something we strive to
+        achieve.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="my-orange-text font-200 text-uppercase center bold">
+        Values
+      </h2>
+    </div>
+  </div>
+  <div class="row d-flex mt-5">
+    <div class="col s12 m4 center">
+      <img src="{% static 'images/about/values/1.jpg' %}" class="mb-3 w-25">
+      <h3 class="my-orange-text font-150 text-uppercase center bold">
+        Creativity & Innovation
+      </h3>
+      <p class="text-justify">
+        We believe that food should be fun and interesting. This is why we believe that creativity and innovation are
+        key to the success of the company and its ability to achieve their mission and vision.
+      </p>
+    </div>
+    <div class="col s12 m4 center">
+      <img src="{% static 'images/about/values/2.jpg' %}" class="mb-3 w-25">
+      <h3 class="my-orange-text font-150 text-uppercase center bold">
+        Free expression
+      </h3>
+      <p class="text-justify">
+        One thing that promotes creativity is the exchange of ideas, and for that to happen we need
+        people to feel comfortable making mistakes and exploring their ideas in a respectful and nurturing environment.
+      </p>
+    </div>
+    <div class="col s12 m4 center">
+      <img src="{% static 'images/about/values/3.jpg' %}" class="mb-3 w-25">
+      <h3 class="my-orange-text font-150 text-uppercase center bold">
+        Fun
+      </h3>
+      <p class="text-justify">
+        we believe that if you have fun and enjoy what you do, you are more likely to make something extraordinary. If
+        we can incorporate this value into our culture, it would make it easier to achieve our other values, our mission
+        and vision.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

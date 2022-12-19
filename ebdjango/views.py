@@ -13,3 +13,10 @@ def contact_us_page(request):
     }
 
     return render(request, "contact_us.html", context)
+
+
+def about_us_page(request):
+    context = {
+    }
+
+    return render(request, "about_us.html", context)
