@@ -237,7 +237,7 @@ def my_webhook_view(request):
     event = None
 
     endpoint_secret = endpoint_secret_test
-    if settings.STRIPE_TEST:
+    if not settings.STRIPE_TEST:
         endpoint_secret = endpoint_secret_live
     elif settings.STATIC_LOCAL:
         endpoint_secret = endpoint_secret_local
