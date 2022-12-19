@@ -34,15 +34,17 @@
   <div class="row">
     {% for obj in qs %}
     <div class="col s6 m3">
-      <form method="POST"> {% csrf_token %}
-        <input type="hidden" name="size" value="{{ obj.size }}">
-        {% if obj.image %}
-        <img src="{{ obj.image.url }}" class="responsive-img">
-        {% endif %}
-        <button type="submit" class="btn btn-outline-green">
+
+      {% if obj.image %}
+      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.image.url }}" class="responsive-img"> </a>
+      {% endif %}
+      <p class="center ">
+        <a class="btn btn-outline-green" href="{{ obj.get_absolute_url }}">
           {{ obj }}
-        </button>
-      </form>
+        </a>
+      </p>
+
+
     </div>
     {% endfor %}
   </div>

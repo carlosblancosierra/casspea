@@ -10,11 +10,6 @@ from .models import FLAVOURS, FLAVOUR_FORMAT
 
 # Create your views here.
 def home_page(request):
-    if request.POST:
-        size = request.POST.get('size', None)
-        if size:
-            return redirect("store:boxes", size=size)
-
     qs = BoxSize.objects.active()
 
     context = {

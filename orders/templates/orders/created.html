@@ -58,11 +58,24 @@
             <img src="{{ obj.product.image.url }}" width="150px">
             {% endif %}
           </td>
-          <td>{{ obj.product.size }}</td>
+          <td>
+            <p class="bold">{{ obj.product.size }}</p>
+            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
+            <ul class="m-0">
+              {% for obj in obj.product.selected_prebuilts.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+              {% for obj in obj.product.selected_flavours.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+            </ul>
+          </td>
           <td>{{ obj.product.price }}</td>
           <td>{{ obj.quantity }}</td>
           <td>£{{ obj.total }} GBP</td>
+
         </tr>
+
         {% endfor %}
 
 

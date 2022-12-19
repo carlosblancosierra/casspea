@@ -48,9 +48,12 @@ class BoxSize(models.Model):
                                  options={'quality': 95})
 
     def __str__(self):
-        return "Box of {} pieces".format(self.size)
+        return "Box of {} Chocolates".format(self.size)
 
     objects = BoxSizeManager()
+
+    def get_absolute_url(self):
+        return f"/store/box/{self.size}"
 
 
 class Box(models.Model):
@@ -77,7 +80,7 @@ class Box(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "Box of {} Chocolates".format(self.size)
+        return "Box of {} Chocolates, {}".format(self.size, self.flavour_format)
 
     @property
     def image(self):

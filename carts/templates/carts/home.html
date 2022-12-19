@@ -100,7 +100,7 @@
   </div>
 </section>
 
-<section class="container">
+<section class="container" id="gift-message-form">
   <form method="POST"> {% csrf_token %}
     <div class="row">
       <div class="col s12 m6">
@@ -110,9 +110,7 @@
                     name="gift_message"
                     class="materialize-textarea browser-default"
                     data-length="120"
-                    rows="2"
-          >{% if gift_message %}{{ gift_message }}{% endif %}
-          </textarea>
+          >{% if gift_message %}{{ gift_message }}{% endif %}</textarea>
           <label for="gift_message">Add your Message (optional)</label>
         </div>
       </div>
