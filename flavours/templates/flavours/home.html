@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Box Flavours{% endblock %}
+
+{% block content %}
+
+{% url 'store:add_boxes' as add_boxes_url %}
+{% url 'store:remove_boxes' as remove_boxes_url %}
+{% url 'store:home' as store_home_url %}
+
+{% url 'orders:address' as address_url %}
+{% url 'carts:home' as cart_url %}
+
+
+{% include "base/inner-banner.html" %}
+
+<section class="container">
+  <div class="row">
+    <div class="col s12 m8 offset-m2 my-5">
+      <p class="font-150 center">
+        Welcome to our flavours page, here we show you all the great flavours that we have. We also include allergenic
+        information for your convenience. If you would like further information please click here.
+      </p>
+    </div>
+
+    {% for obj in qs %}
+    <div class="col s12 m8 offset-m2">
+      <div class="row mt-3 mb-4">
+        <div class="col s12 m6 center">
+          <h2 class="font-200 my-pink-text pt-0">{{ obj.name }}</h2>
+          {% if obj.description %}
+          <p>{{ obj.description }}</p>
+          {% endif %}
+          {% if obj.allergens_str %}
+          <p>*Contains {{ obj.allergens_str }}</p>
+          {% endif %}
+        </div>
+        <div class="col s12 m6">
+          {% if obj.image %}
+          <img src="{{ obj.image.url }}" class="responsive-img"/>
+          {% endif %}
+        </div>
+      </div>
+      <hr class="">
+
+    </div>
+
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

@@ -30,6 +30,7 @@ urlpatterns = [
     path('cart/', include('carts.urls')),
     path('orders/', include('orders.urls')),
     path('store/', include('store.urls')),
+    path('flavours/', include('flavours.urls')),
 
     path('logout', LogoutView.as_view(), name='logout'),
     path('login', login_page, name="login"),
