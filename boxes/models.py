@@ -77,7 +77,7 @@ class Box(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} {}".format(self.size, self.flavour_format)
+        return "Box of {} Chocolates".format(self.size)
 
     @property
     def image(self):
