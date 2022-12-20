@@ -19,21 +19,23 @@ User = settings.AUTH_USER_MODEL
 
 # Create your views here.
 def login_page(request):
-    print(request.user)
+    # print(request.user)
     if request.method == "POST":
         next_url = request.POST.get('next_url', None)
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            if next_url:
-                return redirect(next_url)
-            else:
+            print("next_url ", next_url is None)
+            if next_url is None:
                 return redirect('/')
+            return redirect(next_url)
     else:
         form = AuthenticationForm(request)
-        next_url = request.GET.get('next', None)
+        next_url = request.GET.get('next', "/")
+
     context = {
+        "title": "Log In",
         "form": form,
         "next_url": next_url
     }
@@ -59,6 +61,7 @@ def register_page_local(request):
     else:
         user_form = CustomUserCreationForm()
     return render(request, 'accounts/register-local.html', {
+        "title": "Register",
         'user_form': user_form,
         "next_url": next_url
     })
