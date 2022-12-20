@@ -1,5 +1,11 @@
 {% load static %}
 
+{% url 'store:home' as store_url %}
+{% url 'carts:home' as cart_url %}
+{% url 'flavours:home' as flavours_url %}
+{% url 'about' as about_url %}
+{% url 'contact' as contact_url %}
+
 <footer class="page-footer my-grey">
   <div class="container">
     <div class="row">
@@ -9,29 +15,34 @@
                class="responsive-img p-3"/></a>
         <p> © 2018 All rights reserved</p>
       </div>
-<!--      <div class="col m2 s12 white-text font-100 offset-m1">-->
-<!--        <h5 class="white-text">Address</h5>-->
-<!--        <ul>-->
-<!--          <li>1839 Fairfield Road V8S</li>-->
-<!--          <li>1G9 Victoria</li>-->
-<!--          <li>British Columbia</li>-->
-<!--        </ul>-->
-<!--      </div>-->
+      <!--      <div class="col m2 s12 white-text font-100 offset-m1">-->
+      <!--        <h5 class="white-text">Address</h5>-->
+      <!--        <ul>-->
+      <!--          <li>1839 Fairfield Road V8S</li>-->
+      <!--          <li>1G9 Victoria</li>-->
+      <!--          <li>British Columbia</li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
 
       <div class="col m2 s12">
         <h5 class="white-text">Links</h5>
         <ul class="font-100">
-          <li><a class="" href="#!">Store</a></li>
-          <li><a class="" href="#!">Contact</a></li>
-          <li><a class="" href="#!">About Us</a></li>
+          <li><a class="" href="/">Home</a></li>
+          <li><a class="mt-4" href="{{ store_url }}">Store</a></li>
+          <li><a class="" href="{{ flavours_url }}">Flavours</a></li>
+
+          <li><a class="mt-4" href="{{ contact_url }}">Contact Us</a></li>
+          <li><a class="mt-4" href="{{ about_url }}">About Us</a></li>
+          <li><a class="mt-4" href="{{ cart_url }}">Cart</a></li>
+
         </ul>
       </div>
 
-      <div class="col m2 s12">
+      <div class="col m3 s12">
         <h5 class="white-text">Contact</h5>
         <ul>
-          <li><a href="tel:07859790386">07859790386</a></li>
-          <li><a href="mailto:info@casspea.co.uk">info@casspea.co.uk</a></li>
+          <li><a href="tel:07859790386"><i class="fa-brands fa-whatsapp"></i> 07859790386</a></li>
+          <li><a href="mailto:info@casspea.co.uk"><i class="fa-solid fa-envelope"></i> info@casspea.co.uk</a></li>
         </ul>
       </div>
     </div>
