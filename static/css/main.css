@@ -136,75 +136,75 @@ h1, h2 {
 }
 
 .my-pink {
-  background-color: var(--pink);
+  background-color: var(--pink)!important;
 }
 
 .my-pink-text {
-  color: var(--pink);
+  color: var(--pink)!important;
 }
 
 .my-yellow {
-  background-color: var(--yellow);
+  background-color: var(--yellow)!important;
 }
 
 .my-yellow-text {
-  color: var(--yellow);
+  color: var(--yellow)!important;
 }
 
 .my-green {
-  background-color: var(--green);
+  background-color: var(--green)!important;
 }
 
 .my-green-text {
-  color: var(--green);
+  color: var(--green)!important;
 }
 
 .my-lblue {
-  background-color: var(--lblue);
+  background-color: var(--lblue)!important;
 }
 
 .my-lblue-text {
-  color: var(--lblue);
+  color: var(--lblue)!important;
 }
 
 .my-purple {
-  background-color: var(--purple);
+  background-color: var(--purple)!important;
 }
 
 .my-purple-text {
-  color: var(--purple);
+  color: var(--purple)!important;
 }
 
 .my-orange {
-  background-color: var(--orange);
+  background-color: var(--orange)!important;
 }
 
 .my-orange-text {
-  color: var(--orange);
+  color: var(--orange)!important;
 }
 
 .my-eblue {
-  background-color: var(--eblue);
+  background-color: var(--eblue)!important;
 }
 
 .my-eblue-text {
-  color: var(--eblue);
+  color: var(--eblue)!important;
 }
 
 .my-brown {
-  background-color: var(--brown);
+  background-color: var(--brown)!important;
 }
 
 .my-brown-text {
-  color: var(--brown);
+  color: var(--brown)!important;
 }
 
 .my-grey {
-  background-color: var(--grey);
+  background-color: var(--grey)!important;
 }
 
 .my-grey-text {
-  color: #272729;
+  color: #272729!important;
 }
 
 .btn-large, .btn {

@@ -10,7 +10,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import datetime
-from .models import Order, STATUS_CHOICES
+from .models import Order, STATUS_CHOICES, CANCELED
 
 from carts.models import Cart, CartEntry
 from addresses.models import Address
@@ -184,9 +184,9 @@ class CreateCheckoutSessionView(View):
         order.cart_entries.set(cart_entries)
         order_id = order.order_id
 
-        request.session['cart_id'] = None
-        request.session['address_id'] = None
-        request.session['gift_message'] = None
+        # request.session['cart_id'] = None
+        # request.session['address_id'] = None
+        # request.session['gift_message'] = None
         request.session['order_id'] = order_id
         line_items = []
         for entry in cart_entries:
@@ -325,7 +325,8 @@ def success_page(request):
 
     request.session['cart_id'] = None
     request.session['address_id'] = None
-    request.session['order_id'] = None
+    request.session['gift_message'] = None
+
     context = {
         "order": order,
         "address": order.shipping_address,
@@ -335,6 +336,21 @@ def success_page(request):
     }
 
     return render(request, "orders/created.html", context)
+
+
+def cancel_page(request):
+    order_id = request.session.get('order_id', None)
+    order_qs = Order.objects.filter(order_id=order_id)
+    if len(order_qs) == 1:
+        order = order_qs.first()
+    else:
+        return redirect('carts:home')
+
+    order.stats = "CANCELED"
+    order.save()
+    request.session['order_id'] = None
+
+    return redirect("carts:home")
 
 
 @staff_member_required
@@ -366,11 +382,11 @@ def staff_detail_page(request, order_id):
         if order:
             order.status = status
             order.save()
-            messages.success(request, 'Estatus de orden actualizado')
+            messages.success(request, 'Order status updated')
 
     context = {
         "order": order,
-        "address": order.direccion_entrega,
+        "address": order.shipping_address,
         "entries": order.cart_entries.all,
         "STATUS_CHOICES": STATUS_CHOICES,
     }

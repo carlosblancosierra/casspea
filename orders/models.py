@@ -8,11 +8,16 @@ from django.db.models.signals import post_save
 # Create your models here.
 User = settings.AUTH_USER_MODEL
 
+CREATED = 'created'
+CANCELED = 'cancelled'
+PAID = 'paid'
+DELIVERED = 'delivered'
+
 STATUS_CHOICES = (
-    ('created', 'created'),
-    ('cancelled', 'cancelled'),
-    ('paid', 'paid'),
-    ('delivered', 'delivered'),
+    (CREATED, CREATED),
+    (CANCELED, CANCELED),
+    (PAID, PAID),
+    (DELIVERED, DELIVERED),
 )
 
 

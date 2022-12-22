@@ -5,77 +5,85 @@
 {% block head_title %} {% endblock %}
 
 {% block content %}
+
+{% include "base/navbar-dark.html" %}
+
 <div class="container my-5">
-    <div class="row">
-        <div class="col s12">
-            <h1 class="text-lblue font-200">Ordenes</h1>
-            <div class="span bg-lblue py-1"></div>
-        </div>
+  <div class="row">
+    <div class="col s12">
+      <h1 class="font-200 center">Orders</h1>
     </div>
+  </div>
 </div>
 
 <div class="container mh-50">
-    <div class="collection">
-        <a class="collection-item">
-            <div class="row">
-                <div class="col s1">
-                    ID
-                </div>
-                <div class="col s3">
-                    Fecha
-                </div>
-                <div class="col s2">
-                    Estatus
-                </div>
-                <div class="col s4">
-                    Dirección
-                </div>
-                <div class="col s1">
-                    Total
-                </div>
-            </div>
-        </a>
+  <div class="collection">
+    <a class="collection-item">
+      <div class="row my-orange-text">
+        <div class="col s1">
+          ID
+        </div>
+        <div class="col s3">
+          Client
+        </div>
+        <div class="col s3">
+          Payment Status
+        </div>
+        <div class="col s2">
+          Date
+        </div>
+        <div class="col s2">
+          Status
+        </div>
+        <div class="col s1">
+          Total
+        </div>
+      </div>
+    </a>
 
-        {% for order in orders %}
-        <a href="{{ order.get_staff_url }}" class="collection-item">
-            <div class="row">
-                <div class="col s1">
-                    {{ order.order_id }}
-                </div>
-                <div class="col s3">
-                    {{ order.timestamp }}
-                </div>
-                <div class="col s2">
-                    {{ order.status }}
-                </div>
-                <div class="col s4">
-                    {{ order.direccion_entrega }}
-                </div>
-                <div class="col s1">
-                    ${{ order.total }}
-                </div>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
+    {% for order in orders %}
+    <a href="{{ order.get_staff_url }}" class="collection-item">
+      <div class="row my-grey-text">
+        <div class="col s1">
+          {{ order.order_id }}
+        </div>
+        <div class="col s3">
+          {{ order.user.email }}
+        </div>
+        <div class="col s3">
+          {{ order.payment_status }}
+        </div>
+        <div class="col s2">
+          {{ order.timestamp }}
+        </div>
+        <div class="col s2">
+          {{ order.status }}
+        </div>
+        <div class="col s1">
+          ${{ order.total }}
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 
 <ul class="pagination center">
 
-    <li class="{% if not orders.has_previous %}disabled{% endif %}">
-        <a href="{% if orders.has_previous %}?page={{ orders.previous_page_number }}{% endif%}">
-            <i class="material-icons">chevron_left</i>
-        </a>
-    </li>
+  <li class="{% if not orders.has_previous %}disabled{% endif %}">
+    <a href="{% if orders.has_previous %}?page={{ orders.previous_page_number }}{% endif%}">
+      <i class="material-icons">chevron_left</i>
+    </a>
+  </li>
 
-    <li class=""><a href="?page=1">Primera</a></li>
-    <li class="active bg-blue"><a href="#!">Pagina {{ orders.number }} de {{ orders.paginator.num_pages }}</a></li>
-    <li class=""><a href="?page={{ orders.paginator.num_pages }}">Ultima</a></li>
+  <li class=""><a href="?page=1">First</a></li>
+  <li class="active my-green"><a href="#!">Page {{ orders.number }} of {{ orders.paginator.num_pages }}</a></li>
+  <li class=""><a href="?page={{ orders.paginator.num_pages }}">Last</a></li>
 
-    <li class="{% if not orders.has_next %}disabled{% endif %}">
-        <a href="{% if orders.has_next %}?page={{ orders.next_page_number }}{% endif%}">
-            <i class="material-icons">chevron_right</i>
-        </a>
-    </li>
+  <li class="{% if not orders.has_next %}disabled{% endif %}">
+    <a href="{% if orders.has_next %}?page={{ orders.next_page_number }}{% endif%}">
+      <i class="material-icons">chevron_right</i>
+    </a>
+  </li>
 </ul>
 {% endblock %}
