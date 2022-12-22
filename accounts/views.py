@@ -65,3 +65,15 @@ def register_page_local(request):
         'user_form': user_form,
         "next_url": next_url
     })
+
+
+@staff_member_required
+def user_list_page(request):
+    User = get_user_model()
+    users = User.objects.all()
+
+    context = {
+        "users": users,
+    }
+
+    return render(request, "accounts/list.html", context)

@@ -1,0 +1,21 @@
+{% load static %}
+
+{% url 'store:home' as store_url %}
+{% url 'carts:home' as cart_url %}
+{% url 'flavours:home' as flavours_url %}
+{% url 'about' as about_url %}
+{% url 'contact' as contact_url %}
+{% url 'dashboards:client' as client_url %}
+
+<ul class="sidenav" id="mobile-demo">
+  <a href="/" class="w-90 ml-1">
+    <img src="{% static 'images/casspea-pink-logo.png' %}"
+         class="responsive-img"/></a>
+  <li><a href="/">Home</a></li>
+  <li><a href="{{ store_url }}">Store</a></li>
+  <li><a href="{{ flavours_url }}">Flavours</a></li>
+  <li><a href="{{ client_url }}">Clients</a></li>
+  <li><a href="{{ contact_url }}">Contact Us</a></li>
+  <li><a href="{{ about_url }}">About Us</a></li>
+  <li><a href="{{ cart_url }}" class="btn btn-orange">Cart</a></li>
+</ul>

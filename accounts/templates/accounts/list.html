@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% include "base/navbar-dark.html" %}
+
+{% url 'orders:list' as orders_list_url %}
+
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="font-200 my-4 text-center font-weight-bold text-uppercase">User List</h1>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <div class="collection">
+        <a class="collection-item">
+          <div class="row my-orange-text">
+            <div class="col s3">
+              User
+            </div>
+            <div class="col s3">
+              Email
+            </div>
+
+          </div>
+        </a>
+
+        {% for user in users %}
+        <a href="{{ order.get_absolute_url }}" class="collection-item">
+          <div class="row my-grey-text">
+            <div class="col s3">
+              {{ user.first_name }} {{ user.last_name }}
+            </div>
+            <div class="col s3">
+              {{ user.email }}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

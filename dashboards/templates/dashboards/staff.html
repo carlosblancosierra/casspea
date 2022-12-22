@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% include "base/navbar-dark.html" %}
+
+{% url 'orders:list' as orders_list_url %}
+{% url 'accounts:user-list' as user_list_url %}
+
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="font-200 my-4 text-center font-weight-bold text-uppercase">Staff Dashboard</h1>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="font-150 my-4 text-center font-weight-bold text-uppercase"> Last Orders</h2>
+      <div class="collection">
+        <a class="collection-item">
+          <div class="row my-orange-text">
+            <div class="col s1">
+              ID
+            </div>
+            <div class="col s3">
+              Payment Status
+            </div>
+            <div class="col s2">
+              Date
+            </div>
+            <div class="col s2">
+              Status
+            </div>
+            <div class="col s1">
+              Total
+            </div>
+          </div>
+        </a>
+
+        {% for order in orders %}
+        <a href="{{ order.get_absolute_url }}" class="collection-item">
+          <div class="row my-grey-text">
+            <div class="col s1">
+              {{ order.order_id }}
+            </div>
+            <div class="col s3">
+              {{ order.payment_status }}
+            </div>
+            <div class="col s2">
+              {{ order.timestamp }}
+            </div>
+            <div class="col s2">
+              {{ order.status }}
+            </div>
+            <div class="col s1">
+              ${{ order.total }}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <p class="right"><a href="{{ orders_list_url }}" class="btn btn-green">View All Orders</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="font-150 my-4 text-center font-weight-bold text-uppercase">Last Users</h2>
+      <div class="collection">
+        <a class="collection-item">
+          <div class="row my-orange-text">
+            <div class="col s3">
+              User
+            </div>
+            <div class="col s3">
+              Email
+            </div>
+
+          </div>
+        </a>
+
+        {% for user in users %}
+        <a href="{{ order.get_absolute_url }}" class="collection-item">
+          <div class="row my-grey-text">
+            <div class="col s3">
+              {{ user.first_name }} {{ user.last_name }}
+            </div>
+            <div class="col s3">
+              {{ user.email }}
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <p class="right"><a href="{{ user_list_url }}" class="btn btn-green">View All Users</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
