@@ -57,7 +57,7 @@ class Order(models.Model):
         return f"/orders/staff/{self.order_id}"
 
     def get_absolute_url(self):
-        return f"/orders/{self.order_id}"
+        return f"/orders/client/{self.order_id}"
 
     @property
     def subtotal(self):

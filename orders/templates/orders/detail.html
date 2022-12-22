@@ -7,17 +7,41 @@
 {% block content %}
 
 {% url 'orders:address' as order_address_url %}
-{% include "base/inner-banner.html" %}
+{% include "base/navbar-dark.html" %}
 
 
 <div class="container mt-5">
   <div class="row">
     <div class="col s12">
-      <h1 class="text-lblue font-200">Order details</h1>
+      <h1 class="center font-200">Order details</h1>
       <div class="span bg-lblue py-1"></div>
-      <p class="font-150">Order Id: {{ order.order_id }}</p>
-      <p class="font-150">Date: {{ order.timestamp }}</p>
     </div>
+
+    <div class="col s12 m4">
+      <p class="font-150 mb-1"><span class="font-150 bold">ID:</span> {{ order.order_id }}</p>
+      <p class="font-150 my-1"><span class="font-150 bold">Date:</span> {{ order.timestamp }}</p>
+      <p class="font-150 my-1"><span class="font-150 bold">Gift Message:</span> {{ order.gift_message }}</p>
+      <p class="font-150 my-1"><span class="font-150 bold">Shipping Date:</span> {{ order.shipping_date }}</p>
+      <p class="font-150 my-1"><span class="font-150 bold">Status:</span> {{ order.status }}</p>
+
+
+    </div>
+    <div class="col s12 m4">
+
+      <h4 class="font-150 bold">Shipping Address</h4>
+
+      <div class="p-3">
+        <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
+        <p class="m-0 p-0">
+          {{ address.street }},
+          {{ address.postal_code }},
+          {{ address.city }},
+          {{ address.country }},
+        </p>
+      </div>
+
+    </div>
+
   </div>
 </div>
 
@@ -25,8 +49,8 @@
 
   <div class="row">
 
-    <div class="col s12 m12 px-md-4">
-      <h4 class="text-lblue">Products</h4>
+    <div class="col s12">
+      <h4 class="text-lblue">Order</h4>
 
       <table>
         <thead>
@@ -34,9 +58,10 @@
           <th></th>
           <th></th>
           <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>TOTAL</th>
+          <th class="d-none d-md-table-cell">PRICE</th>
+          <th class="d-none d-md-table-cell">QUANTITY</th>
+          <th class="d-none d-md-table-cell">TOTAL</th>
+          <th class="d-md-none">DETAILS</th>
         </tr>
         </thead>
 
@@ -47,54 +72,53 @@
           <td></td>
           <td>
             {% if obj.product.image %}
-            <img src="{{ obj.product.image.url }}" width="150px">
+            <img src="{{ obj.product.image.url }}" width="150px" class="d-none d-md-table-cell">
+            <img src="{{ obj.product.image.url }}" width="50px" class="d-md-none">
             {% endif %}
           </td>
-          <td>{{ obj.product.size }}</td>
-          <td>{{ obj.product.price }}</td>
-          <td>{{ obj.quantity }}</td>
-          <td>£{{ obj.total }} GBP</td>
+          <td>
+            <p class="bold">{{ obj.product.size }}</p>
+            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
+            <ul class="m-0">
+              {% for obj in obj.product.selected_prebuilts.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+              {% for obj in obj.product.selected_flavours.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="d-none d-md-table-cell">{{ obj.product.price }}</td>
+          <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
+          <td class="d-none d-md-table-cell">£{{ obj.total }} GBP</td>
+          <td class="d-md-none">
+            <span class="bold">Price:</span><br>
+            {{ obj.product.price }}<br>
+            <span class="bold">Quantity:</span><br>
+            {{ obj.quantity }}<br>
+            <span class="bold">Total:</span><br>
+            £{{ obj.total }} GBP
+          </td>
         </tr>
         {% endfor %}
+
+        <tr>
+          <td colspan="2" class="d-md-none"></td>
+          <td colspan="4" class="d-none d-md-table-cell"></td>
+          <td>Shipping:</td>
+          <td>£{{ order.shipping_cost }} GBP</td>
+        </tr>
+
+        <tr>
+          <td colspan="2" class="d-md-none"></td>
+          <td colspan="4" class="d-none d-md-table-cell"></td>
+          <td>Total:</td>
+          <td>£{{ order.total }} GBP</td>
+        </tr>
 
 
         </tbody>
       </table>
-
-    </div>
-    <h4 class="mt-4 font-150 bold">Summary</h4>
-
-    <div class="">
-      <div class="row p-0">
-        {% if order.gift_message %}
-        <div class="col s6">
-          <p class="font-100 mt-2">Gift Message:</p>
-        </div>
-        <div class="col s6">
-          <p class="text-right font-100 mt-2">
-            {{ order.gift_message }}
-          </p>
-        </div>
-        {% endif %}
-        <div class="col s6">
-          <p class="font-100 mt-2">Shipping:</p>
-        </div>
-        <div class="col s6">
-          <p class="text-right font-100 mt-2">
-            {% if order.shipping_free %}
-            Free
-            {% else %}
-            £{{ order.shipping_cost }} GBP
-            {% endif %}
-          </p>
-        </div>
-        <div class="col s6">
-          <p class="font-100 mt-2 font-150 bold">Total:</p>
-        </div>
-        <div class="col s6">
-          <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
-        </div>
-      </div>
 
     </div>
 
