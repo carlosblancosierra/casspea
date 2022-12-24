@@ -6,10 +6,10 @@ User = settings.AUTH_USER_MODEL
 
 
 class Address(models.Model):
-    full_name = models.CharField(max_length=120)
-    street = models.CharField(max_length=120)
-    postal_code = models.CharField(max_length=5)
-    city = models.CharField(max_length=120)
+    full_name = models.CharField(max_length=500)
+    street = models.CharField(max_length=500)
+    postal_code = models.CharField(max_length=120)
+    city = models.CharField(max_length=500)
     tel = models.CharField(max_length=120, null=True, blank=True)
     country = models.CharField(max_length=120, default="Mexico")
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
