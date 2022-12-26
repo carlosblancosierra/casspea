@@ -56,6 +56,13 @@ LOGIN_URL_REDIRECT = '/'
 LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/login'
 
+EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST_USER = 'casspea.sistemas@gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

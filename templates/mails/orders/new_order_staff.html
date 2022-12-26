@@ -1,0 +1,83 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="bold font-200 center">Congratulations</h1>
+      <p class="center font-150">Your order has been created successfully, we will contact you soon</p>
+      <a href="www.casspea.co.uk{{ order.get_absolute_url}}">View Order details</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 m8 offset-m2">
+      <h4 class="center font-150 bold">Order ID: {{ order.order_id }}</h4>
+      <h4 class="font-150 bold">Shipping Address:</h4>
+
+      <div class="">
+        <p class="m-0 p-0">{{ order.shipping_address.full_name }}, {{ order.shipping_address.tel }}</p>
+        <p class="m-0 p-0">
+          {{ order.shipping_address.street }},
+          {{ order.shipping_address.city }},
+          {{ order.shipping_address.country }},
+          {{ order.shipping_address.postal_code }}.
+        </p>
+      </div>
+      <h4 class="font-150 bold">Products:</h4>
+
+      <table>
+        <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th>PRODUCT</th>
+          <th>PRICE</th>
+          <th>QUANTITY</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for obj in order.cart_entries.all %}
+
+        <tr>
+          <td></td>
+          <td>
+            {% if obj.product.image %}
+            <img src="{{ obj.product.image.url }}" width="150px">
+            {% endif %}
+          </td>
+          <td>
+            <p class="bold">{{ obj.product.size }}</p>
+            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
+            <ul class="m-0">
+              {% for obj in obj.product.selected_prebuilts.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+              {% for obj in obj.product.selected_flavours.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>{{ obj.product.price }}</td>
+          <td>{{ obj.quantity }}</td>
+          <td>£{{ obj.total }} GBP</td>
+
+        </tr>
+
+        {% endfor %}
+
+
+        </tbody>
+      </table>
+
+      <h4 class="mt-4 font-150 bold">Summary</h4>
+      <p>{% if gift_message %} Gift Message: {{ gift_message }} {% endif %}</p>
+      <div class="row p-0">
+      </div>
+      <p>Shipping: {% if order.shipping_free %} Free {% else %} £{{ order.shipping_cost }} GBP {% endif %}</p>
+<p>Total: £{{ order.total }} GBP</p>
+
+    </div>
+  </div>
+</div>

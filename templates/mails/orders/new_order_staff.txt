@@ -1,0 +1,3 @@
+New Order
+Order Id: {{ order.order_id }}
+View Order details : {{ order.get_absolute_url}}

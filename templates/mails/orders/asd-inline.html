@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" data-lt-installed="true">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tu orden en JimMiss.mx</title>
+    <style>
+        .container {
+            width:90%;
+        }
+        @media (min-width:1300px) {
+            .container {
+                width:70%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div style="background-color: #173B4D;padding:3rem;">
+    <div class="container mx-auto"
+         style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;width: 90%;margin-left: auto;margin-right: auto;padding: 3rem!important;">
+        <p class="center"
+           style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;text-align: center;margin-left: auto;margin-right: auto;">
+            <img src="{{ STATIC_URL }}{% static 'images/jimmiss-logo.png' %}" width="200px" class="mx-auto"
+                 style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;margin-right: auto;margin-left: auto;">
+        </p>
+    </div>
+
+    <div class="container mx-auto p-5 bg-white mb-5"
+         style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;width: 90%;margin-left: auto;margin-right: auto;margin-bottom: 3rem!important;padding: 3rem!important;background-color: white!important;">
+        <div class="row"
+             style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;position: relative;width: 100%;">
+            <h1 class="text-lblue center "
+                style="font-family: 'Lato', Helvetica, sans-serif;color: #4B868F;line-height: 1.5;font-size: 2.5rem;text-align: center;margin-left: auto;margin-right: auto;">
+                Felicidades</h1>
+            <p class="center font-150"
+               style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;text-align: center;margin-left: auto;margin-right: auto;">
+                Su pedido a sido creado con exito, le contactaremos pronto</p>
+            <div class="span bg-lblue py-1"
+                 style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;padding-top: .25rem!important;padding-bottom: .25rem!important;background-color: #4B868F!important;"></div>
+
+        </div>
+
+        <div class="row"
+             style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;position: relative;width: 100%;">
+            <h2 class="text-lblue center"
+                style="font-family: 'Lato', Helvetica, sans-serif;color: #4B868F;line-height: 1.5;font-size: 2rem;text-align: center;margin-left: auto;margin-right: auto;">
+                Detalles del pedido</h2>
+            <h4 class="center"
+                style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;font-size: 1.125rem;text-align: center;margin-left: auto;margin-right: auto;">
+                Identificador: {{ order.order_id }}</h4>
+            <h4 class="text-lblue"
+                style="font-family: 'Lato', Helvetica, sans-serif;color: #4B868F;line-height: 1.5;font-size: 1.125rem;text-align: center;margin-left: auto;margin-right: auto;">
+                Enviar a:</h4>
+
+            <div class="card cart-card p-3"
+                 style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;padding: 1rem!important;">
+                <p class="m-0 p-0"
+                   style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;text-align: center;margin-left: auto;margin-right: auto;">
+                    {{ order.direccion_entrega.nombre_completo }}, {{ order.direccion_entrega.telefono }}</p>
+                <p class="m-0 p-0"
+                   style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;text-align: center;margin-left: auto;margin-right: auto;">
+                    {{ order.direccion_entrega.calle_numero }},
+                    {{ order.direccion_entrega.estado }},
+                    {{ order.direccion_entrega.ciudad }},
+                    {{ order.direccion_entrega.colonia }},
+                    {{ order.direccion_entrega.pais }},
+                    {{ order.direccion_entrega.codigo_postal }}.
+                </p>
+            </div>
+            <h4 class="text-lblue"
+                style="font-family: 'Lato', Helvetica, sans-serif;color: #4B868F;line-height: 1.5;font-size: 1.125rem;text-align: center;margin-left: auto;margin-right: auto;">
+                Productos:</h4>
+            <table class="mx-auto"
+                   style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;margin-right: auto;margin-left: auto;">
+                <tbody style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+                <tr style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+                    <th style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+
+                    </th>
+
+                </tr>
+                {% for obj in order.cart_entries.all %}
+                <tr style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+                    <td style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+
+                        {% if obj.image %}
+                        <img src="{{ STATIC_URL }}{{ obj.image.url }}" width="100px" height="auto"/>
+                        {% else %}
+                        <img src="{{ STATIC_URL }}{% static 'images/placeholder.jpg' %}" width="100px"/>
+                        {% endif %}
+
+                    </td>
+                    <td class="px-5"
+                        style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;padding-right: 3rem!important;padding-left: 3rem!important;">
+                        <p style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;">
+                            {{ obj.sku_product.master.descripcion }} /
+                            {{ obj.sku_product.color }} /
+                            {{ obj.sku_product.talla }}
+                        </p>
+                    </td>
+                    <td style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;">
+                        <p class=""
+                           style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;">
+                            ${{ obj.sku_product.master.costo }}
+                        </p>
+                        <p class=""
+                           style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: 200;">
+                            Cantidad: {{ obj.quantity }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            <div class="px-5"
+                 style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;padding-right: 3rem!important;padding-left: 3rem!important;">
+                <div class="row"
+                     style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;position: relative;width: 100%;">
+                    <p class="center b"
+                       style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: bold;text-align: center;margin-left: auto;margin-right: auto;">
+                        Subtotal: ${{ order.subtotal }}</p>
+                </div>
+                <div class="row"
+                     style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.5;position: relative;width: 100%;">
+                    <p class="center b"
+                       style="font-family: 'Lato', Helvetica, sans-serif;color: #333447;line-height: 1.8;font-size: 1.125rem;font-weight: bold;text-align: center;margin-left: auto;margin-right: auto;">
+                        Total: ${{ order.total }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
