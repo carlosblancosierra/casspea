@@ -23,7 +23,18 @@
       <div class="card p-5">
         <p class="font-150 mt-0">Returning User</p>
         <form method="POST"> {% csrf_token %}
-          {{ form }}
+
+          <div class="input-field">
+            {{ form.username }}
+            <label for="id_username">Email</label>
+          </div>
+
+
+          <div class="input-field">
+          {{ form.password }}
+            <label for="id_password">Password</label>
+          </div>
+          {{ form.non_field_errors }}
           <input type="hidden" name="next_url" value="{{ next_url }}">
           <button type="submit" class="btn-large btn-orange mt-3 w-100">Log in</button>
         </form>
