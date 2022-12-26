@@ -65,9 +65,19 @@ class Flavour(models.Model):
     @property
     def allergens_str(self):
         text = ""
-        if len(self.allergens.all()) > 0:
+        count = len(self.allergens.all())
+        index = 0
+        if count == 1:
+            text = self.allergens.all().first().name
+        elif count > 0:
             for obj in self.allergens.all():
-                text = text + obj.name + " "
+                index += 1
+                if index != count:
+                    text = text + obj.name
+                    if index + 1 != count:
+                        text += ", "
+                else:
+                    text = text + " and " + obj.name + "."
         return text
 
 
