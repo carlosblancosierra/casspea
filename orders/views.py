@@ -11,6 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import datetime
 from .models import Order, STATUS_CHOICES, CANCELED
+from .emails import new_order_staff_mail
 
 from carts.models import Cart, CartEntry
 from addresses.models import Address
@@ -32,7 +33,7 @@ endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
 endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'
 
 
-# from .emails import nueva_orden_mail_staff, nueva_orden_mail_client
+from .emails import new_order_staff_mail
 
 
 # Create your views here.
@@ -243,7 +244,7 @@ class CreateCheckoutSessionView(View):
                 "metadata": {"order": order_id},
                 # "account_tax_ids": [],
                 # "custom_fields": [{"name": "Purchase Order", "value": "PO-XYZ"}],
-                "rendering_options": {"amount_tax_display": "include_inclusive_tax"},
+                # "rendering_options": {"amount_tax_display": "include_inclusive_tax"},
                 "footer": "CassPea",
             },
         }
@@ -263,7 +264,8 @@ class CreateCheckoutSessionView(View):
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
-            # invoice_creation=invoice_creation,
+            allow_promotion_codes = True,
+            invoice_creation=invoice_creation,
         )
         return redirect(checkout_session.url)
 
@@ -434,11 +436,12 @@ def list_page(request):
 
 @staff_member_required
 def email_test(request):
-    order_id = ""
-    # nueva_orden_mail_staff("JM3")
+    order_id = "CP57"
+    sent = new_order_staff_mail(order_id)
+    print(sent)
     # print(nueva_orden_mail_client(order_id))
 
     qs = Order.objects.filter(order_id=order_id)
     context = {"order": qs.first()}
 
-    return render(request, "mails/orders/asd-inline.html", context)
+    return render(request, "mails/orders/new_order_staff.html", context)
