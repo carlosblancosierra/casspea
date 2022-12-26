@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from orders.models import Order
@@ -13,6 +13,9 @@ from django.contrib.auth import get_user_model
 @login_required
 def client_page(request):
     user = request.user
+
+    if request.user.is_staff:
+        return redirect('dashboards:staff')
 
     orders_qs = Order.objects.filter(user=user)
 
