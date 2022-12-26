@@ -16,10 +16,16 @@ from carts.models import Cart, CartEntry
 from addresses.models import Address
 import stripe
 
+more_than_10_discount_id_test = 'ShaB0r8a'
+more_than_10_discount_id_live = 'QS2DToWU'
+
+
 if settings.STRIPE_TEST:
     stripe.api_key = settings.STRIPE_SECRET_KEY
+    discount_code = more_than_10_discount_id_test
 else:
     stripe.api_key = settings.STRIPE_SECRET_KEY_LIVE
+    discount_code = more_than_10_discount_id_live
 
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
 endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
@@ -242,9 +248,9 @@ class CreateCheckoutSessionView(View):
             },
         }
 
-        discounts = [{
-            'coupon': 'admin90',
-        }],
+        discounts = []
+        if CartEntry.objects.more_than_10(request):
+            discounts = [{'coupon': discount_code}]
 
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -252,11 +258,12 @@ class CreateCheckoutSessionView(View):
             customer_email=customer_email,
             currency='GBP',
             mode='payment',
+            discounts=discounts,
             shipping_options=shipping_options,
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
-            invoice_creation=invoice_creation,
+            # invoice_creation=invoice_creation,
         )
         return redirect(checkout_session.url)
 

@@ -6,6 +6,7 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.db.models.signals import pre_save
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from boxes.models import Box
 
 User = settings.AUTH_USER_MODEL
 
@@ -93,6 +94,16 @@ class CartEntryManager(models.Manager):
             total += subtotal
         return total
 
+    def cart_boxes(self, request):
+        entries = self.entries(request)
+        boxes = 0
+        for entry in entries:
+            if entry.content_type == ContentType.objects.get_for_model(Box):
+                boxes += entry.quantity
+
+        print(boxes)
+        return boxes
+
     def shipping_free(self, request):
         cart_subtotal = self.cart_subtotal(request)
         if cart_subtotal >= 45:
@@ -112,6 +123,12 @@ class CartEntryManager(models.Manager):
         total = cart_subtotal + cart_shipping_cost
 
         return round(total, 2)
+
+    def more_than_10(self, request):
+        boxes = self.cart_boxes(request)
+        if boxes >= 10:
+            return True
+        return False
 
     #
     # def new_or_update(self, request, sku_product_id, quantity):
