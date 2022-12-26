@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import datetime
 from .models import Order, STATUS_CHOICES, CANCELED
-from .emails import new_order_staff_mail
+# from .emails import new_order_staff_mail
 
 from carts.models import Cart, CartEntry
 from addresses.models import Address
