@@ -12,11 +12,19 @@
 {% url 'orders:list' as orders_list_url %}
 
 
+{% url 'logout' as logout_url %}
+{% url 'password_change' as password_change_url %}
+
 <section class="container">
   <div class="row">
     <div class="col s12">
       <h1 class="font-200 my-4 text-center font-weight-bold text-uppercase">Dashboard</h1>
       <p class="center">User: {{ request.user.email }} </p>
+      <p class="center">
+        <a href="{{ password_change_url }}" class="btn btn-outline-green">Change Password</a>
+        <a href="{{ logout_url }}" class="btn btn-outline-orange ">Logout</a>
+      </p>
+
     </div>
   </div>
 </section>

@@ -5,6 +5,7 @@
 
 {% block content %}
 {% include "base/inner-banner.html" %}
+{% url 'password_reset' as password_reset_url %}
 
 
 <div class="container my-5">
@@ -29,6 +30,7 @@
         {% if error %}
         <p class="text-red">{{ error }}</p>
         {% endif %}
+        <p class="center"><a class="" href="{{ password_reset_url }}">Reset Password</a></p>
       </div>
       <div class="card p-5">
         <p class="font-150 mt-0">New user?</p>
