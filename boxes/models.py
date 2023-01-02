@@ -27,6 +27,11 @@ class BoxSize(models.Model):
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    store_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+                                processors=[ResizeToFill(1500, 1500)],
+                                format='JPEG',
+                                options={'quality': 95})
+
     image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                 processors=[ResizeToFill(1500, 998)],
                                 format='JPEG',

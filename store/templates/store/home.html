@@ -22,7 +22,7 @@
     {% for obj in qs %}
     <div class="col s6 m3">
 
-      {% if obj.image %}
+      {% if obj.store_image %}
       <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.image.url }}" class="responsive-img"> </a>
       {% endif %}
       <p class="center ">
