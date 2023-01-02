@@ -124,9 +124,15 @@ class CartEntryManager(models.Manager):
 
         return round(total, 2)
 
-    def more_than_10(self, request):
+    def more_than_15(self, request):
         boxes = self.cart_boxes(request)
-        if boxes >= 10:
+        if boxes >= 15:
+            return True
+        return False
+
+    def more_than_30(self, request):
+        boxes = self.cart_boxes(request)
+        if boxes >= 30:
             return True
         return False
 

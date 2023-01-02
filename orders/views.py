@@ -21,15 +21,20 @@ from carts.models import Cart, CartEntry
 from addresses.models import Address
 import stripe
 
-more_than_10_discount_id_test = 'ShaB0r8a'
-more_than_10_discount_id_live = 'QS2DToWU'
+more_than_15_discount_id_test = 'kNMyLyWK'
+more_than_15_discount_id_live = 'lk8ip9No'
+
+more_than_30_discount_id_test = 'NUGvdvL1'
+more_than_30_discount_id_live = 'ln6FgI7i'
 
 if settings.STRIPE_TEST:
     stripe.api_key = settings.STRIPE_SECRET_KEY
-    discount_code = more_than_10_discount_id_test
+    more_than_15_discount_id = more_than_15_discount_id_test
+    more_than_30_discount_id = more_than_30_discount_id_test
 else:
     stripe.api_key = settings.STRIPE_SECRET_KEY_LIVE
-    discount_code = more_than_10_discount_id_live
+    more_than_15_discount_id = more_than_15_discount_id_live
+    more_than_30_discount_id = more_than_30_discount_id_live
 
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
 endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
@@ -258,8 +263,10 @@ class CreateCheckoutSessionView(View):
         }
 
         discounts = []
-        if CartEntry.objects.more_than_10(request):
-            discounts = [{'coupon': discount_code}]
+        if CartEntry.objects.more_than_30(request):
+            discounts = [{'coupon': more_than_30_discount_id}]
+        elif CartEntry.objects.more_than_15(request):
+            discounts = [{'coupon': more_than_15_discount_id}]
 
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
@@ -272,7 +279,7 @@ class CreateCheckoutSessionView(View):
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
-            allow_promotion_codes=True,
+            # allow_promotion_codes=True,
             invoice_creation=invoice_creation,
         )
         return redirect(checkout_session.url)
@@ -456,7 +463,6 @@ def email_test(request):
 
 
 def guess_checkout_page(request):
-
     if request.method == "POST":
         next_url = request.POST.get('next_url', None)
         form = AuthenticationForm(request, data=request.POST)
