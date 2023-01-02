@@ -553,3 +553,7 @@ h1, h2 {
   background-size: cover;
   background-position: center;
 }
+
+.sidenav {
+    z-index:99999!important;
+}
