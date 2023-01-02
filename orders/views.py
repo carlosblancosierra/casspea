@@ -463,6 +463,9 @@ def email_test(request):
 
 
 def guess_checkout_page(request):
+    if request.user.is_authenticated:
+        return redirect('orders:address')
+
     if request.method == "POST":
         next_url = request.POST.get('next_url', None)
         form = AuthenticationForm(request, data=request.POST)
