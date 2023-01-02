@@ -25,6 +25,7 @@
       {% if obj.store_image %}
       <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
       {% endif %}
+      <p class="center bold">£{{ obj.price }}</p>
       <p class="center ">
         <a class="btn btn-outline-{{ obj.color }}" href="{{ obj.get_absolute_url }}">
           {{ obj }}

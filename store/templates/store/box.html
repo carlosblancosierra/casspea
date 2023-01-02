@@ -38,7 +38,8 @@
     </div>
 
     <div class="col s12 m6">
-      <h1 class="font-250">{{ box_obj }}</h1>
+      <h1 class="font-250 bold">{{ box_obj }}</h1>
+      <p class=" my-orange-text font-150">£{{ box_obj.price }}</p>
       {% if box_obj.description %}
       <p>{{ box_obj.description }}</p>
       {% endif %}
