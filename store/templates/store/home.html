@@ -23,7 +23,7 @@
     <div class="col s6 m3">
 
       {% if obj.store_image %}
-      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.image.url }}" class="responsive-img"> </a>
+      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
       {% endif %}
       <p class="center ">
         <a class="btn btn-outline-{{ obj.color }}" href="{{ obj.get_absolute_url }}">
