@@ -81,7 +81,6 @@ class Flavour(models.Model):
         return text
 
 
-
 class FlavourChoice(models.Model):
     flavour = models.ForeignKey(Flavour, on_delete=models.PROTECT)
     quantity = models.PositiveIntegerField()

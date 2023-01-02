@@ -8,6 +8,7 @@ urlpatterns = [
     path('email-test', views.email_test),
     path('address', views.address_page, name="address"),
     path('confirmar', views.confirm_page, name="confirm"),
+    path('guess_checkout', views.guess_checkout_page, name="guess_checkout"),
     path('staff-list', views.staff_list_page, name="staff-list"),
     path('list', views.list_page, name="list"),
     path('create-checkout-session', views.CreateCheckoutSessionView.as_view(), name="checkout-session"),

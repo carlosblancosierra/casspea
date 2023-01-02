@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %} {% endblock %}
+
+{% block content %}
+
+{% include "base/inner-banner.html" %}
+{% url 'orders:address' as address_url %}
+
+<div class="container">
+  <div class="row my-5">
+    <div class="col s12 m6 xl4">
+      <p class="font-150 mt-0">Guess Checkout</p>
+      <p>
+        <a class="btn-large btn-green w-100"
+           href="{{ address_url }}">
+          Continue without account</a>
+      </p>
+    </div>
+    <div class="col s12 m6 xl4">
+      <div class="">
+        <p class="font-150 mt-0">New user?</p>
+        <p>
+          <a class="btn-large btn-green w-100"
+             href="/register?next_url={{ address_url }}">
+            Register</a>
+        </p>
+
+      </div>
+
+    </div>
+    <div class="col s12 m6 xl4">
+      <div class="">
+        <p class="font-150 mt-0">Returning User</p>
+        <form method="POST"> {% csrf_token %}
+
+          <div class="input-field">
+            {{ form.username }}
+            <label for="id_username">Email</label>
+          </div>
+
+
+          <div class="input-field">
+            {{ form.password }}
+            <label for="id_password">Password</label>
+          </div>
+          {{ form.non_field_errors }}
+          <input type="hidden" name="next_url" value="{{ address_url }}">
+          <button type="submit" class="btn-large btn-orange mt-3 w-100">Log in</button>
+        </form>
+        {% if error %}
+        <p class="text-red">{{ error }}</p>
+        {% endif %}
+        <p class="center"><a class="" href="{{ password_reset_url }}">Reset Password</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

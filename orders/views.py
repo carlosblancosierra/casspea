@@ -9,6 +9,10 @@ from django.conf import settings
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
+from django.contrib.auth import authenticate, login, logout
+
 import datetime
 from .models import Order, STATUS_CHOICES, CANCELED
 # from .emails import new_order_staff_mail
@@ -19,7 +23,6 @@ import stripe
 
 more_than_10_discount_id_test = 'ShaB0r8a'
 more_than_10_discount_id_live = 'QS2DToWU'
-
 
 if settings.STRIPE_TEST:
     stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -32,31 +35,33 @@ endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e5
 endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
 endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'
 
-
 from .emails import new_order_staff_mail
 
 
 # Create your views here.
 
-@login_required
 def address_page(request):
-    if not request.user.is_authenticated:
-        return redirect('/login?next=/orders/address')
+    # if not request.user.is_authenticated:
+    #     return redirect('/login?next=/orders/address')
 
     entries = CartEntry.objects.entries(request)
     if not entries:
         return redirect("carts:home")
 
-    user = request.user
-
-    address_id = request.session.get("address_id", None)
-    addresses = Address.objects.filter(user=user, active=True)
-    address_qs = addresses.filter(id=address_id)
+    guest = not request.user.is_authenticated
+    addresses = None
+    # address = None
     address_to_update = None
 
-    if len(address_qs) == 1:
-        address_to_update = address_qs.first()
-        addresses = addresses.exclude(id=address_id)
+    address_id = request.session.get("address_id", None)
+    if not guest:
+        addresses = Address.objects.filter(user=request.user, active=True)
+        address_qs = addresses.filter(id=address_id)
+
+        address_to_update = None
+        if len(address_qs) == 1:
+            address_to_update = address_qs.first()
+            addresses = addresses.exclude(id=address_id)
 
     context = {
         "title": 'Checkout',
@@ -113,9 +118,12 @@ def address_page(request):
                 city=city,
                 tel=tel,
                 country=country,
-                user=request.user
+                # user=request.user
             )
             address.save()
+
+            if not guest:
+                address.user = request.user
 
             request.session['address_id'] = address.id
 
@@ -124,7 +132,6 @@ def address_page(request):
     return render(request, "orders/address.html", context)
 
 
-@login_required
 def confirm_page(request):
     address_id = request.session.get("address_id", None)
     gift_message = request.session.get("gift_message", None)
@@ -181,14 +188,17 @@ class CreateCheckoutSessionView(View):
             shipping_date_obj = datetime.datetime.strptime(shipping_date, '%b %d, %Y')
             shipping_date_obj = shipping_date_obj.date()
 
-        order = Order(user=request.user,
-                      shipping_address=shipping_address,
+        order = Order(shipping_address=shipping_address,
                       gift_message=gift_message,
                       shipping_date=shipping_date_obj
                       )
-
+        customer_email = None
+        if request.user.is_authenticated:
+            order.user = request.user
+            customer_email = request.user.email
         order.save()
         order.cart_entries.set(cart_entries)
+
         order_id = order.order_id
 
         # request.session['cart_id'] = None
@@ -201,8 +211,6 @@ class CreateCheckoutSessionView(View):
                 'price': str(entry.product.size.price_id),
                 'quantity': str(entry.quantity),
             })
-
-        customer_email = request.user.email
 
         # send order id to stripe
         domain = "https://www.casspea.co.uk"
@@ -264,7 +272,7 @@ class CreateCheckoutSessionView(View):
             client_reference_id=order_id,
             success_url=domain + '/orders/success',
             cancel_url=domain + '/orders/cancel',
-            allow_promotion_codes = True,
+            allow_promotion_codes=True,
             invoice_creation=invoice_creation,
         )
         return redirect(checkout_session.url)
@@ -445,3 +453,27 @@ def email_test(request):
     context = {"order": qs.first()}
 
     return render(request, "mails/orders/new_order_staff.html", context)
+
+
+def guess_checkout_page(request):
+
+    if request.method == "POST":
+        next_url = request.POST.get('next_url', None)
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            print("next_url ", next_url is None)
+            if next_url is None:
+                return redirect('/')
+            return redirect(next_url)
+    else:
+        form = AuthenticationForm(request)
+        next_url = request.GET.get('next', "/")
+
+    context = {
+        "title": "Log In",
+        "form": form,
+        "next_url": next_url
+    }
+    return render(request, "orders/guess_checkout.html", context)

@@ -29,7 +29,7 @@ def home_page(request):
         shipping_date = request.POST.get('shipping_date', None)
         request.session['shipping_date'] = shipping_date
 
-        return redirect('orders:address')
+        return redirect('orders:guess_checkout')
 
     context = {
         "title": "Cart",
