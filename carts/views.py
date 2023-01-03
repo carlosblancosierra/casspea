@@ -22,6 +22,8 @@ def home_page(request):
         if shipping_free:
             shipping_cost = 0
 
+    # discount = CartEntry.objects.get_discount(request)
+
     if request.POST:
         gift_message = request.POST.get('gift_message', None)
         request.session['gift_message'] = gift_message
@@ -41,6 +43,7 @@ def home_page(request):
         "subtotal": subtotal,
         "shipping_cost": shipping_cost,
         "shipping_free": shipping_free,
+        # "discount": discount,
 
     }
 

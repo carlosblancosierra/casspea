@@ -30,7 +30,7 @@
               <th></th>
               <th></th>
               <th>PRODUCT</th>
-              <th class="d-none d-md-table-cell">PRICE</th>
+              <th class="d-none d-md-table-cell">EACH</th>
               <th class="d-none d-md-table-cell">QUANTITY</th>
               <th class="d-none d-md-table-cell">TOTAL</th>
               <th class="d-md-none">DETAILS</th>
@@ -41,43 +41,58 @@
             {% for obj in entries %}
 
             <tr>
-              <td></td>
-              <td>
-                {% if obj.product.image %}
-                <img src="{{ obj.product.image.url }}" width="150px" class="d-none d-md-table-cell">
-                <img src="{{ obj.product.image.url }}" width="50px" class="d-md-none">
-                {% endif %}
-              </td>
-              <td>
-                <p class="bold">{{ obj.product.size }}</p>
-                <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
-                <ul class="m-0">
-                  {% for obj in obj.product.selected_prebuilts.all %}
-                  <li class="m-0">{{ obj }}</li>
-                  {% endfor %}
-                  {% for obj in obj.product.selected_flavours.all %}
-                  <li class="m-0">{{ obj }}</li>
-                  {% endfor %}
-                </ul>
-              </td>
-              <td class="d-none d-md-table-cell">{{ obj.product.price }}</td>
-              <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
-              <td class="d-none d-md-table-cell">£{{ obj.total }} GBP</td>
-              <td class="d-md-none">
-                <span class="bold">Price:</span><br>
-                {{ obj.product.price }}<br>
-                <span class="bold">Quantity:</span><br>
-                {{ obj.quantity }}<br>
-                <span class="bold">Total:</span><br>
-                £{{ obj.total }} GBP
-              </td>
-              <td>
-                <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
-                  <input type="hidden" value="{{ obj.id }}" name="obj_id">
-                  <button type="submit">X</button>
-                </form>
-              </td>
-            </tr>
+          <td></td>
+          <td>
+            {% if obj.product.image %}
+            <img src="{{ obj.product.image.url }}" width="150px" class="d-none d-md-table-cell">
+            <img src="{{ obj.product.image.url }}" width="50px" class="d-md-none">
+            {% endif %}
+          </td>
+          <td>
+            <p class="bold">{{ obj.product.size }}</p>
+            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
+            <ul class="m-0">
+              {% for obj in obj.product.selected_prebuilts.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+              {% for obj in obj.product.selected_flavours.all %}
+              <li class="m-0">{{ obj }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="d-none d-md-table-cell">
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+          </td>
+          <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
+          <td class="d-none d-md-table-cell">£{{ obj.total|floatformat:2 }}</td>
+          <td class="d-md-none">
+            <span class="bold">Price:</span><br>
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+            <br>
+            <span class="bold">Quantity:</span><br>
+            {{ obj.quantity }}<br>
+            <span class="bold">Total:</span><br>
+            £{{ obj.total|floatformat:2 }}
+          </td>
+          <td>
+            <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
+              <input type="hidden" value="{{ obj.id }}" name="obj_id">
+              <button type="submit">X</button>
+            </form>
+          </td>
+        </tr>
 
             {% endfor %}
 

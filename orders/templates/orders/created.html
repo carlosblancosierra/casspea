@@ -43,7 +43,7 @@
           <th></th>
           <th></th>
           <th>PRODUCT</th>
-          <th>PRICE</th>
+          <th>EACH</th>
           <th>QUANTITY</th>
           <th>TOTAL</th>
         </tr>
@@ -52,11 +52,12 @@
         <tbody>
         {% for obj in order.cart_entries.all %}
 
-        <tr>
+         <tr>
           <td></td>
           <td>
             {% if obj.product.image %}
-            <img src="{{ obj.product.image.url }}" width="150px">
+            <img src="{{ obj.product.image.url }}" width="150px" class="d-none d-md-table-cell">
+            <img src="{{ obj.product.image.url }}" width="50px" class="d-md-none">
             {% endif %}
           </td>
           <td>
@@ -71,10 +72,32 @@
               {% endfor %}
             </ul>
           </td>
-          <td>{{ obj.product.price }}</td>
-          <td>{{ obj.quantity }}</td>
-          <td>£{{ obj.total }} GBP</td>
-
+          <td class="d-none d-md-table-cell">
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+          </td>
+          <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
+          <td class="d-none d-md-table-cell">£{{ obj.total|floatformat:2 }}</td>
+          <td class="d-md-none">
+            <span class="bold">Price:</span><br>
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+            <br>
+            <span class="bold">Quantity:</span><br>
+            {{ obj.quantity }}<br>
+            <span class="bold">Total:</span><br>
+            £{{ obj.total|floatformat:2 }}
+          </td>
         </tr>
 
         {% endfor %}

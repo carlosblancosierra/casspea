@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load humanize %}
 
 {% block head_title %}{{ block.super }} Box Flavours{% endblock %}
 
@@ -42,7 +43,7 @@
           <th></th>
           <th></th>
           <th>PRODUCT</th>
-          <th class="d-none d-md-table-cell">PRICE</th>
+          <th class="d-none d-md-table-cell">EACH</th>
           <th class="d-none d-md-table-cell">QUANTITY</th>
           <th class="d-none d-md-table-cell">TOTAL</th>
           <th class="d-md-none">DETAILS</th>
@@ -73,16 +74,31 @@
               {% endfor %}
             </ul>
           </td>
-          <td class="d-none d-md-table-cell">{{ obj.product.price }}</td>
+          <td class="d-none d-md-table-cell">
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+          </td>
           <td class="d-none d-md-table-cell">{{ obj.quantity }}</td>
-          <td class="d-none d-md-table-cell">£{{ obj.total }} GBP</td>
+          <td class="d-none d-md-table-cell">£{{ obj.total|floatformat:2 }}</td>
           <td class="d-md-none">
             <span class="bold">Price:</span><br>
-            {{ obj.product.price }}<br>
+            {% if obj.discounted_price %}
+            <s>£{{ obj.product.price|floatformat:2 }}</s>
+            <br>
+            <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
+            {% else %}
+            £{{ obj.product.price|floatformat:2 }}
+            {% endif %}
+            <br>
             <span class="bold">Quantity:</span><br>
             {{ obj.quantity }}<br>
             <span class="bold">Total:</span><br>
-            £{{ obj.total }} GBP
+            £{{ obj.total|floatformat:2 }}
           </td>
           <td>
             <form action="{{ remove_boxes_url }}" method="POST"> {% csrf_token %}
@@ -96,8 +112,8 @@
         <tr>
           <td colspan="2" class="d-md-none"></td>
           <td colspan="4" class="d-none d-md-table-cell"></td>
-          <td>Total:</td>
-          <td>£{{ total }} GBP</td>
+          <td class="bold">Total:</td>
+          <td>£{{ total|floatformat:2 }}</td>
         </tr>
 
 
@@ -151,8 +167,18 @@
               <tbody>
               <tr>
                 <td>Products</td>
-                <td class="right">£{{ subtotal }} GBP</td>
+                <td class="right">£{{ subtotal|floatformat:2 }} GBP</td>
               </tr>
+
+              <!--              <tr>-->
+              <!--                <td class=""><span class="bold">Discount:</span><br>-->
+              <!--                  10% off 15 or more Boxes <br>-->
+              <!--                  15% off 30 or more Boxes-->
+              <!--                <td>-->
+              <!--                <td>-->
+              <!--                  {{ discount }}-->
+              <!--                </td>-->
+              <!--              </tr>-->
               <tr>
                 <td>
                   <span class="">Shipping</span>
@@ -163,14 +189,14 @@
                   {% if shipping_free %}
                   Free
                   {% else %}
-                  £{{ shipping_cost }} GBP
+                  £{{ shipping_cost|floatformat:2 }} GBP
                   <br>
                   {% endif %}
                 </td>
               </tr>
               <tr>
                 <td class="bold font-150">Total</td>
-                <td class="right bold font-150">£{{ total }} GBP</td>
+                <td class="right bold font-150">£{{ total|floatformat:2 }} GBP</td>
               </tr>
               </tbody>
             </table>

@@ -136,63 +136,6 @@ class CartEntryManager(models.Manager):
             return True
         return False
 
-    #
-    # def new_or_update(self, request, sku_product_id, quantity):
-    #
-    #     if sku_product_id is not None:
-    #         try:
-    #             sku_product = SkuProduct.objects.get(sku=sku_product_id)
-    #
-    #         except SkuProduct.DoesNotExist:
-    #             messages.error(request, "Error de producto")
-    #             return redirect("carts:home")
-    #
-    #     cart, created = Cart.objects.new_or_get(request)
-    #
-    #     cart_entry = self.filter(cart=cart).filter(sku_product=sku_product)
-    #
-    #     if cart_entry.count() == 1:
-    #         entry = cart_entry.first()
-    #         if int(quantity) > 0:
-    #             entry.quantity = quantity
-    #             entry.save()
-    #
-    #         elif int(quantity) == 0:
-    #             entry.delete()
-    #
-    #     elif cart_entry.count() > 1:
-    #         raise MultipleObjectsReturned
-    #
-    #     else:
-    #         entry = self.new(request, sku_product=sku_product, quantity=quantity)
-    #
-    # def add_or_remove_quantity(self, request, sku_product_id, quantity):
-    #
-    #     if sku_product_id is not None:
-    #         try:
-    #             sku_product = SkuProduct.objects.get(sku=sku_product_id)
-    #
-    #         except SkuProduct.DoesNotExist:
-    #             messages.error(request, "Error de producto")
-    #             return redirect("carts:home")
-    #     cart, created = Cart.objects.new_or_get(request)
-    #     cart_entry = self.filter(cart=cart).filter(sku_product=sku_product)
-    #
-    #     if cart_entry.count() == 1:
-    #         entry = cart_entry.first()
-    #         print(quantity)
-    #         entry.quantity = entry.quantity + quantity
-    #         entry.save()
-    #
-    #         if entry.quantity <= 0:
-    #             entry.delete()
-    #
-    # def add_1(self, request, sku_product_id):
-    #     self.add_or_remove_quantity(request, sku_product_id, 1)
-    #
-    # def remove_1(self, request, sku_product_id):
-    #     self.add_or_remove_quantity(request, sku_product_id, -1)
-
 
 class CartEntry(models.Model):
     quantity = models.PositiveIntegerField()
@@ -216,4 +159,48 @@ class CartEntry(models.Model):
 
     @property
     def total(self):
-        return self.product.price * self.quantity
+        return self.price * self.quantity
+
+    @property
+    def cart_boxes(self):
+        entries = CartEntry.objects.filter(cart=self.cart, active=True)
+        total = 0
+        for entry in entries:
+            total += entry.quantity
+        return total
+
+    @property
+    def more_than_15_boxes(self):
+        boxes = self.cart_boxes
+        if boxes >= 15:
+            return True
+
+    @property
+    def more_than_30_boxes(self):
+        boxes = self.cart_boxes
+        if boxes >= 30:
+            return True
+
+    @property
+    def discounted_price(self):
+        if self.more_than_30_boxes:
+            return float(self.product.price) * 0.85
+        elif self.more_than_15_boxes:
+            return float(self.product.price) * 0.9
+        else:
+            return None
+
+    @property
+    def has_discount(self):
+        if self.more_than_15_boxes or self.more_than_30_boxes:
+            return True
+        else:
+            return False
+
+    @property
+    def price(self):
+        price = self.product.price
+        if self.discounted_price:
+            return self.discounted_price
+        else:
+            return price
