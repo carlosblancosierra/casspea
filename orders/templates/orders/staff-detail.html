@@ -19,6 +19,10 @@
 
     <div class="col s12 m4">
       <p class="font-150 mb-1"><span class="font-150 bold">ID:</span> {{ order.order_id }}</p>
+      <p class="font-150 mb-1"><span class="font-150 bold">Stripe Description:</span> {{ order.stripe_description }}</p>
+      <p class="font-150 mb-1"><span class="font-150 bold">Payment Status:</span>
+        {{ order.is_paid }}
+      </p>
       <p class="font-150 my-1"><span class="font-150 bold">User:</span> {{ order.user }}</p>
       <p class="font-150 my-1"><span class="font-150 bold">Date:</span> {{ order.timestamp }}</p>
       <p class="font-150 my-1"><span class="font-150 bold">Gift Message:</span> {{ order.gift_message }}</p>

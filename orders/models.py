@@ -4,6 +4,7 @@ from addresses.models import Address
 from carts.models import CartEntry
 from django.conf import settings
 from django.db.models.signals import post_save
+import json
 
 # Create your models here.
 User = settings.AUTH_USER_MODEL
@@ -16,7 +17,6 @@ DELIVERED = 'delivered'
 STATUS_CHOICES = (
     (CREATED, CREATED),
     (CANCELED, CANCELED),
-    (PAID, PAID),
     (DELIVERED, DELIVERED),
 )
 
@@ -85,6 +85,19 @@ class Order(models.Model):
     @property
     def total(self):
         return round(float(self.subtotal) + float(self.shipping_cost), 2)
+
+    @property
+    def is_paid(self):
+        if self.payment_status == 'paid':
+            return self.payment_status
+        else:
+            return 'unpaid'
+
+    @property
+    def stripe_description(self):
+        if self.stripe_data:
+            stripe_data = json.loads(self.stripe_data)
+            return stripe_data['payment_intent']
 
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):

@@ -23,10 +23,10 @@
         <div class="col s1">
           ID
         </div>
-        <div class="col s3">
-          Client
+        <div class="col s4">
+          Stripe Description
         </div>
-        <div class="col s3">
+        <div class="col s2">
           Payment Status
         </div>
         <div class="col s2">
@@ -47,11 +47,11 @@
         <div class="col s1">
           {{ order.order_id }}
         </div>
-        <div class="col s3">
-          {{ order.user.email }}
+        <div class="col s4">
+          {{ order.stripe_description }}
         </div>
-        <div class="col s3">
-          {{ order.payment_status }}
+        <div class="col s2">
+          {{ order.is_paid }}
         </div>
         <div class="col s2">
           {{ order.timestamp }}

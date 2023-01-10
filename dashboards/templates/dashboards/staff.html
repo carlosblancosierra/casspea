@@ -9,7 +9,7 @@
 
 {% include "base/navbar-dark.html" %}
 
-{% url 'orders:list' as orders_list_url %}
+{% url 'orders:staff-list' as orders_list_url %}
 {% url 'accounts:user-list' as user_list_url %}
 
 
@@ -28,19 +28,22 @@
       <div class="collection">
         <a class="collection-item">
           <div class="row my-orange-text">
-            <div class="col s1">
+            <div class="col s12 m1">
               ID
             </div>
-            <div class="col s3">
+            <div class="col s12 m4">
+              Stripe Description
+            </div>
+            <div class="col s12 m2">
               Payment Status
             </div>
-            <div class="col s2">
+            <div class="col s12 m2">
               Date
             </div>
-            <div class="col s2">
+            <div class="col s12 m2">
               Status
             </div>
-            <div class="col s1">
+            <div class="col s12 m1">
               Total
             </div>
           </div>
@@ -49,20 +52,23 @@
         {% for order in orders %}
         <a href="{{ order.get_staff_url }}" class="collection-item">
           <div class="row my-grey-text">
-            <div class="col s1">
-              {{ order.order_id }}
+            <div class="col s12 m1">
+              <span class="d-md-none bold">ID: </span>{{ order.order_id }}
             </div>
-            <div class="col s3">
-              {{ order.payment_status }}
+            <div class="col s12 m4">
+              <span class="d-md-none bold">Stripe Description: </span>{{ order.stripe_description }}
             </div>
-            <div class="col s2">
-              {{ order.timestamp }}
+            <div class="col s12 m2">
+              <span class="d-md-none bold">Payment: </span>{{ order.is_paid }}
             </div>
-            <div class="col s2">
-              {{ order.status }}
+            <div class="col s12 m2">
+              <span class="d-md-none bold">Date: </span>{{ order.timestamp }}
             </div>
-            <div class="col s1">
-              ${{ order.total }}
+            <div class="col s12 m2">
+              <span class="d-md-none bold">Status: </span>{{ order.status }}
+            </div>
+            <div class="col s12 m1">
+              <span class="d-md-none bold">Total: </span>${{ order.total }}
             </div>
           </div>
         </a>
@@ -73,39 +79,39 @@
   </div>
 </section>
 
-<section class="container">
-  <div class="row">
-    <div class="col s12">
-      <h2 class="font-150 my-4 text-center font-weight-bold text-uppercase">Last Users</h2>
-      <div class="collection">
-        <a class="collection-item">
-          <div class="row my-orange-text">
-            <div class="col s3">
-              User
-            </div>
-            <div class="col s3">
-              Email
-            </div>
+<!--<section class="container">-->
+<!--  <div class="row">-->
+<!--    <div class="col s12">-->
+<!--      <h2 class="font-150 my-4 text-center font-weight-bold text-uppercase">Last Users</h2>-->
+<!--      <div class="collection">-->
+<!--        <a class="collection-item">-->
+<!--          <div class="row my-orange-text">-->
+<!--            <div class="col s3">-->
+<!--              User-->
+<!--            </div>-->
+<!--            <div class="col s3">-->
+<!--              Email-->
+<!--            </div>-->
 
-          </div>
-        </a>
+<!--          </div>-->
+<!--        </a>-->
 
-        {% for user in users %}
-        <a href="{{ order.get_absolute_url }}" class="collection-item">
-          <div class="row my-grey-text">
-            <div class="col s3">
-              {{ user.first_name }} {{ user.last_name }}
-            </div>
-            <div class="col s3">
-              {{ user.email }}
-            </div>
-          </div>
-        </a>
-        {% endfor %}
-      </div>
-      <p class="right"><a href="{{ user_list_url }}" class="btn btn-green">View All Users</a></p>
-    </div>
-  </div>
-</section>
+<!--        {% for user in users %}-->
+<!--        <a class="collection-item">-->
+<!--          <div class="row my-grey-text">-->
+<!--            <div class="col s3">-->
+<!--              {{ user.first_name }} {{ user.last_name }}-->
+<!--            </div>-->
+<!--            <div class="col s3">-->
+<!--              {{ user.email }}-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </a>-->
+<!--        {% endfor %}-->
+<!--      </div>-->
+<!--      <p class="right"><a href="{{ user_list_url }}" class="btn btn-green">View All Users</a></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
 {% endblock %}
 
