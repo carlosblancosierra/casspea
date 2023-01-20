@@ -567,3 +567,55 @@ h1, h2 {
 .sidenav {
     z-index:99999!important;
 }
+
+
+/* CUSTOM CHOCOLATES */
+
+#custom-background {
+
+}
+
+#custom-layer-1,
+#custom-side-layer-1
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 110;
+  width: 100%;
+}
+
+#custom-layer-2, 
+#custom-side-layer-2
+ {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  width: 100%;
+}
+
+#custom-layer-3,
+#custom-side-layer-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 130;
+  width: 100%;
+}
+
+#custom-shadows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width: 100%;
+}
+
+#custom-side-shadows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width: 100%;
+}

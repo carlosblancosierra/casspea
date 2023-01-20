@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'addresses',
     'boxes',
     'carts',
+    'custom_chocolates',
     'dashboards',
     'flavours',
     'orders',

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="text-lblue font-200">Test</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="position-relative">
+            <img src="{% static 'images/custom/top/background/midnight_galaxy.png' %}" class="responsive-img" id="custom-top-background">
+            <img src="" id="custom-layer-1" style="opacity:0">
+            <img src="" id="custom-layer-2" style="opacity:0">
+            <img src="" id="custom-layer-3" style="opacity:0">
+            <img src="{% static 'images/custom/top/shadows.png' %}" id="custom-shadows">
+          </div>
+        </div>
+        <div class="col s12 m12">
+          <div class="position-relative ">
+            <img src="{% static 'images/custom/side/background/midnight_galaxy.png' %}" class="responsive-img">
+            <!--            <img src="" style="opacity:0" class="responsive-img">-->
+            <!--            <img src="" style="opacity:0" class="responsive-img">-->
+            <!--            <img src="" style="opacity:0" class="responsive-img">-->
+            <img src="{% static 'images/custom/side/shadows.png' %}" id="custom-side-shadows">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6">
+      <h1 class="font-200">Custom Chocolates</h1>
+      <form>
+        <label>Background</label>
+        <select class="browser-default" id="select-background">
+          <option value="" disabled selected>Choose your background</option>
+          <option value="{% static 'images/custom/top/background/midnight_galaxy.png' %}">Midnight Galaxy</option>
+          <option value="{% static 'images/custom/top/background/orange.png' %}">Orange</option>
+        </select>
+        <label>Layer 1</label>
+        <select class="browser-default" id="select-layer-1">
+          <option value="" disabled selected>Choose</option>
+          <option value="{% static 'images/custom/top/dots/blue.png' %}">Blue</option>
+          <option value="{% static 'images/custom/top/dots/white.png' %}">White</option>
+          <option value="{% static 'images/custom/top/dots/purple.png' %}">Purple</option>
+          <option value="">None</option>
+        </select>
+        <label>Layer 2</label>
+        <select class="browser-default" id="select-layer-2">
+          <option value="" disabled selected>Choose</option>
+          <option value="{% static 'images/custom/top/dots/blue.png' %}">Blue</option>
+          <option value="{% static 'images/custom/top/dots/white.png' %}">White</option>
+          <option value="{% static 'images/custom/top/dots/purple.png' %}">Purple</option>
+          <option value="">None</option>
+
+        </select>
+        <label>Layer 3</label>
+        <select class="browser-default" id="select-layer-3">
+          <option value="" disabled selected>Choose</option>
+          <option value="{% static 'images/custom/top/dots/blue.png' %}">Blue</option>
+          <option value="{% static 'images/custom/top/dots/white.png' %}">White</option>
+          <option value="{% static 'images/custom/top/dots/purple.png' %}">Purple</option>
+          <option value="">None</option>
+
+        </select>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
