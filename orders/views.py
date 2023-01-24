@@ -262,26 +262,44 @@ class CreateCheckoutSessionView(View):
             },
         }
 
-        discounts = []
+        discounts = None
+        allow_promotion_codes = True
         if CartEntry.objects.more_than_30(request):
             discounts = [{'coupon': more_than_30_discount_id}]
+            allow_promotion_codes = False
         elif CartEntry.objects.more_than_15(request):
             discounts = [{'coupon': more_than_15_discount_id}]
+            allow_promotion_codes = False
 
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=line_items,
-            customer_email=customer_email,
-            currency='GBP',
-            mode='payment',
-            discounts=discounts,
-            shipping_options=shipping_options,
-            client_reference_id=order_id,
-            success_url=domain + '/orders/success',
-            cancel_url=domain + '/orders/cancel',
-            # allow_promotion_codes=True,
-            invoice_creation=invoice_creation,
-        )
+        if not allow_promotion_codes:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+                customer_email=customer_email,
+                currency='GBP',
+                mode='payment',
+                discounts=discounts,
+                shipping_options=shipping_options,
+                client_reference_id=order_id,
+                success_url=domain + '/orders/success',
+                cancel_url=domain + '/orders/cancel',
+                invoice_creation=invoice_creation,
+            )
+        else:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=line_items,
+                customer_email=customer_email,
+                currency='GBP',
+                mode='payment',
+                shipping_options=shipping_options,
+                client_reference_id=order_id,
+                success_url=domain + '/orders/success',
+                cancel_url=domain + '/orders/cancel',
+                allow_promotion_codes=allow_promotion_codes,
+                invoice_creation=invoice_creation,
+            )
+
         return redirect(checkout_session.url)
 
 
