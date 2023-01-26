@@ -20,6 +20,13 @@
 </head>
 
 <body>
+
+<section class="row">
+  <div class="col s12">
+    <p class="center">ADD CODE <span class="bold">CASSPEA15</span> AT PAYMENT FOR 15% OFF</p>
+  </div>
+</section>
+
 <div class="mh-90 mb-5">
   {% block content %}
 
@@ -40,6 +47,8 @@
 {{ message }}
 <script>
     M.toast({html: '{{ message }}', classes: '{% if message.tags %}{{ message.tags }}{% endif %} rounded'});
+
+
 
 
 </script>
