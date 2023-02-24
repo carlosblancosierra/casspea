@@ -162,11 +162,15 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'media')
 MEDIA_URL = '/media/'  # django-storages
 
-AWS_ACCESS_KEY_ID = "AKIAIWMAKUKZAEUHDANQ"
+# AWS_ACCESS_KEY_ID = "AKIAIWMAKUKZAEUHDANQ"
+#
+# AWS_SECRET_ACCESS_KEY = "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"
 
-AWS_SECRET_ACCESS_KEY = "BAhacAbFwPu+bUR/R5Vaz4NkyCiYnz5dAR5Au1De"
+AWS_ACCESS_KEY_ID = "AKIARBFJSQ6R42T6TAFU"
 
-AWS_STORAGE_BUCKET_NAME = 'casspea-static-guork2'
+AWS_SECRET_ACCESS_KEY = "PhDTHw+Anc5whxTB673SepMZ3PIlYPr+7B22mqem"
+
+AWS_STORAGE_BUCKET_NAME = 'casspea-static-eu'
 
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3-accelerate.amazonaws.com'
 
@@ -190,7 +194,7 @@ EMAIL_STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}'
 
 MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
 
-AWS_S3_REGION_NAME = 'eu-west-2'
+AWS_S3_REGION_NAME = 'eu-west-1'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
