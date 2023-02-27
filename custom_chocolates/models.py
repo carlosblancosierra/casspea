@@ -15,11 +15,14 @@ class ChocolateDesignLayerType(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+
 def upload_location(instance, filename):
     return "chocolate-design-layer-img/%s/%s" % (instance.id, filename)
 
 
 class ChocolateDesignLayer(models.Model):
+    type = models.ForeignKey(ChocolateDesignLayerType, related_name="type", on_delete=models.PROTECT, null=True,
+                             blank=True)
     title = models.CharField(max_length=120, blank=True, null=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                     processors=[ResizeToFill(2000, 2000)],
