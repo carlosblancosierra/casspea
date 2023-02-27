@@ -18,6 +18,9 @@ class ChocolateDesignLayerType(models.Model):
     def __str__(self):
         return "{}".format(self.title)
 
+    class Meta:
+        ordering = ['title']
+
 
 def upload_location(instance, filename):
     return "chocolate-design-layer-img/%s/%s" % (instance.id, filename)
@@ -51,6 +54,9 @@ class ChocolateDesignLayer(models.Model):
             }
             return json.dumps(images)
 
+    class Meta:
+        ordering = ['type', 'title']
+
 
 class ChocolateDesignBase(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
@@ -78,6 +84,9 @@ class ChocolateDesignBase(models.Model):
             }
             return json.dumps(images)
 
+    class Meta:
+        ordering = ['title']
+
 
 class ChocolateDesign(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
@@ -103,6 +112,9 @@ class ChocolateDesign(models.Model):
     def get_absolute_url(self):
         return f"/custom_chocolates/design/{self.slug}"
 
+    class Meta:
+        ordering = ['title']
+
 
 class UserChocolateDesign(models.Model):
     design = models.ForeignKey(ChocolateDesign, related_name="design", on_delete=models.PROTECT)
@@ -120,6 +132,9 @@ class UserChocolateDesign(models.Model):
 
     def __str__(self):
         return self.design.title
+
+    class Meta:
+        ordering = ['timestamp']
 
     @property
     def description(self):
