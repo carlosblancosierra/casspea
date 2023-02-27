@@ -15,6 +15,8 @@ class ChocolateDesignLayerType(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return "{}".format(self.title)
 
 def upload_location(instance, filename):
     return "chocolate-design-layer-img/%s/%s" % (instance.id, filename)
