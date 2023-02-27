@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}{{ title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+
+{% include "base/inner-banner.html" %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="position-relative ">
+            <img src="{% static 'images/custom/side/background/midnight_galaxy.png' %}" class="responsive-img"
+                 id="custom-side-background"
+            >
+            <img src="" id="custom-side-layer-1" style="opacity:0">
+            <img src="" id="custom-side-layer-2" style="opacity:0">
+            <img src="" id="custom-side-layer-3" style="opacity:0">
+            <img src="{% static 'images/custom/side/shadows.png' %}" id="custom-side-shadows">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m4">
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="position-relative">
+            <img src="{% static 'images/custom/top/background/midnight_galaxy.png' %}" class="responsive-img"
+                 id="custom-top-background">
+            <img src="" id="custom-layer-1" style="opacity:0">
+            <img src="" id="custom-layer-2" style="opacity:0">
+            <img src="" id="custom-layer-3" style="opacity:0">
+            <img src="{% static 'images/custom/top/shadows.png' %}" id="custom-shadows">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col s12 m4">
+      <h1 class="text-capitalize">{{ obj.title }}</h1>
+      <form method="POST"> {% csrf_token %}
+        <label>Background</label>
+        <select class="browser-default" id="select-background" required name="base_id">
+          <option value="" disabled selected>Choose your background</option>
+          {% for base_option in obj.base_options.all %}
+          <option data-images="{{ base_option.images }}" value="{{ base_option.id }}">{{ base_option.title }}</option>
+          {% endfor %}
+        </select>
+        <label>{{ obj.layer1_name}}</label>
+        <select class="browser-default" id="select-layer-1" required name="layer1_id">
+          <option value="" disabled selected>Choose</option>
+          {% for option in obj.layer1_options.all %}
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          {% endfor %}
+          <option value="">None</option>
+        </select>
+        {% if layer2_active %}
+        <label>Layer 2</label>
+        <select class="browser-default" id="select-layer-2" name="layer2_id">
+          <option value="" disabled selected>Choose</option>
+          {% for option in obj.layer2_options.all %}
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          {% endfor %}
+          <option value="">None</option>
+
+        </select>
+        {% endif %}
+        {% if layer3_active %}
+        <label>Layer 3</label>
+        <select class="browser-default" id="select-layer-3" name="layer3_id">
+          <option value="" disabled selected>Choose</option>
+          {% for option in obj.layer3_options.all %}
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          {% endfor %}
+          <option value="">None</option>
+        </select>
+        {% endif %}
+
+        <button type="submit" class="btn btn-orange mt-3 w-100">Save your design</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

@@ -619,3 +619,47 @@ h1, h2 {
   z-index: 500;
   width: 100%;
 }
+
+.custom-side-background-table {
+ width:50px;
+}
+
+.custom-layer-1-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 110;
+  width:50px;
+}
+
+.custom-layer-2-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  width:50px;
+}
+
+.custom-layer-3-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 130;
+  width:50px;
+}
+
+.custom-shadows-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width:50px;
+}
+
+.custom-side-shadows-table {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width:50px;
+}

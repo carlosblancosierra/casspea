@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Store{% endblock %}
+{% block content %}
+{% include "base/inner-banner.html" %}
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="bold font-200 center">Your design is ready, now choose your box size</h2>
+      <p class="center">{{ user_design }}</p>
+    </div>
+  </div>
+</div>
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col s12">
+    </div>
+    {% for obj in qs %}
+    <div class="col s6 m3">
+
+      {% if obj.store_image %}
+      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
+      {% endif %}
+      <p class="center bold">£{{ obj.price }}</p>
+      <p class="center ">
+        <a class="btn btn-outline-{{ obj.color }}" href="/custom_chocolates/box_size/{{ obj.size }}">
+          {{ obj }}
+        </a>
+      </p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

@@ -18,7 +18,8 @@ $(document).ready(function () {
 
 
   selectBackground.change(function () {
-    const images = JSON.parse(selectBackground.val())
+    const selected = $(this).find('option:selected');
+    const images = selected.data('images');
 
     customTopBackground.fadeTo(0, 0)
     customSideBackground.fadeTo(0, 0)
@@ -34,12 +35,12 @@ $(document).ready(function () {
   });
 
   selectLayer1.change(function () {
-    var images = selectLayer1.val()
+    const selected = $(this).find('option:selected');
+    const images = selected.data('images');
 
     customTopLayer1.fadeTo(0, 0)
     customSideLayer1.fadeTo(0, 0)
     if (images) {
-      images = JSON.parse(images)
       customTopLayer1.attr('src', images['top']);
       customSideLayer1.attr('src', images['side']);
 
@@ -49,11 +50,12 @@ $(document).ready(function () {
   });
 
   selectLayer2.change(function () {
-    var images = selectLayer2.val()
+    const selected = $(this).find('option:selected');
+    const images = selected.data('images');
+
     customTopLayer2.fadeTo(0, 0)
     customSideLayer2.fadeTo(0, 0)
     if (images) {
-      images = JSON.parse(images)
       customTopLayer2.attr('src', images['top']);
       customSideLayer2.attr('src', images['side']);
 
@@ -63,11 +65,12 @@ $(document).ready(function () {
   });
 
   selectLayer3.change(function () {
-    var images = selectLayer3.val()
+    const selected = $(this).find('option:selected');
+    const images = selected.data('images');
+
     customTopLayer3.fadeTo(0, 0)
     customSideLayer3.fadeTo(0, 0)
     if (images) {
-      images = JSON.parse(images)
       customTopLayer3.attr('src', images['top']);
       customSideLayer3.attr('src', images['side']);
       customTopLayer3.fadeTo("medium", 1)

@@ -6,6 +6,8 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.db.models.signals import pre_save
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from custom_chocolates.models import UserChocolateDesign
+
 from boxes.models import Box
 
 User = settings.AUTH_USER_MODEL
@@ -147,6 +149,12 @@ class CartEntry(models.Model):
 
     cart = models.ForeignKey(Cart, null=True, on_delete=models.CASCADE)
     # total = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    user_chocolate_design = models.ForeignKey(
+        UserChocolateDesign,
+        related_name="custom_design",
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True)
 
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)

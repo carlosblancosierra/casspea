@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 
 from flavours.models import PreBuildFlavour, Flavour, FlavourChoice
-
 from boxes.models import Box, BoxSize
 from carts.models import CartEntry
 from lots.models import Lot, LotSize
-
+from custom_chocolates.models import UserChocolateDesign
 from .models import FLAVOURS, FLAVOUR_FORMAT
 
 
@@ -98,8 +97,11 @@ def add_box_to_cart(request):
         # create entry
         box_quantity = form.get('box_quantity', None)
         cart_entry = CartEntry.objects.new(request, product=new_box, quantity=box_quantity)
-        # print("cart_entry")
-        # print(cart_entry)
+        user_design_id = request.session.get('user_design_id')
+        user_design_qs = UserChocolateDesign.objects.filter(active=True, id=user_design_id)
+        if user_design_qs.count() == 1:
+            cart_entry.user_chocolate_design = user_design_qs.first()
+        cart_entry.save()
 
     return redirect('carts:home')
 
