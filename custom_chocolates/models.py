@@ -31,13 +31,9 @@ class ChocolateDesignLayer(models.Model):
                              blank=True)
     title = models.CharField(max_length=120, blank=True, null=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                    processors=[ResizeToFill(1500, 1500)],
-                                    format='PNG',
-                                    options={'quality': 95})
+                                    format='PNG')
     side_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                     processors=[ResizeToFill(1500, 1500)],
-                                     format='PNG',
-                                     options={'quality': 95})
+                                     format='PNG')
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
