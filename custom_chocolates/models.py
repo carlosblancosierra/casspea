@@ -53,11 +53,11 @@ class ChocolateDesignBase(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                     processors=[ResizeToFill(1000, 1000)],
-                                    format='JPG',
+                                    format='JPEG',
                                     options={'quality': 95})
     side_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                      processors=[ResizeToFill(1000, 1000)],
-                                     format='JPG',
+                                     format='JPEG',
                                      options={'quality': 95})
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
