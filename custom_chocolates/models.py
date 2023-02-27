@@ -25,11 +25,11 @@ class ChocolateDesignLayer(models.Model):
                              blank=True)
     title = models.CharField(max_length=120, blank=True, null=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                    processors=[ResizeToFill(2000, 2000)],
+                                    processors=[ResizeToFill(1500, 1500)],
                                     format='PNG',
                                     options={'quality': 95})
     side_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                     processors=[ResizeToFill(2000, 2000)],
+                                     processors=[ResizeToFill(1500, 1500)],
                                      format='PNG',
                                      options={'quality': 95})
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -52,12 +52,12 @@ class ChocolateDesignLayer(models.Model):
 class ChocolateDesignBase(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                    processors=[ResizeToFill(2000, 2000)],
-                                    format='PNG',
+                                    processors=[ResizeToFill(1000, 1000)],
+                                    format='JPG',
                                     options={'quality': 95})
     side_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                     processors=[ResizeToFill(2000, 2000)],
-                                     format='PNG',
+                                     processors=[ResizeToFill(1000, 1000)],
+                                     format='JPG',
                                      options={'quality': 95})
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
