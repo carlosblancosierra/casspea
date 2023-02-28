@@ -21,14 +21,14 @@ $(document).ready(function () {
     const selected = $(this).find('option:selected');
     const images = selected.data('images');
 
-    customTopBackground.fadeTo(0, 0)
-    customSideBackground.fadeTo(0, 0)
+    customTopBackground.fadeTo("slow", 1)
+    customSideBackground.fadeTo("slow", 1)
 
     if (images) {
       customTopBackground.attr('src', images['top']);
       customSideBackground.attr('src', images['side']);
-      customTopBackground.fadeTo("medium", 1)
-      customSideBackground.fadeTo("medium", 1)
+      customTopBackground.fadeTo("slow", 1)
+      customSideBackground.fadeTo("slow", 1)
     }
 
 
@@ -38,14 +38,14 @@ $(document).ready(function () {
     const selected = $(this).find('option:selected');
     const images = selected.data('images');
 
-    customTopLayer1.fadeTo(0, 0)
-    customSideLayer1.fadeTo(0, 0)
+    customTopLayer1.fadeTo("slow", 1)
+    customSideLayer1.fadeTo("slow", 1)
     if (images) {
       customTopLayer1.attr('src', images['top']);
       customSideLayer1.attr('src', images['side']);
 
-      customTopLayer1.fadeTo("medium", 1)
-      customSideLayer1.fadeTo("medium", 1)
+      customTopLayer1.fadeTo("slow", 1)
+      customSideLayer1.fadeTo("slow", 1)
     }
   });
 
@@ -53,14 +53,14 @@ $(document).ready(function () {
     const selected = $(this).find('option:selected');
     const images = selected.data('images');
 
-    customTopLayer2.fadeTo(0, 0)
-    customSideLayer2.fadeTo(0, 0)
+    customTopLayer2.fadeTo("slow", 1)
+    customSideLayer2.fadeTo("slow", 1)
     if (images) {
       customTopLayer2.attr('src', images['top']);
       customSideLayer2.attr('src', images['side']);
 
-      customTopLayer2.fadeTo("medium", 1)
-      customSideLayer2.fadeTo("medium", 1)
+      customTopLayer2.fadeTo("slow", 1)
+      customSideLayer2.fadeTo("slow", 1)
     }
   });
 
@@ -68,13 +68,13 @@ $(document).ready(function () {
     const selected = $(this).find('option:selected');
     const images = selected.data('images');
 
-    customTopLayer3.fadeTo(0, 0)
-    customSideLayer3.fadeTo(0, 0)
+    customTopLayer3.fadeTo("slow", 1)
+    customSideLayer3.fadeTo("slow", 1)
     if (images) {
       customTopLayer3.attr('src', images['top']);
       customSideLayer3.attr('src', images['side']);
-      customTopLayer3.fadeTo("medium", 1)
-      customSideLayer3.fadeTo("medium", 1)
+      customTopLayer3.fadeTo("slow", 1)
+      customSideLayer3.fadeTo("slow", 1)
     }
   });
 });
