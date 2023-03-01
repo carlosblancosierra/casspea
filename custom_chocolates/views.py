@@ -60,9 +60,29 @@ def design_page(request, slug=None):
             return redirect('custom_chocolates:box_size')
         else:
             errors = form.errors.as_data()
+    images = []
+
+    for base in obj.base_options.all():
+        images.append(base.top_image.url)
+        images.append(base.side_image.url)
+
+    for layer in obj.layer1_options.all():
+        images.append(layer.top_image.url)
+        images.append(layer.side_image.url)
+
+    if obj.layer2_active:
+        for layer in obj.layer2_options.all():
+            images.append(layer.top_image.url)
+            images.append(layer.side_image.url)
+
+    if obj.layer3_active:
+        for layer in obj.layer3_options.all():
+            images.append(layer.top_image.url)
+            images.append(layer.side_image.url)
 
     context = {
         "obj": obj,
+        "image_urls": images
     }
 
     return render(request, "custom_chocolates/design.html", context)

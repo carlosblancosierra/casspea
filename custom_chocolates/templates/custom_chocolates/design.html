@@ -87,5 +87,22 @@
   </div>
 </div>
 
+<script>
+		var image_urls = {{ image_urls|safe }};
+
+		function preloadImages() {
+			for (var i = 0; i < image_urls.length; i++) {
+				var div = document.createElement('div');
+				div.style.backgroundImage = 'url(' + image_urls[i] + ')';
+				document.body.appendChild(div);
+			}
+		}
+
+		window.onload = function() {
+			// Call preloadImages function after a delay of 2 seconds
+			setTimeout(preloadImages, 2000);
+		};
+	</script>
+
 {% endblock %}
 
