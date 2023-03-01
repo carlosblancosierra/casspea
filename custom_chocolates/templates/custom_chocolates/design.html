@@ -7,9 +7,9 @@
 
 {% include "base/inner-banner.html" %}
 
-<div class="container my-5">
+<div class="container my-md-5 mt-3">
   <div class="row">
-    <div class="col s12 m4">
+    <div class="col s6 m4 p-0">
       <div class="row">
         <div class="col s12 m12">
           <div class="position-relative ">
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="col s12 m4">
+    <div class="col s6 m4 p-0">
       <div class="row">
         <div class="col s12 m12">
           <div class="position-relative">
@@ -42,7 +42,7 @@
 
 
     <div class="col s12 m4">
-      <h1 class="text-capitalize">{{ obj.title }}</h1>
+<!--      <h1 class="text-capitalize font-150">{{ obj.title }}</h1>-->
       <form method="POST"> {% csrf_token %}
         <label>Background</label>
         <select class="browser-default" id="select-background" required name="base_id">

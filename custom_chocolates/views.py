@@ -60,35 +60,36 @@ def design_page(request, slug=None):
             return redirect('custom_chocolates:box_size')
         else:
             errors = form.errors.as_data()
-    images = []
-
-    for base in obj.base_options.all():
-        images.append(base.top_image.url)
-        images.append(base.side_image.url)
-
-    for layer in obj.layer1_options.all():
-        if layer.top_image:
-            images.append(layer.top_image.url)
-        if layer.side_image:
-            images.append(layer.side_image.url)
-
-    if obj.layer2_active:
-        for layer in obj.layer2_options.all():
-            if layer.top_image:
-                images.append(layer.top_image.url)
-            if layer.side_image:
-                images.append(layer.side_image.url)
-
-    if obj.layer3_active:
-        for layer in obj.layer3_options.all():
-            if layer.top_image:
-                images.append(layer.top_image.url)
-            if layer.side_image:
-                images.append(layer.side_image.url)
+    # images = []
+    #
+    # for base in obj.base_options.all():
+    #     images.append(base.top_image.url)
+    #     images.append(base.side_image.url)
+    #
+    # for layer in obj.layer1_options.all():
+    #     if layer.top_image:
+    #         images.append(layer.top_image.url)
+    #     if layer.side_image:
+    #         images.append(layer.side_image.url)
+    #
+    # if obj.layer2_active:
+    #     for layer in obj.layer2_options.all():
+    #         if layer.top_image:
+    #             images.append(layer.top_image.url)
+    #         if layer.side_image:
+    #             images.append(layer.side_image.url)
+    #
+    # if obj.layer3_active:
+    #     for layer in obj.layer3_options.all():
+    #         if layer.top_image:
+    #             images.append(layer.top_image.url)
+    #         if layer.side_image:
+    #             images.append(layer.side_image.url)
 
     context = {
         "obj": obj,
-        "image_urls": images
+        # "image_urls": images,
+        "title": "Personalize your chocolates"
     }
 
     return render(request, "custom_chocolates/design.html", context)

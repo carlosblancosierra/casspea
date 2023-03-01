@@ -663,3 +663,16 @@ h1, h2 {
   z-index: 500;
   width:50px;
 }
+
+@media only screen and (min-width: 768px) {
+.custom-side-background-table,
+ .custom-layer-1-table,
+ .custom-layer-2-table,
+ .custom-layer-3-table,
+ .custom-shadows-table,
+ .custom-side-shadows-table
+ {
+ width:150px;
+}
+
+}
