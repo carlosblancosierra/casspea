@@ -16,7 +16,7 @@ admin.site.register(ChocolateDesignLayerType)
 class ChocolateDesignLayerModelAdmin(admin.ModelAdmin):
     list_display = ["type", "color", "updated"]
 
-    search_fields = ["type", "color"]
+    search_fields = ["type", "color", "title"]
     list_filter = ["type", "color"]
 
     class Order:
