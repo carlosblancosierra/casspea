@@ -53,7 +53,7 @@ class ChocolateDesignLayer(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{}: {}".format(self.title, self.type)
+        return "{}: {}".format(self.type, self.color)
 
     @property
     def images(self):
@@ -84,7 +84,7 @@ class ChocolateDesignBase(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{}".format(self.title)
+        return "{}".format(self.base_color)
 
     @property
     def images(self):
@@ -97,7 +97,7 @@ class ChocolateDesignBase(models.Model):
             return json.dumps(images)
 
     class Meta:
-        ordering = ['title']
+        ordering = ['base_color']
 
 
 class ChocolateDesign(models.Model):
