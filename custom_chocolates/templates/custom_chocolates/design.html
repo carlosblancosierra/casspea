@@ -48,7 +48,7 @@
         <select class="browser-default" id="select-background" required name="base_id">
           <option value="" disabled selected>Choose your background</option>
           {% for base_option in obj.base_options.all %}
-          <option data-images="{{ base_option.images }}" value="{{ base_option.id }}">{{ base_option.color }}</option>
+          <option data-images="{{ base_option.images }}" value="{{ base_option.id }}">{{ base_option.base_color }}</option>
           {% endfor %}
         </select>
         <label>{{ obj.layer1_name}}</label>
