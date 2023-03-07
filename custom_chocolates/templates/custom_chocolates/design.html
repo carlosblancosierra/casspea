@@ -48,14 +48,14 @@
         <select class="browser-default" id="select-background" required name="base_id">
           <option value="" disabled selected>Choose your background</option>
           {% for base_option in obj.base_options.all %}
-          <option data-images="{{ base_option.images }}" value="{{ base_option.id }}">{{ base_option.title }}</option>
+          <option data-images="{{ base_option.images }}" value="{{ base_option.id }}">{{ base_option.color }}</option>
           {% endfor %}
         </select>
         <label>{{ obj.layer1_name}}</label>
         <select class="browser-default" id="select-layer-1" required name="layer1_id">
           <option value="" disabled selected>Choose</option>
           {% for option in obj.layer1_options.all %}
-          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.color }}</option>
           {% endfor %}
           <option value="">None</option>
         </select>
@@ -64,7 +64,7 @@
         <select class="browser-default" id="select-layer-2" name="layer2_id" required>
           <option value="" disabled selected>Choose</option>
           {% for option in obj.layer2_options.all %}
-          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.color }}</option>
           {% endfor %}
           <option value="">None</option>
 
@@ -75,7 +75,7 @@
         <select class="browser-default" id="select-layer-3" name="layer3_id" required>
           <option value="" disabled selected>Choose</option>
           {% for option in obj.layer3_options.all %}
-          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.title }}</option>
+          <option data-images="{{ option.images }}" value="{{ option.id }}">{{ option.color }}</option>
           {% endfor %}
           <option value="">None</option>
         </select>
