@@ -17,7 +17,7 @@ class ChocolateDesignLayerModelAdmin(admin.ModelAdmin):
     list_display = ["type", "color", "updated"]
 
     search_fields = ["type", "color", "title"]
-    list_filter = ["type", "color"]
+    list_filter = ["type", "color", "title"]
 
     class Order:
         model = ChocolateDesignLayer
