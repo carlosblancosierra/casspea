@@ -10,6 +10,18 @@ User = settings.AUTH_USER_MODEL
 
 
 # Create your models here.
+class LayerColor(models.Model):
+    title = models.CharField(max_length=120, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return "{}".format(self.title)
+
+    class Meta:
+        ordering = ['title']
+
+
 class ChocolateDesignLayerType(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -29,10 +41,13 @@ def upload_location(instance, filename):
 class ChocolateDesignLayer(models.Model):
     type = models.ForeignKey(ChocolateDesignLayerType, related_name="type", on_delete=models.PROTECT, null=True,
                              blank=True)
+    color = models.ForeignKey(LayerColor, related_name="color", on_delete=models.PROTECT, null=True, blank=True)
     title = models.CharField(max_length=120, blank=True, null=True)
-    top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+    top_image = ProcessedImageField(upload_to=upload_location,
+                                    null=True, blank=True,
                                     format='PNG')
-    side_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
+    side_image = ProcessedImageField(upload_to=upload_location,
+                                     null=True, blank=True,
                                      format='PNG')
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -51,11 +66,12 @@ class ChocolateDesignLayer(models.Model):
             return json.dumps(images)
 
     class Meta:
-        ordering = ['type', 'title']
+        ordering = ['type', 'color']
 
 
 class ChocolateDesignBase(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
+    base_color = models.ForeignKey(LayerColor, related_name="base_color", on_delete=models.PROTECT, null=True, blank=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                     # processors=[ResizeToFill(1000, 1000)],
                                     format='JPEG',
