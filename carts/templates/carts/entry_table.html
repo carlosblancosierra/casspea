@@ -23,9 +23,9 @@
   <tr>
     <td></td>
 
-    {% if obj.user_chocolate_design %}
+    {% if obj.product.custom_design %}
     <td>
-      {% include "custom_chocolates/table_user_design_picture.html" with design=obj.user_chocolate_design %}
+      {% include "custom_chocolates/table_user_design_picture.html" with design=obj.product.custom_design %}
     </td>
     {% elif obj.product.image %}
     <td>
@@ -39,21 +39,20 @@
 
       <p class="bold mb-0">Design:</p>
       <ul class="m-0">
-        <li class="m-0">{{ obj.user_chocolate_design }}</li>
-        <li class="m-0">Background: {{ obj.user_chocolate_design.base }}</li>
+        <li class="m-0">Background: {{ obj.product.custom_design.base }}</li>
         <li class="m-0">
-          {{ obj.user_chocolate_design.design.layer1_name }}: {{ obj.user_chocolate_design.layer1 }}
+          {{ obj.product.custom_design.layer1 }}
         </li>
 
-        {% if obj.user_chocolate_design.layer2 %}
+        {% if obj.product.custom_design.layer2 %}
         <li class="m-0">
-          {{ obj.user_chocolate_design.design.layer2_name }}: {{ obj.user_chocolate_design.layer2 }}
+          {{ obj.product.custom_design.layer2 }}
         </li>
         {% endif %}
 
-        {% if obj.user_chocolate_design.layer3 %}
+        {% if obj.product.custom_design.layer3 %}
         <li class="m-0">
-          {{ obj.user_chocolate_design.design.layer3_name }}: {{ obj.user_chocolate_design.layer3 }}
+          {{ obj.product.custom_design.layer3 }}
         </li>
         {% endif %}
 
@@ -61,10 +60,7 @@
 
       <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
       <ul class="m-0">
-        {% for obj in obj.product.selected_prebuilts.all %}
-        <li class="m-0">{{ obj }}</li>
-        {% endfor %}
-        {% for obj in obj.product.selected_flavours.all %}
+        {% for obj in obj.product.flavours.all %}
         <li class="m-0">{{ obj }}</li>
         {% endfor %}
       </ul>

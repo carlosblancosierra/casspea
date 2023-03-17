@@ -3,7 +3,8 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from imagekit.models import ImageSpecField
 
-from flavours.models import PreBuildFlavour, FlavourChoice
+from flavours.models import Flavour, PreBuildFlavour, FlavourChoice
+from custom_chocolates.models import UserChocolateDesign
 
 
 # Create your models here.
@@ -23,14 +24,15 @@ class BoxSize(models.Model):
     color = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     active = models.BooleanField(default=True)
+    custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
 
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     store_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                processors=[ResizeToFill(1500, 1500)],
-                                format='JPEG',
-                                options={'quality': 95})
+                                      processors=[ResizeToFill(1500, 1500)],
+                                      format='JPEG',
+                                      options={'quality': 95})
 
     image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                 processors=[ResizeToFill(1500, 998)],
@@ -98,6 +100,9 @@ class Box(models.Model):
     selected_prebuilts = models.ManyToManyField(PreBuildFlavour, blank=True, related_name="selected_prebuilts")
     selected_flavours = models.ManyToManyField(FlavourChoice, blank=True, related_name="selected_flavours")
 
+    custom_design = models.ForeignKey(UserChocolateDesign, blank=True, null=True, on_delete=models.PROTECT)
+    custom_chocolates_flavours = models.ManyToManyField(Flavour, blank=True)
+
     price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 
     active = models.BooleanField(default=True)
@@ -114,3 +119,12 @@ class Box(models.Model):
     @property
     def price(self):
         return self.size.price
+
+    @property
+    def flavours(self):
+        if self.flavour_format == Box.PRE_BUILT:
+            return self.selected_prebuilts
+        elif self.selected_flavours.exists():
+            return self.selected_flavours
+        elif self.custom_chocolates_flavours.exists():
+            return self.custom_chocolates_flavours

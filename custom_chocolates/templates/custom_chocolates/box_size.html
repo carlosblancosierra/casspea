@@ -12,6 +12,7 @@
     <div class="col s12">
       <h2 class="bold font-200 center">Your design is ready, now choose your box size</h2>
       <p class="center">{{ user_design }}</p>
+      <p class="center">Minimun order: 45 chocolates</p>
     </div>
   </div>
 </div>
@@ -24,13 +25,27 @@
     <div class="col s6 m3">
 
       {% if obj.store_image %}
-      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
+      <a href="/custom_chocolates/box_size/{{ obj.size }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
       {% endif %}
-      <p class="center bold">£{{ obj.price }}</p>
+      <p class="center bold">£{{ obj.price }} ea</p>
       <p class="center ">
         <a class="btn btn-outline-{{ obj.color }}" href="/custom_chocolates/box_size/{{ obj.size }}">
           {{ obj }}
         </a>
+      </p>
+      <p class="center">
+        From
+        {% if obj.size == 9 %}
+        5 Boxes
+        {% elif obj.size == 15 %}
+        3 Boxes
+        {% elif obj.size == 24 %}
+        2 Boxes
+        {% elif obj.size == 48 %}
+        1 Box
+        {% endif %}
+
+
       </p>
     </div>
     {% endfor %}
