@@ -7,9 +7,10 @@ $(document).ready(function () {
   var max_flavours = 0
 
   quantitySelect.on('change', function() {
-    max_flavours = quantitySelect.find('option:selected').data('max-flavours')
-    remainingFlavours.text(max_flavours)
-    flavourCheckboxes.not(':checked').prop('disabled', false);
+    max_flavours = quantitySelect.find('option:selected').data('max-flavours');
+    remainingFlavours.text(max_flavours);
+    flavourCheckboxes.prop('checked', false);
+    flavourCheckboxes.prop('disabled', false);
   });
 
   prebuildCheckboxes.on('change', function() {

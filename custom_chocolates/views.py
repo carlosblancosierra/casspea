@@ -73,13 +73,9 @@ def design_page(request, slug=None):
 
 def box_size_page(request):
     qs = BoxSize.objects.active()
-    user_design_id = request.session.get('user_design_id')
-    user_design = None
 
-    if user_design_id:
-        user_design_qs = UserChocolateDesign.objects.filter(active=True, id=user_design_id)
-        if user_design_qs.count() == 1:
-            user_design = user_design_qs.first()
+    user_design_id = request.session.get('user_design_id')
+    user_design = get_object_or_404(UserChocolateDesign, id=user_design_id)
 
     context = {
         "title": "Pick your Box Size",
