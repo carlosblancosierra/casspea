@@ -6,6 +6,7 @@
 {% url 'about' as about_url %}
 {% url 'contact' as contact_url %}
 {% url 'dashboards:client' as client_url %}
+{% url 'custom_chocolates:home' as custom_url %}
 
 
 <nav class="white" id="site-nav">
@@ -18,6 +19,7 @@
       <li><a class="navbar2-link" href="/">Home</a></li>
       <li><a class="navbar2-link" href="{{ store_url }}">Store</a></li>
       <li><a class="navbar2-link" href="{{ flavours_url }}">Flavours</a></li>
+      <li><a class="navbar2-link" href="{{ custom_url }}">Personalize</a></li>
     </ul>
 
     <ul id="nav-mobile2" class="right hide-on-med-and-down">

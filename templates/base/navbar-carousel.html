@@ -5,6 +5,7 @@
 {% url 'about' as about_url %}
 {% url 'contact' as contact_url %}
 {% url 'dashboards:client' as client_url %}
+{% url 'custom_chocolates:home' as custom_url %}
 
 <nav class="transparent inner-nav">
   <div class="nav-wrapper container">
@@ -15,6 +16,8 @@
       <li><a href="/">Home</a></li>
       <li><a href="{{ store_url }}">Store</a></li>
       <li><a href="{{ flavours_url }}">Flavours</a></li>
+      <li><a href="{{ custom_url }}">Personalize</a></li>
+
     </ul>
 
     <ul id="nav-home2" class="right hide-on-med-and-down">
