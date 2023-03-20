@@ -20,9 +20,11 @@ class BoxSizeManager(models.Manager):
 class BoxSize(models.Model):
     size = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
-    price_id = models.CharField(max_length=200, null=True, blank=True)
     color = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    price_id = models.CharField(max_length=200, null=True, blank=True)
+    custom_price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
+    custom_price_id = models.CharField(max_length=200, null=True, blank=True)
     active = models.BooleanField(default=True)
     custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
 
@@ -56,7 +58,7 @@ class BoxSize(models.Model):
                                  options={'quality': 95})
 
     def __str__(self):
-        return "Box of {} Chocolates".format(self.size)
+        return "Box of {}".format(self.size)
 
     objects = BoxSizeManager()
 
@@ -82,7 +84,6 @@ class BoxSize(models.Model):
 
         return images
 
-
 class Box(models.Model):
     PRE_BUILT = "pre_built"
     CUSTOM = "custom"
@@ -103,7 +104,7 @@ class Box(models.Model):
     custom_design = models.ForeignKey(UserChocolateDesign, blank=True, null=True, on_delete=models.PROTECT)
     custom_chocolates_flavours = models.ManyToManyField(Flavour, blank=True)
 
-    price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
+    # price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -118,7 +119,10 @@ class Box(models.Model):
 
     @property
     def price(self):
-        return self.size.price
+        if self.custom_design:
+            return self.size.custom_price
+        else:
+            return self.size.price
 
     @property
     def flavours(self):
@@ -128,3 +132,10 @@ class Box(models.Model):
             return self.selected_flavours
         elif self.custom_chocolates_flavours.exists():
             return self.custom_chocolates_flavours
+
+    @property
+    def get_price_id(self):
+        if self.custom_design:
+            return self.size.custom_price_id
+        else:
+            return self.size.price_id

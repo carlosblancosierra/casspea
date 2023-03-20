@@ -213,7 +213,7 @@ class CreateCheckoutSessionView(View):
         line_items = []
         for entry in cart_entries:
             line_items.append({
-                'price': str(entry.product.size.price_id),
+                'price': str(entry.product.get_price_id),
                 'quantity': str(entry.quantity),
             })
 

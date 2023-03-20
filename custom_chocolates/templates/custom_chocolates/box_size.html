@@ -29,10 +29,10 @@
       {% if obj.store_image %}
       <a href="/custom_chocolates/box_size/{{ obj.size }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
       {% endif %}
-      <p class="center bold">£{{ obj.price }} ea</p>
+      <p class="center bold">£{{ obj.custom_price }} ea</p>
       <p class="center ">
-        <a class="btn btn-outline-{{ obj.color }}" href="/custom_chocolates/box_size/{{ obj.size }}">
-          {{ obj }}
+        <a class="btn btn-outline-{{ obj.color }} w-100" href="{{ obj.get_absolute_url }}">
+          {{ obj }} <span class="d-none d-md-inline-block">Chocolates</span>
         </a>
       </p>
       <p class="center">
@@ -46,8 +46,6 @@
         {% elif obj.size == 48 %}
         1 Box
         {% endif %}
-
-
       </p>
     </div>
     {% endfor %}
