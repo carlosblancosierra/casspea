@@ -70,10 +70,11 @@ class CartEntryManager(models.Manager):
             )
 
     def entries(self, request):
+        entries = []
         cart_id = request.session.get('cart_id', None)
         if cart_id:
             entries = self.filter(active=True, cart__id=cart_id)
-            return entries
+        return entries
 
     def set_inactive(self, request, id):
         qs = self.filter(id=id)
