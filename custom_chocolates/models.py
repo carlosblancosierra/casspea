@@ -130,7 +130,7 @@ class ChocolateDesign(models.Model):
 
     @property
     def featured_design(self):
-        featured_designs = UserChocolateDesign.objects.filter(active=True, featured=True)
+        featured_designs = UserChocolateDesign.objects.filter(active=True, featured=True, design=self)
         if featured_designs.exists():
             return featured_designs.first()
 
