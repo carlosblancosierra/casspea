@@ -70,7 +70,8 @@
                      value="{% if shipping_date %}{{ shipping_date }}{% endif %}"
               >
               <label for="shipping_date">Pick a date (Leave Blank for ASAP)</label>
-              <p class="grey-text lighten-2">Usually delivers within 1-2 days from delivery </p>
+              <p class="grey-text lighten-2">Usually delivers within 1-2 days from delivery. Personalized chocolates
+                delivers within 10 working days </p>
             </div>
           </div>
         </div>
@@ -139,6 +140,40 @@
 
 {% block js_extra %}
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const navDropdown = document.querySelectorAll('.dropdown-trigger');
+    const instances = M.Dropdown.init(navDropdown, ({
+    alignment:'left',
+    'hover':false,
+    'constrainWidth':false,
+    'coverTrigger':false
+    }));
+
+    var minDelivery = new Date()
+    minDelivery.setDate(minDelivery.getDate() + 1)
+    {% if custom_chocolates %}
+    // Loop through the next 10 days
+    for (var i = 1; i < 10; i++) {
+      // Add one day to the date
+      minDelivery.setDate(minDelivery.getDate() + 1);
+
+      // Check if the new date is a weekend day
+      if (minDelivery.getDay() == 6) { // Saturday
+        minDelivery.setDate(minDelivery.getDate() + 2); // Add two days for Sunday and Monday
+      } else if (minDelivery.getDay() == 0) { // Sunday
+        minDelivery.setDate(minDelivery.getDate() + 1); // Add one day for Monday
+      }
+    }
+    {% endif %}
+    const datepickerElems = document.querySelectorAll('.datepicker');
+    const datepickerOptions = {
+        disableWeekends: true,
+        minDate: minDelivery,
+        autoClose: true,
+        showClearBtn: true,
+    }
+    const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
+});
 
 </script>
 {% endblock %}

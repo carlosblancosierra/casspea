@@ -9,6 +9,11 @@ def home_page(request):
     empty = CartEntry.objects.empty_cart(request)
     gift_message = request.session.get('gift_message', None)
     shipping_date = request.session.get("shipping_date", None)
+    custom_chocolates = False
+    for entry in entries:
+        if custom_chocolates is False:
+            if entry.product.custom_design:
+                custom_chocolates = True
 
     total = 0
     subtotal = 0
@@ -44,6 +49,7 @@ def home_page(request):
         "shipping_cost": shipping_cost,
         "shipping_free": shipping_free,
         # "discount": discount,
+        "custom_chocolates": custom_chocolates,
 
     }
 
