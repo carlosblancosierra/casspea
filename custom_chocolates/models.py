@@ -71,7 +71,8 @@ class ChocolateDesignLayer(models.Model):
 
 class ChocolateDesignBase(models.Model):
     title = models.CharField(max_length=120, blank=True, null=True)
-    base_color = models.ForeignKey(LayerColor, related_name="base_color", on_delete=models.PROTECT, null=True, blank=True)
+    base_color = models.ForeignKey(LayerColor, related_name="base_color", on_delete=models.PROTECT, null=True,
+                                   blank=True)
     top_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                     # processors=[ResizeToFill(1000, 1000)],
                                     format='JPEG',
@@ -127,6 +128,12 @@ class ChocolateDesign(models.Model):
     class Meta:
         ordering = ['title']
 
+    @property
+    def featured_design(self):
+        featured_designs = UserChocolateDesign.objects.filter(active=True, featured=True)
+        if featured_designs.exists():
+            return featured_designs.first()
+
 
 class UserChocolateDesign(models.Model):
     design = models.ForeignKey(ChocolateDesign, related_name="design", on_delete=models.PROTECT)
@@ -139,6 +146,7 @@ class UserChocolateDesign(models.Model):
                                null=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     active = models.BooleanField(default=True)
+    featured = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 

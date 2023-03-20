@@ -187,3 +187,13 @@ def add_box_to_cart(request):
         cart_entry.save()
 
     return redirect('carts:home')
+
+
+def home_page(request):
+    designs = ChocolateDesign.objects.filter(active=True)
+    context = {
+        "title": "Personalize your Chocolates",
+        "designs": designs
+    }
+
+    return render(request, "custom_chocolates/home.html", context)

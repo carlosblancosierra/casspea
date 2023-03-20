@@ -1,0 +1,11 @@
+{% load static %}
+<div>
+  <div class="position-relative ">
+    <img src="{{ design.base.side_image.url }}" class="responsive-img" id="custom-side-background"
+    >
+    <img src="{{ design.layer1.side_image.url }}" id="custom-side-layer-1">
+    <img src="{{ design.layer2.side_image.url }}" id="custom-side-layer-2">
+    <img src="{{ design.layer3.side_image.url }}" id="custom-side-layer-3">
+    <img src="{% static 'images/custom/side/shadows.png' %}" id="custom-side-shadows">
+  </div>
+</div>
