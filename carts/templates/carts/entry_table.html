@@ -35,8 +35,9 @@
     {% endif %}
 
     <td>
-      <p class="bold">{{ obj.product.size }}</p>
+      <p class="bold">{{ obj.product.size }} Chocolates</p>
 
+      {% if obj.product.custom_design %}
       <p class="bold mb-0">Design:</p>
       <ul class="m-0">
         <li class="m-0">Background: {{ obj.product.custom_design.base }}</li>
@@ -57,6 +58,7 @@
         {% endif %}
 
       </ul>
+      {% endif %}
 
       <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
       <ul class="m-0">
