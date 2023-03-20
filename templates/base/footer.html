@@ -13,6 +13,7 @@
 
 {% url 'password_reset' as password_reset_url %}
 {% url 'password_change' as password_change_url %}
+{% url 'custom_chocolates:home' as custom_url %}
 
 <footer class="page-footer my-grey">
   <div class="container">
@@ -38,10 +39,11 @@
           <li><a class="" href="/">Home</a></li>
           <li><a class="mt-4" href="{{ store_url }}">Store</a></li>
           <li><a class="" href="{{ flavours_url }}">Flavours</a></li>
+          <li><a class="" href="{{ flavours_url }}">Flavours</a></li>
 
           <li><a class="mt-4" href="{{ contact_url }}">Contact Us</a></li>
           <li><a class="mt-4" href="{{ about_url }}">About Us</a></li>
-          <li><a class="mt-4" href="{{ cart_url }}">Cart</a></li>
+          <li><a class="mt-4" href="{{ custom_url }}">Personalize</a></li>
         </ul>
         <ul>
 
