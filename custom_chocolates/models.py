@@ -154,7 +154,7 @@ class UserChocolateDesign(models.Model):
         return self.design.title
 
     class Meta:
-        ordering = ['timestamp']
+        ordering = ['-timestamp']
 
     @property
     def description(self):
