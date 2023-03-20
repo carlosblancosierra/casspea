@@ -31,7 +31,7 @@
       {% endif %}
       <p class="center bold">£{{ obj.custom_price }} ea</p>
       <p class="center ">
-        <a class="btn btn-outline-{{ obj.color }} w-100" href="{{ obj.get_absolute_url }}">
+        <a class="btn btn-outline-{{ obj.color }} w-100" href="/custom_chocolates/box_size/{{ obj.size }}">
           {{ obj }} <span class="d-none d-md-inline-block">Chocolates</span>
         </a>
       </p>
