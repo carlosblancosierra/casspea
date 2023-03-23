@@ -65,7 +65,7 @@ def design_page(request, slug=None):
     context = {
         "obj": obj,
         # "image_urls": images,
-        "title": "Personalize your chocolates"
+        "title": "Personalise your {} design".format(obj.title)
     }
 
     return render(request, "custom_chocolates/design.html", context)
@@ -192,7 +192,7 @@ def add_box_to_cart(request):
 def home_page(request):
     designs = ChocolateDesign.objects.filter(active=True)
     context = {
-        "title": "Personalize your Chocolates",
+        "title": "Personalise your Chocolates",
         "designs": designs
     }
 
