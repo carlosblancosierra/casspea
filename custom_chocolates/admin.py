@@ -26,7 +26,19 @@ class ChocolateDesignLayerModelAdmin(admin.ModelAdmin):
 admin.site.register(ChocolateDesignLayer, ChocolateDesignLayerModelAdmin)
 
 admin.site.register(ChocolateDesignBase)
-admin.site.register(UserChocolateDesign)
+
+
+class UserChocolateDesignModelAdmin(admin.ModelAdmin):
+    list_display = ["design", "user", "timestamp", "featured"]
+
+    search_fields = ["design", "user"]
+    list_filter = ["design", "featured"]
+
+    class Order:
+        model = UserChocolateDesign
+
+
+admin.site.register(UserChocolateDesign, UserChocolateDesignModelAdmin)
 
 
 class ChocolateDesignModelAdmin(admin.ModelAdmin):
