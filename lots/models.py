@@ -2,6 +2,7 @@ from django.db import models
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from flavours.models import PreBuildFlavour, FlavourChoice
+from custom_chocolates.models import UserChocolateDesign
 
 
 # Create your models here.
@@ -46,7 +47,7 @@ class LotSize(models.Model):
                                  options={'quality': 95})
 
     def __str__(self):
-        return "{} Chocolates".format(self.size)
+        return "Lot of {}".format(self.size)
 
     objects = LotSizeManager()
 
@@ -71,6 +72,8 @@ class Lot(models.Model):
     selected_prebuilts = models.ManyToManyField(PreBuildFlavour, blank=True, related_name="lot_selected_prebuilts")
     selected_flavours = models.ManyToManyField(FlavourChoice, blank=True, related_name="lot_selected_flavours")
 
+    custom_design = models.ForeignKey(UserChocolateDesign, blank=True, null=True, on_delete=models.PROTECT)
+
     price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 
     active = models.BooleanField(default=True)
@@ -78,7 +81,7 @@ class Lot(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "Box of {} Chocolates, {}".format(self.size, self.flavour_format)
+        return "{} Chocolates, {}".format(self.size, self.flavour_format)
 
     @property
     def image(self):
@@ -87,3 +90,12 @@ class Lot(models.Model):
     @property
     def price(self):
         return self.size.price
+
+    @property
+    def flavours(self):
+        if self.flavour_format == Lot.PRE_BUILT:
+            return self.selected_prebuilts
+        elif self.selected_flavours.exists():
+            return self.selected_flavours
+        elif self.custom_chocolates_flavours.exists():
+            return self.custom_chocolates_flavours

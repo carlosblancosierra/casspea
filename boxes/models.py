@@ -84,6 +84,7 @@ class BoxSize(models.Model):
 
         return images
 
+
 class Box(models.Model):
     PRE_BUILT = "pre_built"
     CUSTOM = "custom"
