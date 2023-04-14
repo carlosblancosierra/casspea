@@ -6,6 +6,7 @@
 {% block content %}
 
 {% url 'store:home' as store_url %}
+{% url 'custom_chocolates:home' as personalise_url %}
 
 <section class="row">
   <div class="col s12 px-0">
@@ -43,9 +44,9 @@
 <section>
   <div class="row">
     <div class="col s12 p-0">
-      <a href="{{ store_url }}">
-      <img src="{% static 'images/home/casspea15-banner-1.jpg' %}" alt="" class="responsive-img d-none d-md-block">
-      <img src="{% static 'images/home/casspea15-banner-1-mobile.jpg' %}" alt="" class="responsive-img d-md-none">
+      <a href="{{ personalise_url }}">
+      <img src="{% static 'images/home/banner-home.jpg' %}" alt="" class="responsive-img d-none d-md-block">
+      <img src="{% static 'images/home/banner-home.jpg' %}" alt="" class="responsive-img d-md-none">
       </a>
     </div>
   </div>
