@@ -52,4 +52,16 @@
   </div>
 </section>
 
+<section class="container my-5">
+  <div class="row">
+    <div class="col s12">
+      <h2 class="font-200 font-weight-bold center">Need More?</h2>
+      {% for obj in lots %}
+      <p class="center">
+        <a href="/custom_chocolates/lot/{{ obj.size }}" class="btn btn-outline-green">{{ obj }}</a>
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock %}

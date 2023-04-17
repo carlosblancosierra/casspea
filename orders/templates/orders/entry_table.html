@@ -68,7 +68,7 @@
       </ul>
     </td>
     <td class="d-none d-md-table-cell">
-      {% if obj.discounted_price %}
+      {% if obj.has_discount %}
       <s>£{{ obj.product.price|floatformat:2 }}</s>
       <br>
       <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>
@@ -80,7 +80,7 @@
     <td class="d-none d-md-table-cell">£{{ obj.total|floatformat:2 }}</td>
     <td class="d-md-none">
       <span class="bold">Price:</span><br>
-      {% if obj.discounted_price %}
+      {% if obj.has_discount %}
       <s>£{{ obj.product.price|floatformat:2 }}</s>
       <br>
       <span class="red-text">£{{ obj.discounted_price|floatformat:2 }}</span>

@@ -3,6 +3,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from flavours.models import PreBuildFlavour, FlavourChoice
 from custom_chocolates.models import UserChocolateDesign
+from decimal import Decimal
 
 
 # Create your models here.
@@ -55,6 +56,17 @@ class LotSize(models.Model):
         return f"/store/lot/{self.size}"
 
 
+class LotPriceIds(models.Model):
+    title = models.CharField(max_length=100)
+    stripe_id = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    limit = models.PositiveIntegerField(unique=True)
+
+    def __str__(self):
+        return self.title
+
+
 class Lot(models.Model):
     PRE_BUILT = "pre_built"
     CUSTOM = "custom"
@@ -66,30 +78,35 @@ class Lot(models.Model):
         (PICK_AND_MIX, "Pick and Mix"),
     )
 
-    size = models.ForeignKey(LotSize, on_delete=models.PROTECT, null=True)
+    prebuilt_size = models.PositiveIntegerField(blank=True, null=True)
     flavour_format = models.CharField(max_length=30, choices=FLAVOURS_FORMAT_CHOICES, default=PRE_BUILT)
-    pre_built = models.ForeignKey(PreBuildFlavour, on_delete=models.PROTECT, null=True)
+    # pre_built = models.ForeignKey(PreBuildFlavour, on_delete=models.PROTECT, null=True)
     selected_prebuilts = models.ManyToManyField(PreBuildFlavour, blank=True, related_name="lot_selected_prebuilts")
     selected_flavours = models.ManyToManyField(FlavourChoice, blank=True, related_name="lot_selected_flavours")
 
     custom_design = models.ForeignKey(UserChocolateDesign, blank=True, null=True, on_delete=models.PROTECT)
-
-    price_stripe_id = models.CharField(max_length=100, null=True, blank=True)
 
     active = models.BooleanField(default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return "{} Chocolates, {}".format(self.size, self.flavour_format)
-
-    @property
-    def image(self):
-        return self.size.image
+        return "Lot of {} Custom Chocolates".format(self.quantity, self.flavour_format)
 
     @property
     def price(self):
-        return self.size.price
+        price = 0.00
+
+        if self.quantity < 100:
+            price = 1.2
+        elif self.quantity < 300:
+            price = 1
+        elif self.quantity < 500:
+            price = 0.8
+        else:
+            price = 0.75
+
+        return Decimal(price)
 
     @property
     def flavours(self):
@@ -99,3 +116,29 @@ class Lot(models.Model):
             return self.selected_flavours
         elif self.custom_chocolates_flavours.exists():
             return self.custom_chocolates_flavours
+
+    @property
+    def quantity(self):
+        size = 0
+        if self.flavour_format == Lot.PRE_BUILT:
+            size = self.prebuilt_size
+        elif self.flavour_format == Lot.PICK_AND_MIX:
+            for flavour in self.selected_flavours.all():
+                size += flavour.quantity
+        return size
+
+    @property
+    def get_price_id(self):
+        ids = LotPriceIds.objects.all()
+        if self.quantity < 100:
+            qs = ids.filter(limit=100)
+        elif self.quantity < 300:
+            qs = ids.filter(limit=300)
+        elif self.quantity < 500:
+            qs = ids.filter(limit=500)
+        else:
+            qs = ids.filter(limit=10000)
+
+        if len(qs) == 1:
+            obj = qs.first()
+            return obj.stripe_id

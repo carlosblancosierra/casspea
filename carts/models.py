@@ -175,7 +175,8 @@ class CartEntry(models.Model):
         entries = CartEntry.objects.filter(cart=self.cart, active=True)
         total = 0
         for entry in entries:
-            total += entry.quantity
+            if isinstance(entry.product, Box):
+                total += entry.quantity
         return total
 
     @property
@@ -192,17 +193,19 @@ class CartEntry(models.Model):
 
     @property
     def discounted_price(self):
-        if self.more_than_30_boxes:
-            return float(self.product.price) * 0.85
-        elif self.more_than_15_boxes:
-            return float(self.product.price) * 0.9
+        if isinstance(self.product, Box):
+            if self.more_than_30_boxes:
+                return float(self.product.price) * 0.85
+            elif self.more_than_15_boxes:
+                return float(self.product.price) * 0.9
         else:
-            return None
+            return float(self.product.price)
 
     @property
     def has_discount(self):
         if self.more_than_15_boxes or self.more_than_30_boxes:
-            return True
+            if isinstance(self.product, Box):
+                return True
         else:
             return False
 

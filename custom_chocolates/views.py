@@ -226,6 +226,26 @@ def lot_page(request, size=None):
     return render(request, "custom_chocolates/lot.html", context)
 
 
+def create_lot_page(request, size=None):
+    prebuilds = PreBuildFlavour.objects.filter(active=True)
+    flavours = Flavour.objects.active()
+
+    user_design_id = request.session.get('user_design_id')
+    user_design = get_object_or_404(UserChocolateDesign, id=user_design_id)
+
+    context = {
+        "flavours": flavours,
+        "prebuilds": prebuilds,
+        "PRE_BUILT": Lot.PRE_BUILT,
+        "PICK_AND_MIX": Lot.PICK_AND_MIX,
+        "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
+        "title": "LOTS",
+        "user_design": user_design,
+    }
+
+    return render(request, "custom_chocolates/create_lot.html", context)
+
+
 def add_lot_to_cart(request):
     user_design_id = request.session.get('user_design_id')
     user_design = get_object_or_404(UserChocolateDesign, id=user_design_id)
@@ -233,22 +253,10 @@ def add_lot_to_cart(request):
 
     if form:
         # get box data
-        size = form.get('size', None)
+
         flavour_format = form.get(FLAVOUR_FORMAT, None)
 
-        # Check if Size obj exists
-        if not size:
-            # print("error 144")
-            return redirect('custom_chocolates:home')
-
-        size_qs = LotSize.objects.filter(active=True, size=size)
-
-        if len(size_qs) != 1:
-            # print("error 148")
-            return redirect('custom_chocolates:home')
-
-        size_obj = size_qs.first()
-        new_lot = Lot(size=size_obj, flavour_format=flavour_format, custom_design=user_design)
+        new_lot = Lot(flavour_format=flavour_format, custom_design=user_design)
         new_lot.save()
 
         if flavour_format == Lot.PRE_BUILT:
@@ -261,15 +269,18 @@ def add_lot_to_cart(request):
 
             # create box
             new_lot.selected_prebuilts.set(selected_prebuilts)
+            prebuilt_size = form.get('prebuilt-quantity', None)
+            new_lot.prebuilt_size = prebuilt_size
+            new_lot.save()
 
         elif flavour_format == Lot.PICK_AND_MIX:
             flavours = Flavour.objects.active()
             selected_flavours = []
             for obj in flavours:
                 quantity = form.get(obj.slug, 0)
-                # print(obj.slug, quantity)
+                print(obj.slug, quantity)
 
-                if int(quantity) > 0:
+                if quantity and int(quantity) > 0:
                     flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
                     flavour_choice_obj.save()
                     selected_flavours.append(flavour_choice_obj)
@@ -280,8 +291,8 @@ def add_lot_to_cart(request):
             return redirect('custom_chocolates:home')
 
         # create entry
-        cart_entry = CartEntry.objects.new(request, product=new_lot, quantity=1)
-        # print("cart_entry")
-        # print(cart_entry)
+        quantity = new_lot.quantity
+        cart_entry = CartEntry.objects.new(request, product=new_lot, quantity=quantity)
+        cart_entry.save()
 
     return redirect('carts:home')

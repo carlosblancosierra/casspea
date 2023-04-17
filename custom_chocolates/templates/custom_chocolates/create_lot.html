@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ block.super }} Box Flavours{% endblock %}
+
+{% block content %}
+
+{% url 'custom_chocolates:add_lot' as add_lots_url %}
+
+{% include "base/inner-banner.html" %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="row mt-5">
+      <div class="col s12 m4">
+        {% include "custom_chocolates/user_design_pic.html" with design=user_design %}
+      </div>
+      <div class="col s12 m8">
+        <h1 class="font-250">Lot of Chocolates</h1>
+        <p class="bold">Price per piece</p>
+        <ul>
+          <li>0 - 100 = ￡1.2</li>
+          <li>101 - 300 = ￡1.00</li>
+          <li>301 - 500 = ￡0.8</li>
+          <li>500+ = ￡0.75</li>
+        </ul>
+
+        <form method="POST" action="{{ add_lots_url }}"> {% csrf_token %}
+
+          <div class="row">
+            <div class="col s12">
+              <p class="bold">Pick your flavour</p>
+            </div>
+            <div class="col s12 m6">
+              <p>
+                <label onclick="showPreBuiltCol()" class="btn boxes-radio-green-btn">
+                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PRE_BUILT }}"
+                         required/>
+                  <span>Pre Built</span>
+                </label>
+              </p>
+            </div>
+            <div class="col s12 m6">
+              <p>
+                <label onclick="showPickAndMixCol()" class="btn boxes-radio-green-btn">
+                  <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PICK_AND_MIX }}" required/>
+                  <span>Pick and Mix</span>
+                </label>
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="row">
+            <div class="col s12 m6 offset-m3" id="preBuiltCol">
+
+              <p class="input-field">
+                <input id="prebuilt-quantity" type="number"
+                       name="prebuilt-quantity" class="validate center" min="50">
+                <label for="prebuilt-quantity">How many chocolates?</label>
+              </p>
+              <p>Flavours</p>
+              {% for obj in prebuilds %}
+              <p class="box-flavour-radio">
+                <label>
+                  <input class="" name="{{ obj.slug }}" type="checkbox"/>
+                  <span>{{ obj.name }}</span>
+                </label>
+              </p>
+              <hr>
+              {% endfor %}
+              <span>*Pick as many as you want</span>
+
+            </div>
+            <div class="col s12" id="pickAndMixCol">
+              {% for flavour in flavours %}
+              <div class="card">
+                <div class="row box-flavour-radio">
+                  <div class="col s3 m2">
+                    {% if flavour.image %}
+                    <img src="{{ flavour.image.url }}" class="responsive-img"/>
+                    {% endif %}
+                  </div>
+                  <div class="col s5 m4">
+                    <p class="mt-3">{{ flavour.name }}</p>
+                  </div>
+
+                  <div class="col s4 m6">
+                    <p class="input-field">
+                      <input id="{{ flavour.slug }}" type="number"
+                             name="{{ flavour.slug }}" class="flavour-input validate center">
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!--              <hr>-->
+              {% endfor %}
+              <p class="bold font-150"><span id="total_chocolates"></span> Chocolates for a total of ￡<span
+                      id="total_price"></span></p>
+
+            </div>
+          </div>
+          <p class="center">
+            <button type="submit" class="btn-large btn-orange" id="submit-btn">Add Chocolates to Cart
+            </button>
+          </p>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block js_extra %}
+
+<script>
+  const preBuiltCol = document.getElementById('preBuiltCol')
+  const pickAndMixCol = document.getElementById('pickAndMixCol')
+  preBuiltCol.style.display = 'none';
+  pickAndMixCol.style.display = 'none';
+
+  function showPreBuiltCol() {
+      pickAndMixCol.style.display = 'none';
+      preBuiltCol.style.display = 'block';
+  }
+
+  function showPickAndMixCol() {
+    preBuiltCol.style.display = 'none';
+    pickAndMixCol.style.display = 'block';
+  }
+
+const max = parseInt({{ size }})
+const flavourInputs = $('.flavour-input');
+const flavourPlusBtns = $('.flavour-plus-btn');
+const flavourPlus10Btns = $('.flavour-plus10-btn');
+const submitBtn = $('#submit-btn');
+
+const totalChocolates = $('#total_chocolates');
+const totalPrice = $('#total_price');
+
+var timer;
+var sum = 0;
+
+function estimateTotal (inputs) {
+  var new_total = 0;
+  inputs.each(function() {
+    var inputValue = parseInt($(this).val());
+    if (!isNaN(inputValue) && inputValue > 0) {
+      new_total += inputValue
+    }
+  });
+  return new_total
+}
+
+function estimatePrice(total) {
+  var price;
+  if (total < 100) {
+    price =  total * 1.2
+  } else if (total < 300) {
+    price = total
+  } else if (total < 500) {
+    price = total * 0.8
+  } else {
+    price = total * 0.75
+  } 
+
+  return price.toFixed(2)
+}
+
+function showtotal () {
+  var total = estimateTotal(flavourInputs)
+  var price = estimatePrice(total)
+
+  totalChocolates.text(total)
+  totalPrice.text(price)
+}
+
+
+
+
+flavourInputs.on('input', function() {
+  var inputField = $(this); // Store reference to the input field
+  var inputValue = inputField.val();
+  clearTimeout(timer); // clear the previous timer
+  timer = setTimeout(function() {
+    if (inputValue < 0 || inputValue < 50) {
+      // Display an error message or perform validation logic
+      alert('Please enter a 0 or value greater than 50');
+      // Clear the input value
+      inputField.val('');
+    } else {
+      // Input value is valid, perform additional logic if needed
+    }
+    showtotal()
+  }, 750); // set a timer delay of 500 milliseconds (0.5 seconds)
+  
+});
+
+
+
+
+
+
+
+
+</script>
+
+{% endblock %}
