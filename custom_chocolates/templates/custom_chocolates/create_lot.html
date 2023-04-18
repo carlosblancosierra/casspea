@@ -7,6 +7,7 @@
 {% block content %}
 
 {% url 'custom_chocolates:add_lot' as add_lots_url %}
+{% url 'flavours:home' as flavours_url %}
 
 {% include "base/inner-banner.html" %}
 
@@ -50,10 +51,7 @@
                 </label>
               </p>
             </div>
-
           </div>
-
-
           <div class="row">
             <div class="col s12 m6 offset-m3" id="preBuiltCol">
 
@@ -75,31 +73,59 @@
               <span>*Pick as many as you want</span>
 
             </div>
-            <div class="col s12" id="pickAndMixCol">
-              {% for flavour in flavours %}
-              <div class="card">
-                <div class="row box-flavour-radio">
-                  <div class="col s3 m2">
-                    {% if flavour.image %}
-                    <img src="{{ flavour.image.url }}" class="responsive-img"/>
-                    {% endif %}
-                  </div>
-                  <div class="col s5 m4">
-                    <p class="mt-3">{{ flavour.name }}</p>
-                  </div>
+            <div class="col s12 m12" id="pickAndMixCol">
+              <p class="center">Pick 50+ from each flavour, price per piece calculated at the bottom.</p>
+              <p class="center">
+                <a class="modal-trigger text-underline my-orange-text" href="{{flavours_url}}" target="_blank">
+                View Allergen table</a>
+              </p>
 
-                  <div class="col s4 m6">
-                    <p class="input-field">
-                      <input id="{{ flavour.slug }}" type="number"
-                             name="{{ flavour.slug }}" class="flavour-input validate center">
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <!--              <hr>-->
-              {% endfor %}
-              <p class="bold font-150"><span id="total_chocolates"></span> Chocolates for a total of ￡<span
-                      id="total_price"></span></p>
+              <table>
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>Flavour</th>
+                  <th class="center">Quantity</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for flavour in flavours %}
+                <tr>
+                  <td width="70px" class="py-0">
+                    {% if flavour.image %}
+                    <img src="{{ flavour.image.url }}" class="responsive-img" width="50px"/>
+                    {% else %}
+                    <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>
+                    {% endif %}
+                  </td>
+                  <td class="py-0">{{ flavour.name }}</td>
+                  <td class="py-0">
+                    <div class="row">
+                      <div class="col m2 d-none d-md-block">
+                        <button class="btn btn-green btn-number flavour-plus10-btn mt-2"
+                                data-type="minus-50" data-field="{{ flavour.slug }}"
+                        >-50</button>
+                      </div>
+                      <div class="col s12 m8">
+                        <input id="{{ flavour.slug }}" type="number" value="0" min="0" max="10000"
+                           name="{{ flavour.slug }}" class="flavour-input validate center">
+                      </div>
+                      <div class="col m2 d-none d-md-block">
+                        <button class="btn btn-green btn-number flavour-plus10-btn mt-2"
+                            data-type="plus-50" data-field="{{ flavour.slug }}"
+                    >+50
+                    </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+
+              <p class="bold font-150 center"><span id="total_chocolates">0</span> Chocolates for a total of ￡<span
+                      id="total_price">0</span></p>
 
             </div>
           </div>
@@ -107,10 +133,21 @@
             <button type="submit" class="btn-large btn-orange" id="submit-btn">Add Chocolates to Cart
             </button>
           </p>
-
+          
         </form>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="allergenModal" class="modal">
+  <div class="modal-content">
+    <h4 class="">Allergens</h4>
+    <img src="{% static 'images/flavours/allergen-table.jpg' %}" alt="allergens" class="responsive-img">
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
   </div>
 </div>
 {% endblock %}
@@ -179,9 +216,6 @@ function showtotal () {
   totalPrice.text(price)
 }
 
-
-
-
 flavourInputs.on('input', function() {
   var inputField = $(this); // Store reference to the input field
   var inputValue = inputField.val();
@@ -201,10 +235,48 @@ flavourInputs.on('input', function() {
 });
 
 
+$('.btn-number').click(function(e){
+    e.preventDefault();
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    console.log(!isNaN(currentVal))
+    if (!isNaN(currentVal)) {
+        if(type == 'minus-50') {
+            if(currentVal >= input.attr('min') + 50) {
+                input.val(currentVal - 50).change();
+            } else if (currentVal >= input.attr('min')) {
+                input.val(0);
+            }
+        } else if(type == 'plus-50') {
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 50).change();
+          }
+        }
+    } else {
+        input.val(0);
+    }
+    showtotal()
+});
 
 
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
 
+$('.input-number').change(function() {
 
+    minValue =  parseInt($(this).attr('min'));
+    valueCurrent = parseInt($(this).val());
+
+    name = $(this).attr('name');
+    if (valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        $(this).val($(this).data('oldValue'));
+    }
+});
 
 
 </script>

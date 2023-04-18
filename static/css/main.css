@@ -676,3 +676,7 @@ h1, h2 {
 }
 
 }
+
+.lot-flavour-name {
+    min-height:3rem;
+}

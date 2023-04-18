@@ -5,21 +5,21 @@
 {% block head_title %}{{ block.super }} Store{% endblock %}
 {% block content %}
 {% include "base/inner-banner.html" %}
-
+{% url 'custom_chocolates:create_lot' as lots_url %}
 
 <div class="container mt-5">
   <div class="row">
     <div class="col s12">
       <h2 class="bold font-200 center">Your design is ready, now choose your box size</h2>
-<!--      <div class="mx-auto">-->
-<!--        {% include "custom_chocolates/table_user_design_picture.html" with design=user_design %}-->
-<!--      </div>-->
+      <!--      <div class="mx-auto">-->
+      <!--        {% include "custom_chocolates/table_user_design_picture.html" with design=user_design %}-->
+      <!--      </div>-->
       <p class="center">Minimun order: 45 chocolates</p>
     </div>
   </div>
 </div>
 
-<section class="container mt-5">
+<section class="container">
   <div class="row">
     <div class="col s12">
     </div>
@@ -27,7 +27,8 @@
     <div class="col s6 m3">
 
       {% if obj.store_image %}
-      <a href="/custom_chocolates/box_size/{{ obj.size }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
+      <a href="/custom_chocolates/box_size/{{ obj.size }}"><img src="{{ obj.store_image.url }}" class="responsive-img">
+      </a>
       {% endif %}
       <p class="center bold">£{{ obj.custom_price }} ea</p>
       <p class="center ">
@@ -49,6 +50,57 @@
       </p>
     </div>
     {% endfor %}
+  </div>
+</section>
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col s12 m6">
+      <img src="{% static 'images/custom/lots.jpg' %}" class="responsive-img">
+    </div>
+    <div class="col s12 m6">
+      <h2 class="font-200 bold">Need More?</h2>
+      <h3 class="font-150 mt-2">Order chocolates without boxes</h3>
+      <table>
+        <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Flavours</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>0-100</td>
+          <td>£1.2 each</td>
+          <td>1-2</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>101-300</td>
+          <td>£1.00 each</td>
+          <td>2-6</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>301-500</td>
+          <td>£0.8 each</td>
+          <td>6-10</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>500+</td>
+          <td>£0.75 each</td>
+          <td>10+</td>
+        </tr>
+
+        </tbody>
+      </table>
+      <p class="center"><a href="{{ lots_url }}" class="btn-large btn-primary w-100 my-orange">Pick your chocolates</a></p>
+    </div>
   </div>
 </section>
 

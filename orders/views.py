@@ -220,7 +220,7 @@ class CreateCheckoutSessionView(View):
         # send order id to stripe
         domain = "https://www.casspea.co.uk"
         if settings.STATIC_LOCAL:
-            domain = "http://127.0.0.1:9000"
+            domain = "http://127.0.0.1:8000"
 
         shipping_free = {
             "shipping_rate_data": {

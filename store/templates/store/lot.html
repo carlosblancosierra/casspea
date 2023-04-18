@@ -221,6 +221,7 @@ $('.btn-number').click(function(e){
 $('.input-number').focusin(function(){
    $(this).data('oldValue', $(this).val());
 });
+
 $('.input-number').change(function() {
 
     minValue =  parseInt($(this).attr('min'));
@@ -240,7 +241,6 @@ $('.input-number').change(function() {
         alert('Sorry, the maximum value was reached');
         $(this).val($(this).data('oldValue'));
     }
-
 
 });
 
