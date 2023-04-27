@@ -7,6 +7,7 @@ from django.db.models.signals import pre_save
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from custom_chocolates.models import UserChocolateDesign
+from decimal import *
 
 from boxes.models import Box
 
@@ -91,9 +92,9 @@ class CartEntryManager(models.Manager):
 
     def cart_subtotal(self, request):
         entries = self.entries(request)
-        total = 0
+        total = Decimal(0)
         for entry in entries:
-            subtotal = entry.total
+            subtotal = Decimal(entry.total)
             total += subtotal
         return total
 
