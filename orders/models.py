@@ -5,7 +5,7 @@ from carts.models import CartEntry
 from django.conf import settings
 from django.db.models.signals import post_save
 import json
-
+from decimal import *
 # Create your models here.
 User = settings.AUTH_USER_MODEL
 
@@ -62,9 +62,9 @@ class Order(models.Model):
     @property
     def subtotal(self):
         entries = self.cart_entries.all()
-        subtotal = 0
+        subtotal = Decimal(0)
         for entry in entries:
-            subtotal += entry.total
+            subtotal += Decimal(entry.total)
         return subtotal
 
     @property
