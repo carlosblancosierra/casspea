@@ -111,41 +111,86 @@
               <a class="modal-trigger text-underline my-orange-text" href="#allergenModal">
                 View Allergen table</a>
             </p>
-            {% for flavour in flavours %}
-            <div class="row box-flavour-radio">
-              <div class="col s12 m7">
-                <p class="mt-0">
-                  {{ flavour.name }}
-                  <!--                    {% for obj in flavour.allergens.all %}-->
-                  <!--                    <i class="tooltipped" data-position="bottom" data-tooltip="{{ obj}}">I</i>-->
-                  <!--                    {% endfor %}-->
-                </p>
-              </div>
-              <div class=" col s12 m5">
-                <button class="btn btn-green btn-number"
-                        data-type="minus" data-field="{{ flavour.slug }}"
-                >-
-                </button>
+<!--            {% for flavour in flavours %}-->
+<!--            <div class="row box-flavour-radio">-->
+<!--              <div class="col s12 m7">-->
+<!--                <p class="mt-0">-->
+<!--                  {{ flavour.name }}-->
+<!--                  &lt;!&ndash;                    {% for obj in flavour.allergens.all %}&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    <i class="tooltipped" data-position="bottom" data-tooltip="{{ obj}}">I</i>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    {% endfor %}&ndash;&gt;-->
+<!--                </p>-->
+<!--              </div>-->
+<!--              <div class=" col s12 m5">-->
+<!--                <button class="btn btn-green btn-number"-->
+<!--                        data-type="minus" data-field="{{ flavour.slug }}"-->
+<!--                >- -->
+<!--                </button>-->
 
-                <input id="{{ flavour.slug }}" type="number"
+<!--                <input id="{{ flavour.slug }}" type="number"-->
 
-                       name="{{ flavour.slug }}" class="flavour-input validate center browser-default"
-                       required min="0" value="0" max="1000">
+<!--                       name="{{ flavour.slug }}" class="flavour-input validate center browser-default"-->
+<!--                       required min="0" value="0" max="1000">-->
 
-                <button class="btn btn-green btn-number flavour-plus-btn"
-                        data-type="plus" data-field="{{ flavour.slug }}"
-                >+
-                </button>
-              </div>
-            </div>
+<!--                <button class="btn btn-green btn-number flavour-plus-btn"-->
+<!--                        data-type="plus" data-field="{{ flavour.slug }}"-->
+<!--                >+-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <!--              <div class="row">-->
-            <!--                <div class="input-field col s10">-->
-            <!--                  <input id="{{ flavour.slug }}" type="number" name="{{ flavour.alug }}">-->
-            <!--                  <label for="{{ flavour.slug }}">{{ flavour.name }}</label>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            {% endfor %}
+<!--            &lt;!&ndash;              <div class="row">&ndash;&gt;-->
+<!--            &lt;!&ndash;                <div class="input-field col s10">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <input id="{{ flavour.slug }}" type="number" name="{{ flavour.alug }}">&ndash;&gt;-->
+<!--            &lt;!&ndash;                  <label for="{{ flavour.slug }}">{{ flavour.name }}</label>&ndash;&gt;-->
+<!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--            {% endfor %}-->
+            <table>
+              <thead>
+              <tr>
+                <th></th>
+                <th>Flavour</th>
+                <th class="center">Quantity</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              {% for flavour in flavours %}
+              <tr>
+                <td width="70px" class="py-0">
+                  {% if flavour.image %}
+                  <img src="{{ flavour.image.url }}" class="responsive-img" width="50px"/>
+                  {% else %}
+                  <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>
+                  {% endif %}
+                </td>
+                <td class="py-0">{{ flavour.name }}</td>
+                <td class="py-0">
+                  <div class="row">
+                    <div class="col m2 d-none d-md-block">
+                      <button class="btn btn-green btn-number"
+                              data-type="minus" data-field="{{ flavour.slug }}"
+                      >-
+                      </button>
+                    </div>
+                    <div class="col s12 m8">
+                      <input id="{{ flavour.slug }}" type="number" value="0" min="0" max="10000"
+                             name="{{ flavour.slug }}" class="flavour-input validate center">
+                    </div>
+                    <div class="col m2 d-none d-md-block">
+                      <button class="btn btn-green btn-number flavour-plus-btn"
+                              data-type="plus" data-field="{{ flavour.slug }}"
+                      >+
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+
 
           </div>
         </div>
@@ -207,6 +252,9 @@
             background:none!important;
         }
     }
+
+
+
 
 
 
@@ -324,6 +372,9 @@ $('.input-number').change(function() {
 
 
 });
+
+
+
 
 
 
