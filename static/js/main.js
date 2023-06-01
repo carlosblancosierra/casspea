@@ -13,4 +13,9 @@ $(document).ready(function () {
         dotsContainer: '#box-carousel-dots'
     })
 
+    setTimeout(function() {
+        var popup = document.getElementById('popup');
+        popup = M.Modal.init(popup);
+        popup.open()
+    }, 2000); // Adjust the delay (in milliseconds) as per your requirement
 });
