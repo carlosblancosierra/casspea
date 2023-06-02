@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}{{ block.super }} Add Logo{% endblock %}
+
+{% block content %}
+{% include "base/inner-banner.html" %}
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
