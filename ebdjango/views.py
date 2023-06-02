@@ -20,3 +20,10 @@ def about_us_page(request):
     }
 
     return render(request, "about_us.html", context)
+
+
+def privacy_page(request):
+    context = {
+    }
+
+    return render(request, "privacy.html", context)
