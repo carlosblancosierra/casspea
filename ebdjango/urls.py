@@ -24,12 +24,15 @@ from . import views
 urlpatterns = [
     path('', views.home_page, name='home'),
     path('contact-us', views.contact_us_page, name="contact"),
+    path('privacy', views.privacy_page, name="privacy"),
     path('about-us', views.about_us_page, name="about"),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('accounts.passwords.urls')),
     path('addresses/', include('addresses.urls')),
     path('cart/', include('carts.urls')),
     path('custom_chocolates/', include('custom_chocolates.urls')),
+    # path('custom_boxes/', include('custom_boxes.urls')),
+
     path('dashboard/', include('dashboards.urls')),
     path('orders/', include('orders.urls')),
     path('store/', include('store.urls')),
