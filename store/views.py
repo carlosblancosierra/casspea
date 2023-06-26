@@ -80,8 +80,7 @@ def add_box_to_cart(request):
             for obj in flavours:
                 quantity = form.get(obj.slug, 0)
                 # print(obj.slug, quantity)
-
-                if int(quantity) > 0:
+                if quantity and int(quantity) > 0:
                     flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
                     flavour_choice_obj.save()
                     selected_flavours.append(flavour_choice_obj)

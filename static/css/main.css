@@ -380,21 +380,32 @@ h1, h2 {
   font-weight: bold;
 }
 
+#home-section-3 {
+  padding: 1rem;
+}
+
+#home-section-3-text {
+  font-size: 1.75rem;
+  text-align: center;
+  z-index: 999;
+}
+
+@media (min-width: 600px) {
 #home-section-3-text {
   font-size: 1.75rem;
   line-height: 3.5rem;
   text-align: center;
-  padding: 7rem 0;
   z-index: 999;
+}
 }
 
 #home-iso-morado {
   position: absolute;
   right: 0;
   top: -10%;
-  width: 40%;
+  width: 20%;
   z-index: 9;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 #home-section-3-paint {
@@ -409,7 +420,7 @@ h1, h2 {
     position: absolute;
     right: 0;
     top: -10%;
-    width: 20%;
+    width: 15%;
     z-index: 9;
     opacity: 1;
   }
@@ -664,6 +675,10 @@ h1, h2 {
   width:50px;
 }
 
+.home-process-img {
+    width:50%;
+}
+
 @media only screen and (min-width: 768px) {
 .custom-side-background-table,
  .custom-layer-1-table,
@@ -673,6 +688,10 @@ h1, h2 {
  .custom-side-shadows-table
  {
  width:150px;
+}
+
+.home-process-img {
+    width:100%;
 }
 
 }
