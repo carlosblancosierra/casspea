@@ -711,6 +711,15 @@ h1, h2 {
     font-size:1rem;
 }
 
+
+
+#home-hero {
+    min-height:50vh;
+    background-image: url('../images/home/banner-1-phone.jpg');
+    background-position:center;
+    background-size:cover;
+}
+
 @media only screen and (min-width: 768px) {
 .home-hero-h1 {
     font-size:2.5rem;
@@ -719,4 +728,12 @@ h1, h2 {
 .home-hero-description {
     font-size:1.5rem;
 }
+
+#home-hero {
+    min-height:90vh;
+    background-image: url('../images/home/banner-1.jpg');
+    background-position:center;
+    background-size:cover;
+}
+
 }
