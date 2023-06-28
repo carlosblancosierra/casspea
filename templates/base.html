@@ -40,7 +40,7 @@
 {% if messages %}
 {% for message in messages %}
 {{ message }}
-<script>
+<script async>
     M.toast({html: '{{ message }}', classes: '{% if message.tags %}{{ message.tags }}{% endif %} rounded'});
 
 </script>
