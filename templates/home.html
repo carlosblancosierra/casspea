@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block head_title %}{{ block.super }} A New Chocolate Experience{% endblock %}
+
+{% block meta_description %}Create your unique selection of luxury Hand Made Chocolates and add colour and fun to your life{% endblock %}
+
 {% block content %}
 
 {% url 'store:home' as store_url %}
@@ -13,7 +16,7 @@
   <div class="col s12 px-0">
     <div class="center w-100 white-text valign-wrapper center" id="home-hero">
       <div class="w-100">
-        <h1 class="home-hero-h1">Create your unique selection of luxury Hand Made Chocolates and add colour and fun to your life</h1>
+        <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
         <p class="home-hero-description bold">
           ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
         </p>
