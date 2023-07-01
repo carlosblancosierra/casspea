@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -208,3 +210,6 @@ STRIPE_PUBLIC_KEY = "pk_test_51MBMy0JiuFqKKcn6FsLlAE48ndzF9oruq219dkZArcnR6E0GN0
 STRIPE_SECRET_KEY = "sk_test_51MBMy0JiuFqKKcn69O4Fc8Sz7UpmLoRoaxXbqxwO8CD20P2craNClm173MKMwO7ZyyvblMfifmupuPgrWKycMV7p00qiMAW9aX"
 STRIPE_SECRET_KEY_LIVE = "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"
 STRIPE_PUBLIC_KEY_LIVE = "pk_live_51MBMy0JiuFqKKcn6HYrAh3qBJz7x1Ajr5aqcKNzuKVQkr8xSYMdJVlQAV6uZ25HYRJ6kEsRyivTezDroICC3VeBq00q7edrNzB"
+
+django_heroku.settings(locals())
+MIDDLEWARE += ['django.middleware.gzip.GZipMiddleware']
