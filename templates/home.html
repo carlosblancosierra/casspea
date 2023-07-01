@@ -24,26 +24,6 @@
 
     </div>
 
-    <!--    <div class="owl-carousel owl-theme" >-->
-    <!--      <div class="item py-5 valign-wrapper" id="home-carousel-1">-->
-    <!--        -->
-    <!--      </div>-->
-    <!--      &lt;!&ndash;      <div class="item py-5 valign-wrapper" id="home-carousel-2">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="center w-100 white-text">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <h2 class="font-250 bold">&ndash;&gt;-->
-    <!--      &lt;!&ndash;            TRY OUR FINEST CHOCOLATES&ndash;&gt;-->
-    <!--      &lt;!&ndash;          </h2>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      <div class="item py-5 valign-wrapper" id="home-carousel-3">&ndash;&gt;-->
-    <!--      &lt;!&ndash;        <div class="center w-100 white-text">&ndash;&gt;-->
-    <!--      &lt;!&ndash;          <h2 class="font-250 bold text-uppercase">&ndash;&gt;-->
-    <!--      &lt;!&ndash;            a complete experience for you and your loved ones&ndash;&gt;-->
-    <!--      &lt;!&ndash;          </h2>&ndash;&gt;-->
-    <!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-    <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-
-    <!--    </div>-->
 
     {% include "base/navbar-carousel.html" %}
 
@@ -86,7 +66,11 @@
       <p><a href="{{ store_url }}" class="btn-large btn-purple">ORDER NOW</a></p>
     </div>
     <div class="col s12 m6">
-      <img src="{% static 'images/home/section2.jpg' %}" alt="" class="responsive-img">
+      <picture>
+        <source srcset="{% static 'images/home/section2.webp' %}" type="image/webp">
+        <source srcset="{% static 'images/home/section2.jpg' %}" type="image/jpeg">
+        <img src="{% static 'images/home/section2.jpg' %}" alt="" class="responsive-img">
+      </picture>
     </div>
   </div>
 </section>
@@ -99,34 +83,54 @@
         </p>
       </div>
     </div>
-
-
     <div class="row">
       <div class="col s12 m2 offset-m1 center">
-        <img src="{% static 'images/home/process/1.png' %}" class="responsive-img home-process-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/process/1.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/process/1.png' %}" type="image/png">
+          <img src="{% static 'images/home/process/1.png' %}" class="responsive-img home-process-img" loading="lazy">
+        </picture>
+
         <p class="bold center font-150 m-0">
           Visit our shop and choose your box size</p>
       </div>
       <div class="col s12 m2 center">
-        <img src="{% static 'images/home/process/2.png' %}" class="responsive-img home-process-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/process/2.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/process/2.png' %}" type="image/png">
+          <img src="{% static 'images/home/process/2.png' %}" class="responsive-img home-process-img" loading="lazy">
+        </picture>
+
         <p class="bold center font-150 m-0">
           Choose a pre-selected box or why not Pick and Mix your own flavours!
         </p>
       </div>
       <div class="col s12 m2 center">
-        <img src="{% static 'images/home/process/3.png' %}" class="responsive-img home-process-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/process/3.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/process/3.png' %}" type="image/png">
+          <img src="{% static 'images/home/process/3.png' %}" class="responsive-img home-process-img" loading="lazy">
+        </picture>
         <p class="bold center font-150 m-0">
           Sending as a gift? Write a message or leave this blank – your choice!
         </p>
       </div>
       <div class="col s12 m2 center">
-        <img src="{% static 'images/home/process/4.png' %}" class="responsive-img home-process-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/process/4.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/process/4.png' %}" type="image/png">
+          <img src="{% static 'images/home/process/4.png' %}" class="responsive-img home-process-img" loading="lazy">
+        </picture>
         <p class="bold center font-150 m-0">
           Choose your shipping date, enter your shipping address and pay online securely
         </p>
       </div>
       <div class="col s12 m2 center">
-        <img src="{% static 'images/home/process/5.png' %}" class="responsive-img home-process-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/process/5.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/process/5.png' %}" type="image/png">
+          <img src="{% static 'images/home/process/5.png' %}" class="responsive-img home-process-img" loading="lazy">
+        </picture>
         <p class="bold center font-150 m-0">
           Receive your box and enjoy your chocolates!
         </p>
@@ -143,17 +147,6 @@
   </div>
 </section>
 
-
-<!--<section>-->
-<!--  <div class="row">-->
-<!--    <div class="col s12 p-0">-->
-<!--      <a href="{{ personalise_url }}">-->
-<!--        <img src="{% static 'images/home/banner-home.jpg' %}" alt="" class="responsive-img d-none d-md-block">-->
-<!--        <img src="{% static 'images/home/banner-home.jpg' %}" alt="" class="responsive-img d-md-none">-->
-<!--      </a>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
 
 <section id="home-section-2" class="my-yellow">
   <div class="container ">
@@ -187,68 +180,23 @@
 
       </div>
       <div class="col s12 m4">
-        <img src="{% static 'images/home/surpise.jpg' %}" class="responsive-img" loading="lazy">
+        <picture>
+          <source srcset="{% static 'images/home/surpise.webp' %}" type="image/webp">
+          <source srcset="{% static 'images/home/surpise.png' %}" type="image/png">
+          <img src="{% static 'images/home/surpise.png' %}" class="responsive-img" loading="lazy">
+        </picture>
+
       </div>
     </div>
   </div>
   <img src="{% static 'images/home/iso-morado.png' %}" id="home-iso-morado" loading="lazy">
-  <!--  <img src="{% static 'images/home/home-section-3-paint.png' %}" id="home-section-3-paint">-->
 </section>
-
-<!--<section id="home-section-4">-->
-<!--  <div class="container">-->
-<!--    <div class="row">-->
-<!--      <div class="col s12">-->
-<!--        <p class="white-text font-250 center">-->
-<!--          SHOW OFF YOUR AMAZING AND UNIQUE PERSONALITY-->
-<!--        </p>-->
-<!--        <p class="white-text font-250 center bold">-->
-<!--          WITH <span class="yellow-text">OUR PERSONALISED</span> CHOCOLATE SECTION-->
-<!--        </p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
-
-
-<!--<section id="">-->
-<!--  <div class="container">-->
-<!--    <div class="row">-->
-<!--      <div class="col s12 my-5">-->
-<!--        <div class="owl-carousel owl-theme" id="home-carousel-gallery">-->
-<!--          <div class="item">-->
-<!--            <img src="{% static 'images/home/gallery/1.jpg' %}" class="responsive-img">-->
-<!--          </div>-->
-<!--          <div class="item">-->
-<!--            <img src="{% static 'images/home/gallery/2.jpg' %}" class="responsive-img">-->
-<!--          </div>-->
-<!--          <div class="item">-->
-<!--            <img src="{% static 'images/home/gallery/3.jpg' %}" class="responsive-img">-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--      </div>-->
-
-<!--      <div class="col s12 center">-->
-<!--        <p class="d-inline-block">-->
-<!--          <a href="https://www.instagram.com/casspea_/"><i class="fa-brands fa-instagram black-text font-300"></i></a>-->
-<!--        </p>-->
-<!--        <p class="d-inline-block">-->
-<!--          <a href="https://www.instagram.com/casspea_/"><span class="my-purple-text font-200 bold ">@casspea_</span></a>-->
-<!--        </p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</section>-->
 
 
 <style>
   #site-nav {
    display:none;
   }
-
-
-
 
 
 
