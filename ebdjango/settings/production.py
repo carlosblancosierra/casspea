@@ -77,7 +77,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.gzip.GZipMiddleware'
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.brotli.BrotliMiddleware'
 ]
 
 ROOT_URLCONF = 'ebdjango.urls'
