@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 import django_heroku
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -70,7 +69,6 @@ EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -79,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.gzip.GZipMiddleware'
 ]
 
 ROOT_URLCONF = 'ebdjango.urls'
@@ -212,4 +211,3 @@ STRIPE_SECRET_KEY_LIVE = "sk_live_51MBMy0JiuFqKKcn6Zk4f0i4wkEEnKou7Dna9ikDTFtAzQ
 STRIPE_PUBLIC_KEY_LIVE = "pk_live_51MBMy0JiuFqKKcn6HYrAh3qBJz7x1Ajr5aqcKNzuKVQkr8xSYMdJVlQAV6uZ25HYRJ6kEsRyivTezDroICC3VeBq00q7edrNzB"
 
 django_heroku.settings(locals())
-MIDDLEWARE += ['django.middleware.gzip.GZipMiddleware']
