@@ -7,6 +7,7 @@ charset-normalizer==2.1.1
 dj-database-url==1.0.0
 Django==3.2.16
 django-appconf==1.0.5
+django-heroku==0.3.1
 django-imagekit==4.1.0
 django-storages==1.13.1
 gunicorn==20.1.0
@@ -14,6 +15,7 @@ idna==3.4
 jmespath==1.0.1
 pilkit==2.0
 Pillow==9.3.0
+psycopg2==2.9.6
 psycopg2-binary==2.9.4
 python-dateutil==2.8.2
 pytz==2022.4
@@ -24,3 +26,4 @@ sqlparse==0.4.3
 stripe==5.0.0
 typing_extensions==4.1.1
 urllib3==1.26.12
+whitenoise==6.5.0
