@@ -13,7 +13,8 @@ def home_page(request):
     qs = BoxSize.objects.active()
 
     context = {
-        "title": "PICK YOUR BOX",
+        "title": "Build your box of CassPea chocolates.",
+        "subtitle": "Let us surprise you with our own selection, or choose your own flavours with our Pick and Mix option!",
         "qs": qs,
     }
 

@@ -39,9 +39,9 @@
 
       {% include "carts/entry_table.html" %}
 
-      <p class="left">
-        <a class="btn btn-green px-5" href="{{ store_home_url }}">Continue Shopping</a>
-      </p>
+<!--      <p class="left">-->
+<!--        <a class="btn btn-green px-5" href="{{ store_home_url }}">Continue Shopping</a>-->
+<!--      </p>-->
 
     </div>
   </div>
@@ -62,6 +62,37 @@
           >{% if gift_message %}{{ gift_message }}{% endif %}</textarea>
               <label for="gift_message">Add your Message (optional)</label>
             </div>
+            <div class="row">
+              <div class="col s12 m10">
+                <h4 class="font-150 bold">Payment Methods</h4>
+
+                <div class="row">
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/visa.png' %}" class="responsive-img">
+                  </div>
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/master.png' %}" class="responsive-img">
+                  </div>
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/google.png' %}" class="responsive-img">
+                  </div>
+
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/apple.png' %}" class="responsive-img">
+                  </div>
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/amex.png' %}" class="responsive-img">
+                  </div>
+                  <div class="col s2 px-1">
+                    <img src="{% static 'images/payments/diners.png' %}" class="responsive-img">
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+
           </div>
           <div class="col s12 m6">
             <h4 class="font-150 bold">Shipping Date</h4>
@@ -174,6 +205,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
 });
+
+
+
+
+
+
 
 </script>
 {% endblock %}
