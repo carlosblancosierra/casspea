@@ -42,7 +42,7 @@ class Flavour(models.Model):
     slug = models.SlugField(unique=True, blank=True, max_length=255)
 
     description = models.TextField(blank=True, null=True)
-
+    mini_description = models.TextField(max_length=80, blank=True, null=True)
     allergens = models.ManyToManyField(Allergen, blank=True)
 
     image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
