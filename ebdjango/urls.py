@@ -3,7 +3,7 @@ from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from accounts.views import login_page, register_page_local
-
+from leads.views import newsletter_subscribe
 from . import views
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     path('privacy', views.privacy_page, name="privacy"),
     path('about-us', views.about_us_page, name="about"),
     path('fequently-asked-questions', views.faqs_page, name="faqs"),
+    path('newsletter_subscribe', newsletter_subscribe, name="subscribe_newsletter"),
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('accounts.passwords.urls')),
