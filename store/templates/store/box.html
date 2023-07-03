@@ -116,22 +116,28 @@
             {% for flavour in flavours %}
             <div class="row box-flavour-radio">
               <hr/>
-              <div class="col s2 m2">
+              <div class="col s2 m2 p-0">
                 <td width="70px" class="py-0">
                   {% if flavour.image %}
-                  <img src="{{ flavour.image.url }}" class="responsive-img" width="50px"/>
+                  <img src="{{ flavour.image.url }}" class="responsive-img" width="100px"/>
                   {% else %}
                   <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>
                   {% endif %}
                 </td>
               </div>
               <div class="col s4 m5">
-                <p class="mt-0">
+                <p class="mt-0 mb-1 bold">
                   {{ flavour.name }}
                   <!--                    {% for obj in flavour.allergens.all %}-->
                   <!--                    <i class="tooltipped" data-position="bottom" data-tooltip="{{ obj}}">I</i>-->
                   <!--                    {% endfor %}-->
                 </p>
+                {% if flavour.mini_description %}
+                <p class="font-080 m-0">{{ flavour.mini_description }}</p>
+                {% endif %}
+                {% if flavour.allergens_str %}
+                <p class="font-070 mt-1 mb-0">*Contains {{ flavour.allergens_str }}</p>
+                {% endif %}
               </div>
               <div class=" col s6 m5">
                 <button class="btn btn-green btn-number"
