@@ -25,7 +25,7 @@
   </div>
 </section>
 
-<section class="container">
+<section class="">
   <div class="row">
     <div class="col s12 m8 offset-m2 my-5">
       <p class="font-150 center">
@@ -38,26 +38,28 @@
 
 
     </div>
-
+  </div>
+  <div class="row">
     {% for obj in qs %}
-    <div class="col s12 m8 offset-m2">
-      <div class="row mt-3 mb-4 d-flex valign-wrapper">
-        <div class="col s12 m6 center">
-          <h2 class="font-200 my-pink-text pt-0">{{ obj.name }}</h2>
-          {% if obj.description %}
-          <p>{{ obj.description }}</p>
-          {% endif %}
-          {% if obj.allergens_str %}
-          <p>*Contains {{ obj.allergens_str }}</p>
-          {% endif %}
-        </div>
-        <div class="col s12 m6">
-          {% if obj.image %}
-          <img src="{{ obj.image.url }}" class="responsive-img"/>
-          {% endif %}
+    <div class="col s12 m4">
+      <div class="row mt-3 mb-4">
+        <div>
+          <div class="col s12 center">
+            {% if obj.image %}
+            <img src="{{ obj.image.url }}" class="responsive-img w-50"/>
+            {% endif %}
+          </div>
+          <div class="col s12 center">
+            <h2 class="font-200 my-pink-text pt-0">{{ obj.name }}</h2>
+            {% if obj.description %}
+            <p>{{ obj.description }}</p>
+            {% endif %}
+            {% if obj.allergens_str %}
+            <p>*Contains {{ obj.allergens_str }}</p>
+            {% endif %}
+          </div>
         </div>
       </div>
-      <hr class="">
 
     </div>
 
