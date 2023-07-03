@@ -39,9 +39,9 @@
 
       {% include "carts/entry_table.html" %}
 
-<!--      <p class="left">-->
-<!--        <a class="btn btn-green px-5" href="{{ store_home_url }}">Continue Shopping</a>-->
-<!--      </p>-->
+      <!--      <p class="left">-->
+      <!--        <a class="btn btn-green px-5" href="{{ store_home_url }}">Continue Shopping</a>-->
+      <!--      </p>-->
 
     </div>
   </div>
@@ -167,6 +167,30 @@
 </section>
 
 {% endif %}
+
+<section class="container center mt-3">
+  <div class="row">
+    <div class="col s12">
+      <hr>
+    </div>
+    <div class="col s6 m4 my-green-text">
+      <i class="fa-solid fa-truck"></i>
+      <p class="bold">FREE DELIVERY over £45</p>
+    </div>
+    <div class="col s6 m4 my-brown-text">
+      <i class="fa-solid fa-star"></i>
+      <p class="bold">5 star CUSTOMER SERVICE</p>
+    </div>
+    <div class="col s6 m4 my-orange-text">
+      <i class="fa-solid fa-credit-card"></i>
+      <p class="bold">SECURE PAYMENTS</p>
+    </div>
+  </div>
+  <div class="col s12">
+      <hr>
+    </div>
+</section>
+
 {% endblock %}
 
 {% block js_extra %}
@@ -205,6 +229,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
 });
+
+
 
 
 
