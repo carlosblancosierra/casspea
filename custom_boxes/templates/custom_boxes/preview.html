@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load humanize %}
+
+{% block head_title %}{{ block.super }} Add Logo{% endblock %}
+
+{% block content %}
+{% include "base/inner-banner.html" %}
+
+<style>
+  .top-image {
+    transform: rotateX(60deg) rotateZ(45deg);
+  }
+  .front-image {
+    transform: rotateY(60deg);
+  }
+
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col s12 m3">
+      <img src="{{ logo.image.url }}" class="responsive-img front-image">
+    </div>
+    <div class="col s12 m3">
+      <img src="{{ logo.image.url }}" class="responsive-img top-image">
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

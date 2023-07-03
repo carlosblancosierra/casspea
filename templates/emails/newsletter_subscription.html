@@ -1,0 +1,43 @@
+{% extends "emails/base.html" %}
+{% load static %}
+{% block content %}
+<style>
+        /* CSS styles for the template */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .image {
+            margin-top: 20px;
+        }
+        .code {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+
+</style>
+<div class="container">
+  <h1>Thank you for subscribing to CassPea!</h1>
+  <p>Here is your exclusive discount code:</p>
+  <p class="code">Discount Code: CASSPEA15</p>
+  <div class="image">
+    <img src="{{ image_url }}" alt="Discount Code" class="responsive-img">
+  </div>
+</div>
+{% endblock %}

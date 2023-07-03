@@ -1,0 +1,32 @@
+{% load static %}
+<div class="fixed-action-btn">
+  <a class="btn-floating btn-large red modal-trigger" href="#newsletter-modal"
+     style="width:20rem"
+  >
+    Want 15% off?
+  </a>
+</div>
+
+<div id="newsletter-modal" class="modal p-3" style="z-index:999999">
+  <div class="row">
+    <div class="col s12 m6 p-0 d-none d-md-block">
+      <img src="{% static 'images/home/popup-banner3.jpg' %}" class="responsive-img">
+    </div>
+    <div class="col s12 m6 p-5">
+      <p class="pt-md-5 center bold p-0">Suscribe to our Newsletter for</p>
+      <h4 class="center bold p-0">15% OFF FIRST ORDER</h4>
+      <form method="POST" action="{% url 'subscribe_newsletter' %}">
+        {% csrf_token %}
+        <div class="input-field">
+          <input id="email" type="email" name="email" required>
+          <label for="email">Email</label>
+        </div>
+        <button type="submit" class="btn w-100 my-purple bold">GET CODE</button>
+      </form>
+
+      <p class="center">*Discount code sent to your email after subscribing*
+      <p class="center">By suscribing you are accepting our <a href="{% url 'privacy' %}" target="_blank"
+                                                               class="text-underline">Privacy Policy</a></p>
+    </div>
+  </div>
+</div>
