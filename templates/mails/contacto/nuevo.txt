@@ -1,7 +1,0 @@
-Nuevo contacto Creado en JimMiss.mx
-Email: {{ obj.email }}
-Nombre comercial: {{ obj.nombre_comercial }}
-Dirección comercial: {{ obj.direccion_comercial }}
-Razón Social: {{ obj.razon_social }}
-Teléfono: {{ obj.telefono }}
-Mensaje: {{ obj.comments }}

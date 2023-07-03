@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include "base/navbar-dark.html" %}
+
+<div class="container">
+    <h1 class="center bold font-200 my-5 my-purple-text">Frequently Asked Questions</h1>
+    {% for faq in faqs %}
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title font-weight-bold">{{ faq.question }}</span>
+            <p>{{ faq.answer }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

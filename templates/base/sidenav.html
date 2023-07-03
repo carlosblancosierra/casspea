@@ -15,6 +15,7 @@
 {% url 'password_reset' as password_reset_url %}
 {% url 'password_change' as password_change_url %}
 {% url 'custom_chocolates:home' as custom_url %}
+{% url 'faqs' as faqs_url %}
 
 <ul class="sidenav" id="mobile-demo">
   <a href="/" class="w-90 ml-1">
@@ -23,6 +24,7 @@
   <li><a href="/" aria-label="Go to the home page">Home</a></li>
   <li><a href="{{ store_url }}">Shop now</a></li>
   <li><a href="{{ flavours_url }}">Our Flavours</a></li>
+  <li><a href="{{ faqs_url }}">FAQS</a></li>
   <li><a href="{{ client_url }}">Clients</a></li>
   <li><a href="{{ about_url }}">About Us</a></li>
   <li><a href="{{ contact_url }}">Contact Us</a></li>
