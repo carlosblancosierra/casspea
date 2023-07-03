@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 import django_heroku
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -69,7 +70,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
-CONTACT_EMAIL = 'carlosblancosierra@gmail.com'
+CONTACT_EMAIL = 'info@casspea.co.uk'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -213,3 +214,8 @@ STRIPE_SECRET_KEY_LIVE = "sk_live_51MBMy0JiuFqKKcn6Zk4f0i4wkEEnKou7Dna9ikDTFtAzQ
 STRIPE_PUBLIC_KEY_LIVE = "pk_live_51MBMy0JiuFqKKcn6HYrAh3qBJz7x1Ajr5aqcKNzuKVQkr8xSYMdJVlQAV6uZ25HYRJ6kEsRyivTezDroICC3VeBq00q7edrNzB"
 
 django_heroku.settings(locals())
+# MESSAGE BOOTSTRAP
+MESSAGE_TAGS = {
+    messages.ERROR: 'red',
+    messages.SUCCESS: 'green',
+}

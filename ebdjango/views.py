@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from leads.forms import ContactForm
+from django.contrib import messages
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -26,11 +27,12 @@ def contact_us_page(request):
             html_message = render_to_string('emails/contact_form.html', {'obj': contact_message})
             plain_message = strip_tags(html_message)
             from_email = settings.DEFAULT_FROM_EMAIL
-            to_email = [settings.CONTACT_EMAIL]
+            to_email = [settings.CONTACT_EMAIL, 'carlosblancosierra@gmail.com']
             send_mail(subject, plain_message, from_email, to_email, html_message=html_message)
 
-            # Redirect to a success page or show a success message
-            # ...
+            messages.success(request, 'Your message has been sent successfully!')
+
+            return redirect('/')
 
     # Handle GET request or invalid form
     else:
