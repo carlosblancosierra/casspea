@@ -85,9 +85,7 @@ def faqs_page(request):
          "answer": "If you are unsatisfied with your order or there was a problem with delivery, we will do everything possible to make sure that you are left satisfied and wanting to come back again. If you have had a negative experience, please contact us directly at info@casspea.co.uk or send us a WhatsApp message at 07447 990542."},
         {"question": "Where are you located?",
          "answer": "Well, we don't have a physical shop. We do everything online. Our kitchen is based in the south of London."},
-        {"question": "Allergens!",
-         "answer": "We are very careful when we handle allergens, especially nuts, wheat, milk, or soy. We cannot guarantee that there is no cross-contamination, so if you have any allergies to these products, we recommend you take that into account. For more information, please click here to see our allergen table."}
-    ]
+       ]
 
     context = {'faqs': faqs}
 
