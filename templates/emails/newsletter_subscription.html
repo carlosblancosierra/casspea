@@ -1,9 +1,17 @@
 {% extends "emails/base.html" %}
 {% load static %}
 {% block content %}
-
-<h4>Thank you for subscribing to CassPea!</h4>
-<p>Here is your exclusive discount code:</p>
-<p class="code">Discount Code: CASSPEA15</p>
-
+<div class="container">
+  <div class="row">
+    <div class="col s12 m6 offset-m2 center">
+      <h4>Thank you for subscribing to CassPea!</h4>
+      <p>Here is your exclusive discount code:</p>
+      <p class="code">Discount Code: CASSPEA15</p>
+      <div class="image">
+        <img src="https://casspea-static-eu.s3.eu-west-1.amazonaws.com/static/"
+             alt="Discount Code: CASSPEA15" class="responsive-img">
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
