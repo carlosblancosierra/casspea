@@ -67,7 +67,7 @@ def faqs_page(request):
         {"question": "What if it's really hot?",
          "answer": "On the few weeks that we actually get some proper heat, then we do recommend placing them in the fridge. We do, however, advise that they are wrapped in plastic to preserve them as best as possible. If you are conscious about the environment, then we recommend putting them inside a sealed container or a bag."},
         {"question": "Do you ship internationally?", "answer": "At the moment, we only ship within the UK."},
-        {"question": "Can I choose my own flavors?",
+        {"question": "Can I choose my own flavours?",
          "answer": "Absolutely, it is one of the coolest things about our business. You can select and see a picture of the chocolate, so you can choose by flavor, or color, or both. You can also select one of our pre-packed boxes. We offer nut-free, gluten-free, and alcohol-free options."},
         {"question": "How long do they last?",
          "answer": "We advise that they are consumed within 2 weeks of arrival. Most of our chocolates do have a longer shelf life than that. However, we know that the fresher they are, the better they taste."},
@@ -76,7 +76,8 @@ def faqs_page(request):
         {"question": "What if I need many boxes?",
          "answer": "Our website is programmed to give a generous discount to all orders over 10 boxes."},
         {"question": "What if I need more than that and a bigger discount?",
-         "answer": "Please contact us at info@casspea.co.uk or send us a WhatsApp message at 07447 990542."},
+         "answer": "Please contact us at <a href='mailto:info@casspea.co.uk' class='text-underline my-orange-text'>info@casspea.co.uk</a> "
+                   "or send us a WhatsApp message at <a href='tel:07447990542' class='text-underline my-orange-text'>07447 990542.</a>"},
         {"question": "Do you do bespoke orders?",
          "answer": "Absolutely, we can personalize your chocolates. Using our software, you can design your chocolate, and we can develop a flavor if we don't already have it. Please contact us for more information at info@casspea.co.uk or send us a WhatsApp message at 07447 990542."},
         {"question": "How long would a bespoke order take?",
@@ -85,6 +86,7 @@ def faqs_page(request):
          "answer": "If you are unsatisfied with your order or there was a problem with delivery, we will do everything possible to make sure that you are left satisfied and wanting to come back again. If you have had a negative experience, please contact us directly at info@casspea.co.uk or send us a WhatsApp message at 07447 990542."},
         {"question": "Where are you located?",
          "answer": "Well, we don't have a physical shop. We do everything online. Our kitchen is based in the south of London."},
+
     ]
 
     context = {'faqs': faqs}
