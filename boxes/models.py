@@ -21,6 +21,7 @@ class BoxSize(models.Model):
     size = models.PositiveIntegerField()
     description = models.TextField(blank=True, null=True)
     color = models.CharField(max_length=200, null=True, blank=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     price_id = models.CharField(max_length=200, null=True, blank=True)
     custom_price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)

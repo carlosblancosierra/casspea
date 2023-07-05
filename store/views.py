@@ -37,7 +37,7 @@ def box_page(request, size=None):
         "PRE_BUILT": Box.PRE_BUILT,
         "PICK_AND_MIX": Box.PICK_AND_MIX,
         "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
-        "title": "BOXES",
+        "title": box_obj.title,
         "box_obj": box_obj,
     }
 
