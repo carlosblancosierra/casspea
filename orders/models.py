@@ -2,6 +2,7 @@ from django.db import models
 
 from addresses.models import Address
 from carts.models import CartEntry
+from discounts.models import Discount
 from django.conf import settings
 from django.db.models.signals import post_save
 import json
@@ -31,6 +32,8 @@ class Order(models.Model):
     shipping_date = models.DateField(verbose_name="Shipping Date", null=True)
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
     stripe_data = models.TextField(blank=True, null=True)
+    discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
+
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

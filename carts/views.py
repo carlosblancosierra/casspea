@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import login_required
 def home_page(request):
     entries = CartEntry.objects.entries(request)
     empty = CartEntry.objects.empty_cart(request)
+    cart, created = Cart.objects.new_or_get(request)
+    discount = cart.discount
+    discount_total = CartEntry.objects.discount_total(request)
     gift_message = request.session.get('gift_message', None)
     shipping_date = request.session.get("shipping_date", None)
     custom_chocolates = False
@@ -40,6 +43,8 @@ def home_page(request):
 
     context = {
         "title": "Cart",
+        "discount": discount,
+        "discount_total": discount_total,
         "empty": empty,
         "entries": entries,
         "total": total,

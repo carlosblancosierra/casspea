@@ -143,10 +143,12 @@ def confirm_page(request):
     shipping_date = request.session.get("shipping_date", None)
 
     entries = CartEntry.objects.entries(request)
-
     if not entries.exists():
         return redirect("carts:home")
 
+    cart, created = Cart.objects.new_or_get(request)
+    discount = cart.discount
+    discount_total = CartEntry.objects.discount_total(request)
     subtotal = CartEntry.objects.cart_subtotal(request)
     total = CartEntry.objects.cart_total(request)
     shipping_cost = 5.99
@@ -161,6 +163,8 @@ def confirm_page(request):
 
     context = {
         "title": 'Checkout',
+        "discount": discount,
+        "discount_total": discount_total,
         "address": address,
         "entries": entries,
         "total": total,
@@ -192,10 +196,12 @@ class CreateCheckoutSessionView(View):
         if shipping_date:
             shipping_date_obj = datetime.datetime.strptime(shipping_date, '%b %d, %Y')
             shipping_date_obj = shipping_date_obj.date()
-
+        cart, created = Cart.objects.new_or_get(request)
+        discount = cart.discount
         order = Order(shipping_address=shipping_address,
                       gift_message=gift_message,
-                      shipping_date=shipping_date_obj
+                      shipping_date=shipping_date_obj,
+                      discount=cart.discount
                       )
         customer_email = None
         if request.user.is_authenticated:
@@ -261,15 +267,15 @@ class CreateCheckoutSessionView(View):
                 "footer": "CassPea",
             },
         }
+        discounts = [{'coupon': discount.stripe_id}]
 
-        discounts = None
-        allow_promotion_codes = True
-        if CartEntry.objects.more_than_30(request):
-            discounts = [{'coupon': more_than_30_discount_id}]
-            allow_promotion_codes = False
-        elif CartEntry.objects.more_than_15(request):
-            discounts = [{'coupon': more_than_15_discount_id}]
-            allow_promotion_codes = False
+        allow_promotion_codes = False
+        # if CartEntry.objects.more_than_30(request):
+        #     discounts = [{'coupon': more_than_30_discount_id}]
+        #     allow_promotion_codes = False
+        # elif CartEntry.objects.more_than_15(request):
+        #     discounts = [{'coupon': more_than_15_discount_id}]
+        #     allow_promotion_codes = False
 
         if not allow_promotion_codes:
             checkout_session = stripe.checkout.Session.create(

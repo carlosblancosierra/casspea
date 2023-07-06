@@ -3,7 +3,7 @@
 {% load static %}
 {% load humanize %}
 
-{% block head_title %}{{ block.super }} Box Flavours{% endblock %}
+{% block head_title %}{{ block.super }} Cart{% endblock %}
 
 {% block content %}
 
@@ -50,9 +50,21 @@
 <section class="container" id="gift-message-form">
   <div class="row">
     <div class="col s12 l10 offset-l1">
-      <form method="POST"> {% csrf_token %}
-        <div class="row">
-          <div class="col s12 m6">
+      <div class="row">
+        <div class="col s12 m6">
+          <h4 class="font-150 bold">Discount Code</h4>
+          <div class="input-field">
+            <form action="{% url 'discounts:validate_discount' %}" method="POST">
+              {% csrf_token %}
+              <input type="text" class="" name="discount_code" id="discount_code"
+                     value="{% if discount %}{{ discount.code }}{% endif %}"
+              >
+              <label for="discount_code">Add your Discount Code</label>
+              <button type="submit" class="btn">Validate</button>
+            </form>
+            <p class="grey-text lighten-2"></p>
+          </div>
+          <form method="POST"> {% csrf_token %}
             <h4 class="font-150 bold">Gift Message</h4>
             <div class="input-field">
           <textarea id="gift_message"
@@ -62,39 +74,6 @@
           >{% if gift_message %}{{ gift_message }}{% endif %}</textarea>
               <label for="gift_message">Add your Message (optional)</label>
             </div>
-            <div class="row">
-              <div class="col s12 m10">
-                <h4 class="font-150 bold">Payment Methods</h4>
-
-                <div class="row">
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/visa.png' %}" class="responsive-img">
-                  </div>
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/master.png' %}" class="responsive-img">
-                  </div>
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/google.png' %}" class="responsive-img">
-                  </div>
-
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/apple.png' %}" class="responsive-img">
-                  </div>
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/amex.png' %}" class="responsive-img">
-                  </div>
-                  <div class="col s2 px-1">
-                    <img src="{% static 'images/payments/diners.png' %}" class="responsive-img">
-                  </div>
-                </div>
-
-              </div>
-
-
-            </div>
-
-          </div>
-          <div class="col s12 m6">
             <h4 class="font-150 bold">Shipping Date</h4>
             <div class="input-field">
               <input type="text" class="datepicker" name="shipping_date" id="shipping_date"
@@ -104,63 +83,79 @@
               <p class="grey-text lighten-2">Usually delivers within 1-2 days from ordering. Personalized chocolates
                 delivers within 10 working days </p>
             </div>
-          </div>
         </div>
-        <div class="row">
-          <div class="col s12 m6 offset-m6">
-            <table>
-              <thead>
-              <tr>
-                <th>Item</th>
-                <th class="right">Subtotal</th>
-              </tr>
-              </thead>
+        <div class="col s12 m6">
+          <h4 class="font-150 bold">Summary</h4>
+          <table>
+            <thead>
+            <tr>
+              <th>Item</th>
+              <th class="right">Subtotal</th>
+            </tr>
+            </thead>
 
-              <tbody>
-              <tr>
-                <td>Products</td>
-                <td class="right">£{{ subtotal|floatformat:2 }} GBP</td>
-              </tr>
+            <tbody>
+            <tr>
+              <td>Products</td>
+              <td class="right">£{{ subtotal|floatformat:2 }} GBP</td>
+            </tr>
 
-              <!--              <tr>-->
-              <!--                <td class=""><span class="bold">Discount:</span><br>-->
-              <!--                  10% off 15 or more Boxes <br>-->
-              <!--                  15% off 30 or more Boxes-->
-              <!--                <td>-->
-              <!--                <td>-->
-              <!--                  {{ discount }}-->
-              <!--                </td>-->
-              <!--              </tr>-->
-              <tr>
-                <td>
-                  <span class="">Shipping</span>
-                  <br class="">*Free for orders over £45
+            <tr>
+              <td>Discount</td>
+              <td class="right">{{ discount_total }} GBP</td>
+            </tr>
 
-                </td>
-                <td class="right">
-                  {% if shipping_free %}
-                  Free
-                  {% else %}
-                  £{{ shipping_cost|floatformat:2 }} GBP
-                  <br>
-                  {% endif %}
-                </td>
-              </tr>
-              <tr>
-                <td class="bold font-150">Total</td>
-                <td class="right bold font-150">£{{ total|floatformat:2 }} GBP</td>
-              </tr>
-              </tbody>
-            </table>
-            <p class="right">
-              <button type="submit"
-                      class="waves-effect waves-light btn-large btn-purple w-100 text-capitalize font-150">
-                Proceed to Checkout
-              </button>
-            </p>
-          </div>
+            <tr>
+              <td>
+                <span class="">Shipping</span>
+                <br class="">*Free for orders over £45
+
+              </td>
+              <td class="right">
+                {% if shipping_free %}
+                Free
+                {% else %}
+                £{{ shipping_cost|floatformat:2 }} GBP
+                <br>
+                {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td class="bold font-150">Total</td>
+              <td class="right bold font-150">£{{ total|floatformat:2 }} GBP</td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="">
+            <button type="submit"
+                    class="waves-effect waves-light btn-large btn-purple w-100 text-capitalize font-150">
+              Proceed to Checkout
+            </button>
+          </p>
         </div>
+      </div>
       </form>
+      <div class="row">
+        <div class="col s2 m1 px-1 offset-m3">
+          <img src="{% static 'images/payments/visa.png' %}" class="responsive-img">
+        </div>
+        <div class="col s2 m1 px-1">
+          <img src="{% static 'images/payments/master.png' %}" class="responsive-img">
+        </div>
+        <div class="col s2 m1 px-1">
+          <img src="{% static 'images/payments/google.png' %}" class="responsive-img">
+        </div>
+
+        <div class="col s2 m1 px-1">
+          <img src="{% static 'images/payments/apple.png' %}" class="responsive-img">
+        </div>
+        <div class="col s2 m1 px-1">
+          <img src="{% static 'images/payments/amex.png' %}" class="responsive-img">
+        </div>
+        <div class="col s2 m1 px-1">
+          <img src="{% static 'images/payments/diners.png' %}" class="responsive-img">
+        </div>
+      </div>
     </div>
   </div>
 
@@ -187,8 +182,8 @@
     </div>
   </div>
   <div class="col s12">
-      <hr>
-    </div>
+    <hr>
+  </div>
 </section>
 
 {% endblock %}
@@ -229,9 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
 });
-
-
-
 
 
 

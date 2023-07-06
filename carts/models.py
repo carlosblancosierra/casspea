@@ -7,6 +7,7 @@ from django.db.models.signals import pre_save
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from custom_chocolates.models import UserChocolateDesign
+from discounts.models import Discount
 from decimal import *
 
 from boxes.models import Box
@@ -49,6 +50,7 @@ class Cart(models.Model):
     subtotal = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
+    discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
@@ -97,6 +99,14 @@ class CartEntryManager(models.Manager):
             subtotal = Decimal(entry.total)
             total += subtotal
         return total
+
+    def discount_total(self, request):
+        entries = self.entries(request)
+        raw_total = Decimal(0)
+        for entry in entries:
+            raw_total_entry = Decimal(entry.raw_total)
+            raw_total += raw_total_entry
+        return float(raw_total) - float(self.cart_subtotal(request))
 
     def cart_boxes(self, request):
         entries = self.entries(request)
@@ -172,6 +182,10 @@ class CartEntry(models.Model):
         return self.price * self.quantity
 
     @property
+    def raw_total(self):
+        return self.product.price * self.quantity
+
+    @property
     def cart_boxes(self):
         entries = CartEntry.objects.filter(cart=self.cart, active=True)
         total = 0
@@ -192,28 +206,38 @@ class CartEntry(models.Model):
         if boxes >= 30:
             return True
 
+    # @property
+    # def discounted_price(self):
+    #     if isinstance(self.product, Box):
+    #         if self.more_than_30_boxes:
+    #             return float(self.product.price) * 0.85
+    #         elif self.more_than_15_boxes:
+    #             return float(self.product.price) * 0.9
+    #     else:
+    #         return float(self.product.price)
+
     @property
     def discounted_price(self):
-        if isinstance(self.product, Box):
-            if self.more_than_30_boxes:
-                return float(self.product.price) * 0.85
-            elif self.more_than_15_boxes:
-                return float(self.product.price) * 0.9
+        discount = self.cart.discount
+        if discount:
+            if discount.type == Discount.PERCENTAGE:
+                price = float(self.product.price)
+                discount = price * float(discount.amount / 100)
+                return price - discount
         else:
-            return float(self.product.price)
+            return None
 
     @property
     def has_discount(self):
-        if self.more_than_15_boxes or self.more_than_30_boxes:
-            if isinstance(self.product, Box):
-                return True
+        if self.cart.discount:
+            return True
         else:
             return False
 
     @property
     def price(self):
         price = self.product.price
-        if self.discounted_price:
+        if self.has_discount:
             return self.discounted_price
         else:
             return price

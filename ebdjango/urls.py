@@ -21,6 +21,8 @@ urlpatterns = [
     path('addresses/', include('addresses.urls')),
     path('cart/', include('carts.urls')),
     path('custom_chocolates/', include('custom_chocolates.urls')),
+    path('discounts/', include('discounts.urls')),
+
     # path('custom_boxes/', include('custom_boxes.urls')),
 
     path('dashboard/', include('dashboards.urls')),

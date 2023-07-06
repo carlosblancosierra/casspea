@@ -29,35 +29,46 @@
 
         </div>
         <div class="col s12 m6 ">
-          <h4 class="font-150 bold">Shipping Address</h4>
+          <h4 class="font-150 bold mb-1">Shipping Address</h4>
 
           <div class="">
             <p class="m-0 p-0">{{ address.full_name }}, {{ address.tel }}</p>
-            <p class="m-0 p-0">
+            <p class="my-0 p-0">
               {{ address.street }},
               {{ address.city }},
               {{ address.country }},
               {{ address.postal_code }}.
             </p>
-            <a class="btn btn-outline-green mt-3" href="{{ order_address_url }}">Update</a>
+            <a class="text-underline my-green-text" href="{{ cart_url }}#gift-message-form">
+              Update</a>
           </div>
 
-          <h4 class="font-150 bold">Shipping Date</h4>
+          <h4 class="font-150 bold mb-1">Discount</h4>
 
-          <p class="mt-2">
+          <p class="my-0">
+            {% if discount %}{{ discount }}{% else %} - {% endif %}
+          </p>
+          <a class="text-underline my-green-text" href="{{ cart_url }}#gift-message-form">
+            {% if discount %}Change{% else %} Add {% endif %}
+            Code
+          </a>
+
+          <h4 class="font-150 bold mb-1">Shipping Date</h4>
+
+          <p class="my-0">
             {% if shipping_date %}{{ shipping_date }}{% else %} ASAP {% endif %}
           </p>
-          <a class="btn btn-outline-green mt-1" href="{{ cart_url }}#gift-message-form">
+          <a class="text-underline my-green-text" href="{{ cart_url }}#gift-message-form">
             {% if shipping_date %}Change{% else %} Add {% endif %}
             Shipping Date
           </a>
 
-          <h4 class="font-150 bold">Gift Message</h4>
+          <h4 class="font-150 bold mb-1">Gift Message</h4>
 
-          <p class="mt-2">
+          <p class="my-0">
             {% if gift_message %}{{ gift_message }}{% else %} - {% endif %}
           </p>
-          <a class="btn btn-outline-green mt-1" href="{{ cart_url }}#gift-message-form">
+          <a class="text-underline my-green-text" href="{{ cart_url }}#gift-message-form">
             {% if gift_message %}Change{% else %} Add {% endif %}
             Message
           </a>
@@ -83,6 +94,10 @@
                 <td class="right">£{{ subtotal }} GBP</td>
               </tr>
               <tr>
+                <td>Discount</td>
+                <td class="right">{{ discount_total }} GBP</td>
+              </tr>
+              <tr>
                 <td>
                   <span class="">Shipping</span>
                   <br class="">*Free for orders over £45
@@ -97,11 +112,6 @@
                   {% endif %}
                 </td>
               </tr>
-              <tr>
-                <td>Discount Code</td>
-                <td class="right">Add on next step</td>
-              </tr>
-
               <tr>
                 <td class="bold font-150">Total</td>
                 <td class="right bold font-150">£{{ total }} GBP</td>
@@ -124,5 +134,6 @@
   </div>
 
 </section>
+{% include "newsletter-modal.html" %}
 
 {% endblock %}
