@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'carts',
     'custom_chocolates',
     'dashboards',
+    'discounts',
     'flavours',
     'orders',
     'lots',
