@@ -54,14 +54,19 @@
         <div class="col s12 m6">
           <h4 class="font-150 bold">Discount Code</h4>
           <div class="input-field">
+
+            {% if discount %}
+            <form action="{% url 'discounts:remove_discount' %}" method="POST">{% csrf_token %}
+              <button type="submit" class="">{{ discount.code }} X</button>
+            </form>
+            {% else %}
             <form action="{% url 'discounts:validate_discount' %}" method="POST">
               {% csrf_token %}
-              <input type="text" class="" name="discount_code" id="discount_code"
-                     value="{% if discount %}{{ discount.code }}{% endif %}"
-              >
+              <input type="text" class="" name="discount_code" id="discount_code">
               <label for="discount_code">Add your Discount Code</label>
               <button type="submit" class="btn">Validate</button>
             </form>
+            {% endif %}
             <p class="grey-text lighten-2"></p>
           </div>
           <form method="POST"> {% csrf_token %}
@@ -99,12 +104,12 @@
               <td>Products</td>
               <td class="right">£{{ subtotal|floatformat:2 }} GBP</td>
             </tr>
-
+            {% if discount %}
             <tr>
-              <td>Discount</td>
-              <td class="right">{{ discount_total }} GBP</td>
+              <td>{{ discount }}</td>
+              <td class="right red-text">-{{ discount_total }} GBP</td>
             </tr>
-
+            {% endif %}
             <tr>
               <td>
                 <span class="">Shipping</span>
@@ -227,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
 });
+
 
 
 

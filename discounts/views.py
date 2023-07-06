@@ -9,7 +9,7 @@ def validate_discount(request):
         discount_code = request.POST.get('discount_code')
 
         if discount_code:
-            discount = Discount.objects.filter(code=discount_code).first()
+            discount = Discount.objects.filter(code__icontains=discount_code).first()
             if discount:
                 # Check if the user has already used the discount the maximum number of times
                 user = request.user
@@ -24,3 +24,12 @@ def validate_discount(request):
                 cart.save()
 
     return redirect('carts:home')  # Redirect to the cart page
+
+
+def remove_discount(request):
+    if request.method == 'POST':
+        cart, created = Cart.objects.new_or_get(request)
+        cart.discount = None
+        cart.save()
+
+    return redirect('carts:home')

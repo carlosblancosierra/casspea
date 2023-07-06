@@ -45,13 +45,11 @@
 
           <h4 class="font-150 bold mb-1">Discount</h4>
 
-          <p class="my-0">
-            {% if discount %}{{ discount }}{% else %} - {% endif %}
-          </p>
-          <a class="text-underline my-green-text" href="{{ cart_url }}#gift-message-form">
-            {% if discount %}Change{% else %} Add {% endif %}
-            Code
-          </a>
+          {% if discount %}
+          <form action="{% url 'discounts:remove_discount' %}" method="POST">{% csrf_token %}
+            <button type="submit" class="">{{ discount.code }} X</button>
+          </form>
+          {% endif %}
 
           <h4 class="font-150 bold mb-1">Shipping Date</h4>
 
@@ -93,10 +91,12 @@
                 <td>Products</td>
                 <td class="right">£{{ subtotal }} GBP</td>
               </tr>
+              {% if discount %}
               <tr>
-                <td>Discount</td>
-                <td class="right">{{ discount_total }} GBP</td>
+                <td>{{ discount }}</td>
+                <td class="right red-text">-{{ discount_total }} GBP</td>
               </tr>
+              {% endif %}
               <tr>
                 <td>
                   <span class="">Shipping</span>
