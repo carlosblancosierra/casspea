@@ -186,6 +186,9 @@
   </div>
 </section>
 
+{% include "newsletter-modal.html" %}
+{% include "newsletter-modal-fab.html" %}
+
 {% endblock %}
 
 {% block js_extra %}
@@ -224,6 +227,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const datepickerInstances = M.Datepicker.init(datepickerElems, datepickerOptions);
 });
+
+
+
+
 
 
 
