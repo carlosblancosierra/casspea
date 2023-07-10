@@ -12,8 +12,8 @@ def validate_discount(request):
             discount = Discount.objects.filter(code__icontains=discount_code).first()
             if discount:
                 # Check if the user has already used the discount the maximum number of times
-                user = request.user
-                if user:
+                if request.user.is_authenticated:
+                    user = request.user
                     previous_orders = Order.objects.filter(user=user, discount=discount, payment_status="paid")
                     if previous_orders.count() >= discount.max_uses:
                         message = 'You have reached the maximum number of uses for this discount.'
