@@ -13,10 +13,11 @@ def validate_discount(request):
             if discount:
                 # Check if the user has already used the discount the maximum number of times
                 user = request.user
-                previous_orders = Order.objects.filter(user=user, discount=discount, payment_status="paid")
-                if previous_orders.count() >= discount.max_uses:
-                    message = 'You have reached the maximum number of uses for this discount.'
-                    return redirect('carts:home')  # Redirect to the cart page with an error message
+                if user:
+                    previous_orders = Order.objects.filter(user=user, discount=discount, payment_status="paid")
+                    if previous_orders.count() >= discount.max_uses:
+                        message = 'You have reached the maximum number of uses for this discount.'
+                        return redirect('carts:home')  # RedirectRedirect to the cart page with an error message
 
                 # Add the discount object to the session
                 cart, created = Cart.objects.new_or_get(request)
