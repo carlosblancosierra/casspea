@@ -21,31 +21,31 @@
   <a href="/" class="w-90 ml-1">
     <img src="{% static 'images/casspea-pink-logo.png' %}"
          width="250px" alt="casspea logo pink" class="mt-4"/></a>
-  <li><a href="/" aria-label="Go to the home page">Home</a></li>
-  <li><a href="{{ store_url }}">Shop now</a></li>
-  <li><a href="{{ flavours_url }}">Our Flavours</a></li>
-  <li><a href="{{ faqs_url }}">FAQS</a></li>
-  <li><a href="{{ client_url }}">Clients</a></li>
-  <li><a href="{{ about_url }}">About Us</a></li>
-  <li><a href="{{ contact_url }}">Contact Us</a></li>
+  <li><a class="sidenav-link" href="/" aria-label="Go to the home page">Home</a></li>
+  <li><a class="sidenav-link" href="{{ store_url }}">Shop now</a></li>
+  <li><a class="sidenav-link" href="{{ flavours_url }}">Our Flavours</a></li>
+  <li><a class="sidenav-link" href="{{ faqs_url }}">FAQS</a></li>
+  <li><a class="sidenav-link" href="{{ client_url }}">Clients</a></li>
+  <li><a class="sidenav-link" href="{{ about_url }}">About Us</a></li>
+  <li><a class="sidenav-link" href="{{ contact_url }}">Contact Us</a></li>
 
   {% if request.user.is_authenticated %}
   {% if request.user.is_staff %}
-  <li><a href="{{ staff_home_url }}">Staff Dashboard</a></li>
+  <li><a class="sidenav-link" href="{{ staff_home_url }}">Staff Dashboard</a></li>
   {% else %}
-  <li><a href="{{ account_home_url }}">Client Dashboard</a></li>
-  <li><a href="{{ account_home_url }}">Orders</a></li>
+  <li><a class="sidenav-link" href="{{ account_home_url }}">Client Dashboard</a></li>
+  <li><a class="sidenav-link" href="{{ account_home_url }}">Orders</a></li>
   <li class="divider"></li>
   {% endif %}
-  <li><a href="{{ password_change_url }}">Change Password</a></li>
-  <li><a href="{{ logout_url }}">Logout</a></li>
+  <li><a class="sidenav-link" href="{{ password_change_url }}">Change Password</a></li>
+  <li><a class="sidenav-link" href="{{ logout_url }}">Logout</a></li>
   {% else %}
-  <li><a href="{{ login_url }}">Login</a></li>
+  <li><a class="sidenav-link" href="{{ login_url }}">Login</a></li>
   <li></li>
 
   {% endif %}
 
-  <li><a href="{{ cart_url }}" class="btn btn-orange">Cart</a></li>
+  <li><a href="{{ cart_url }}" class="btn btn-orange text-white">Cart</a></li>
 
 </ul>
 
