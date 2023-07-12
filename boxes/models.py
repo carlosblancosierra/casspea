@@ -29,6 +29,9 @@ class BoxSize(models.Model):
     active = models.BooleanField(default=True)
     custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
 
+    seo_title = models.CharField(max_length=200, blank=True)
+    seo_description = models.TextField(blank=True)
+
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -67,7 +70,7 @@ class BoxSize(models.Model):
         ordering = ['size']
 
     def get_absolute_url(self):
-        return f"/store/box/{self.size}"
+        return f"/shop-now/luxury-handmade-chocolates/box-{self.size}"
 
     def images(self):
         images = []

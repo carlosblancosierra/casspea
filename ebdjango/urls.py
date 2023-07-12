@@ -27,7 +27,7 @@ urlpatterns = [
 
     path('dashboard/', include('dashboards.urls')),
     path('orders/', include('orders.urls')),
-    path('store/', include('store.urls')),
+    path('shop-now/', include('store.urls')),
     path('flavours/', include('flavours.urls')),
 
     path('logout', LogoutView.as_view(), name='logout'),
