@@ -77,7 +77,7 @@ def faqs_page(request):
          "answer": "Our website is programmed to give a generous discount to all orders over 10 boxes."},
         {"question": "What if I need more than that and a bigger discount?",
          "answer": "Please contact us at <a href='mailto:info@casspea.co.uk' class='text-underline my-orange-text'>info@casspea.co.uk</a> "
-                   "or send us a WhatsApp message at <a href='tel:07447990542' class='text-underline my-orange-text'>07447 990542.</a>"},
+                   "or send us a WhatsApp message at <a href='tel:07859790386' class='text-underline my-orange-text'>07859 790386.</a>"},
         {"question": "Do you do bespoke orders?",
          "answer": "Absolutely, we can personalize your chocolates. Using our software, you can design your chocolate, and we can develop a flavour if we don't already have it. Please contact us for more information at info@casspea.co.uk or send us a WhatsApp message at 07447 990542."},
         {"question": "How long would a bespoke order take?",
