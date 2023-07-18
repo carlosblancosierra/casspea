@@ -267,7 +267,10 @@ class CreateCheckoutSessionView(View):
                 "footer": "CassPea",
             },
         }
-        discounts = [{'coupon': discount.stripe_id}]
+        if discount:
+            discounts = [{'coupon': discount.stripe_id}]
+        else:
+            discounts = []
 
         allow_promotion_codes = False
         # if CartEntry.objects.more_than_30(request):
