@@ -17,16 +17,20 @@
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TWQTXVNR');</script>
+  })(window,document,'script','dataLayer','GTM-TWQTXVNR');
+  </script>
   <!-- End Google Tag Manager -->
+  <meta name="facebook-domain-verification" content="qfpz4597qdvck27hzkqgb0dx5mlpa2" />
   <link rel="apple-touch-icon" sizes="180x180" href="{% static './images/main-logo.png' %}">
   <link rel="icon" type="image/png" sizes="192x192" href="{% static './images/main-logo.png' %}">
 </head>
 
 <body>
 <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWQTXVNR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TWQTXVNR"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
 <!-- End Google Tag Manager (noscript) -->
 
 {% include 'top-banner.html' %}
@@ -53,6 +57,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 {{ message }}
 <script async>
     M.toast({html: '{{ message }}', classes: '{% if message.tags %}{{ message.tags }}{% endif %} rounded'});
+
 
 </script>
 {% endfor %}
