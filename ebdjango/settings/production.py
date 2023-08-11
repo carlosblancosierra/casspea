@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = 'django-insecure-5=%aj2n#y80$(#k0*=s5hnlqob#sw&3#l4jv^0u5!nzr%syj#k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 STATIC_LOCAL = False
 STRIPE_TEST = False
 
@@ -72,6 +72,7 @@ EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'info@casspea.co.uk'
+ADMINS = [('Carlos Blanco', 'carlosblancosierra@gmail.com')]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -219,4 +220,23 @@ django_heroku.settings(locals())
 MESSAGE_TAGS = {
     messages.ERROR: 'red',
     messages.SUCCESS: 'green',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,  # Include HTML content in the error email
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
 }
