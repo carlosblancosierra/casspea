@@ -24,7 +24,7 @@ def new_order_staff_mail(request, order_id):
             subject = 'CassPea.co.uk | New Order'
             message = render_to_string('mails/orders/new_order_staff.txt', context)
             html_message = render_to_string('mails/orders/new_order_staff.html', context)
-            to_mails = ['carlosblancosierra@gmail.com']
+            to_mails = ['info@casspea.co.uk', 'carlosblancosierra@gmail.com']
             from_mail = 'CassPea <info@casspea.co.uk>'
 
             staff_mails_sent = send_mail(
