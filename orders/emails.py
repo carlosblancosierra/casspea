@@ -5,24 +5,26 @@ from django.conf import settings
 from ebdjango.settings.production import EMAIL_STATIC_URL
 
 
-def new_order_staff_mail(order_id):
+def new_order_staff_mail(request, order_id):
     qs = Order.objects.filter(order_id=order_id)
+    domain = request.META['HTTP_HOST']
     if qs.exists():
         order = qs.first()
         context = {
             "order": order,
             "STATIC_URL": EMAIL_STATIC_URL,
             "address": order.shipping_address,
-            "entries": order.cart_entries,
+            "entries": order.cart_entries.all(),
             "gift_message": order.gift_message,
             "shipping_cost": order.shipping_cost,
+            "domain": domain,
         }
 
         try:
             subject = 'CassPea.co.uk | New Order'
             message = render_to_string('mails/orders/new_order_staff.txt', context)
             html_message = render_to_string('mails/orders/new_order_staff.html', context)
-            to_mails = ['casspea.sistemas@gmail.com']
+            to_mails = ['carlosblancosierra@gmail.com']
             from_mail = 'CassPea <info@casspea.co.uk>'
 
             staff_mails_sent = send_mail(
@@ -35,7 +37,9 @@ def new_order_staff_mail(order_id):
             )
 
             return staff_mails_sent
-        except:
+        except Exception as e:
+            # Log the exception using the logger
+            print(f"Error sending email: {e}")
             pass
 
 

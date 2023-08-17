@@ -102,6 +102,14 @@ class Order(models.Model):
             stripe_data = json.loads(self.stripe_data)
             return stripe_data['payment_intent']
 
+    def discount_total(self, request):
+        entries = self.cart_entries(request)
+        raw_total = Decimal(0)
+        for entry in entries:
+            raw_total_entry = Decimal(entry.raw_total)
+            raw_total += raw_total_entry
+        return float(raw_total) - float(self.subtotal(request))
+
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):
     if not instance.order_id:

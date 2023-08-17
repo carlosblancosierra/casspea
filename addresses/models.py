@@ -20,3 +20,13 @@ class Address(models.Model):
 
     def get_absolute_url(self):
         return f"/addresses/{self.id}"
+
+    def full_address(self):
+        return "{}, {}, {}, {}, {}, {}".format(
+            self.full_name,
+            self.street,
+            self.postal_code,
+            self.city,
+            self.tel,
+            self.country
+        )

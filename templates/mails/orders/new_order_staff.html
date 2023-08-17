@@ -1,83 +1,51 @@
+{% extends "emails/base.html" %}
+{% load static %}
+{% block content %}
+
 <div class="container mt-5">
   <div class="row">
-    <div class="col s12">
-      <h1 class="bold font-200 center">Congratulations</h1>
-      <p class="center font-150">Your order has been created successfully, we will contact you soon</p>
-      <a href="www.casspea.co.uk{{ order.get_absolute_url}}">View Order details</a>
-    </div>
-  </div>
-</div>
+    <div class="col s12 m8 offset-m2 card">
+      <p class="center"><img src="https://www.casspea.co.uk/static/images/casspea-pink-logo.png" width="200px"></p>
+      <h4 class="center"><b>New Order</b></h4>
+      <p class="">A new order has been proccessed</p>
+      <p class=""><a class="btn purple" href="{{ domain }}{{ order.get_absolute_url}}">View Order details</a>
+      </p>
+      <p class=""><b>Order ID: </b>{{ order.order_id }}</p>
+      <p class=""><b>User: </b>{{ order.user }}</p>
+      <p class=""><b>Discount Code: </b>{{ order.discount }}</p>
+      <p>{% if gift_message %} <b>Gift Message: </b>{{ gift_message }} {% endif %}</p>
+      <p class=""><b>Shipping Address: </b>{{ order.shipping_address.full_address }}</p>
+      <p class=""><b>Payment Status: </b>{{ order.payment_status }}</p>
+      <p class=""><b>Stripe ID: </b>{{ order.stripe_description }}</p>
 
-<div class="container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2">
-      <h4 class="center font-150 bold">Order ID: {{ order.order_id }}</h4>
-      <h4 class="font-150 bold">Shipping Address:</h4>
+      <h5 class=""><b>Products:</b></h5>
 
-      <div class="">
-        <p class="m-0 p-0">{{ order.shipping_address.full_name }}, {{ order.shipping_address.tel }}</p>
-        <p class="m-0 p-0">
-          {{ order.shipping_address.street }},
-          {{ order.shipping_address.city }},
-          {{ order.shipping_address.country }},
-          {{ order.shipping_address.postal_code }}.
-        </p>
-      </div>
-      <h4 class="font-150 bold">Products:</h4>
+      {% include "orders/entry_table.html" %}
 
+      <h5 class=""><b>Summary</b></h5>
       <table>
-        <thead>
-        <tr>
-          <th></th>
-          <th></th>
-          <th>PRODUCT</th>
-          <th>PRICE</th>
-          <th>QUANTITY</th>
-          <th>TOTAL</th>
-        </tr>
-        </thead>
-
         <tbody>
-        {% for obj in order.cart_entries.all %}
-
         <tr>
-          <td></td>
-          <td>
-            {% if obj.product.image %}
-            <img src="{{ obj.product.image.url }}" width="150px">
-            {% endif %}
-          </td>
-          <td>
-            <p class="bold">{{ obj.product.size }}</p>
-            <p class="m-0 bold">{{ obj.product.get_flavour_format_display }}:</p>
-            <ul class="m-0">
-              {% for obj in obj.product.selected_prebuilts.all %}
-              <li class="m-0">{{ obj }}</li>
-              {% endfor %}
-              {% for obj in obj.product.selected_flavours.all %}
-              <li class="m-0">{{ obj }}</li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td>{{ obj.product.price }}</td>
-          <td>{{ obj.quantity }}</td>
-          <td>£{{ obj.total }} GBP</td>
-
+          <td>Products</td>
+          <td class="right">£{{ order.subtotal|floatformat:2 }} GBP</td>
         </tr>
+        <tr>
+          <td>
+            <span class="">Shipping</span>
+            <br class="">*Free for orders over £45
 
-        {% endfor %}
-
-
+          </td>
+          <td class="right">
+            {% if order.shipping_free %} Free {% else %} £{{ order.shipping_cost }} GBP {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="bold font-150"><b>Total</b></td>
+          <td class="right bold font-150">£{{ order.total|floatformat:2 }} GBP</td>
+        </tr>
         </tbody>
       </table>
-
-      <h4 class="mt-4 font-150 bold">Summary</h4>
-      <p>{% if gift_message %} Gift Message: {{ gift_message }} {% endif %}</p>
-      <div class="row p-0">
-      </div>
-      <p>Shipping: {% if order.shipping_free %} Free {% else %} £{{ order.shipping_cost }} GBP {% endif %}</p>
-<p>Total: £{{ order.total }} GBP</p>
-
     </div>
   </div>
 </div>
+{% endblock %}

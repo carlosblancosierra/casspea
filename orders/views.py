@@ -15,7 +15,7 @@ from django.contrib.auth import authenticate, login, logout
 
 import datetime
 from .models import Order, STATUS_CHOICES, CANCELED
-# from .emails import new_order_staff_mail
+from .emails import new_order_staff_mail
 
 from carts.models import Cart, CartEntry
 from addresses.models import Address
@@ -39,8 +39,6 @@ else:
 endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
 endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
 endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'
-
-from .emails import new_order_staff_mail
 
 
 # Create your views here.
@@ -226,7 +224,7 @@ class CreateCheckoutSessionView(View):
         # send order id to stripe
         domain = "https://www.casspea.co.uk"
         if settings.STATIC_LOCAL:
-            domain = "http://127.0.0.1:8000"
+            domain = "http://127.0.0.1:9000"
 
         shipping_free = {
             "shipping_rate_data": {
@@ -368,9 +366,11 @@ def my_webhook_view(request):
 
 def success_page(request):
     order_id = request.session.get('order_id', None)
+    new_order_staff_mail(request, order_id)
     order_qs = Order.objects.filter(order_id=order_id)
     if len(order_qs) == 1:
         order = order_qs.first()
+
     else:
         return redirect('carts:home')
 
