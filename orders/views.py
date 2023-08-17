@@ -381,7 +381,7 @@ def success_page(request):
     context = {
         "order": order,
         "address": order.shipping_address,
-        "entries": order.cart_entries,
+        "entries": order.cart_entries.all,
         "gift_message": order.gift_message,
         "shipping_cost": order.shipping_cost,
     }

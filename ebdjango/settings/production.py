@@ -73,6 +73,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'info@casspea.co.uk'
 ADMINS = [('Carlos Blanco', 'carlosblancosierra@gmail.com')]
+STAFF_EMAILS = ['info@casspea.co.uk', 'carlosblancosierra@gmail.com']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

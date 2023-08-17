@@ -4,7 +4,7 @@
 
 <div class="container mt-5">
   <div class="row">
-    <div class="col s12 m8 offset-m2 card">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 card">
       <p class="center"><img src="https://www.casspea.co.uk/static/images/casspea-pink-logo.png" width="200px"></p>
       <h4 class="center"><b>New Order</b></h4>
       <p class="">A new order has been proccessed</p>
@@ -17,6 +17,7 @@
       <p class=""><b>Shipping Address: </b>{{ order.shipping_address.full_address }}</p>
       <p class=""><b>Payment Status: </b>{{ order.payment_status }}</p>
       <p class=""><b>Stripe ID: </b>{{ order.stripe_description }}</p>
+      <p class=""><b>Shipping Date: </b>{{ order.shipping_date }}</p>
 
       <h5 class=""><b>Products:</b></h5>
 

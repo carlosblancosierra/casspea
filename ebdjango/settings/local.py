@@ -69,6 +69,7 @@ EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'carlosblancosierra@gmail.com'
+STAFF_EMAILS = ['carlosblancosierra@gmail.com']
 
 
 MIDDLEWARE = [
