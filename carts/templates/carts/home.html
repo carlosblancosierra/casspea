@@ -65,6 +65,7 @@
               <input type="text" class="" name="discount_code" id="discount_code">
               <label for="discount_code">Add your Discount Code</label>
               <button type="submit" class="btn">Validate</button>
+              {% if discount_error %}<p>{{ discount_error }}</p>{% endif %}
             </form>
             {% endif %}
             <p class="grey-text lighten-2"></p>

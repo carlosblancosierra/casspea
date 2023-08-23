@@ -12,6 +12,8 @@ def home_page(request):
     discount_total = CartEntry.objects.discount_total(request)
     gift_message = request.session.get('gift_message', None)
     shipping_date = request.session.get("shipping_date", None)
+    discount_error = request.session.get("discount_error", None)
+    request.session['discount_error'] = None
     custom_chocolates = False
     for entry in entries:
         if custom_chocolates is False:
@@ -53,7 +55,7 @@ def home_page(request):
         "subtotal": subtotal,
         "shipping_cost": shipping_cost,
         "shipping_free": shipping_free,
-        # "discount": discount,
+        "discount_error": discount_error,
         "custom_chocolates": custom_chocolates,
 
     }

@@ -44,6 +44,9 @@
         <div class="col s1">
           {{ order.order_id }}
         </div>
+         <div class="col s1">
+          {{ order.user }}
+        </div>
         <div class="col s3">
           {{ order.payment_status }}
         </div>
@@ -54,7 +57,7 @@
           {{ order.status }}
         </div>
         <div class="col s1">
-          ${{ order.total }}
+          ￡{{ order.total }} GBP
         </div>
       </div>
     </a>
