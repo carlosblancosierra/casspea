@@ -33,7 +33,7 @@ class Order(models.Model):
     cart_entries = models.ManyToManyField(CartEntry, blank=True)
     stripe_data = models.TextField(blank=True, null=True)
     discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
-
+    staff_email_sent = models.BooleanField(default=False)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

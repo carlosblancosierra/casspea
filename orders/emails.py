@@ -10,38 +10,44 @@ def new_order_staff_mail(request, order_id):
     domain = request.META['HTTP_HOST']
     if qs.exists():
         order = qs.first()
-        context = {
-            "order": order,
-            "STATIC_URL": EMAIL_STATIC_URL,
-            "address": order.shipping_address,
-            "entries": order.cart_entries.all(),
-            "gift_message": order.gift_message,
-            "shipping_cost": order.shipping_cost,
-            "domain": domain,
-        }
 
-        try:
-            subject = 'CassPea.co.uk | New Order'
-            message = render_to_string('mails/orders/new_order_staff.txt', context)
-            html_message = render_to_string('mails/orders/new_order_staff.html', context)
-            to_mails = settings.STAFF_EMAILS
-            from_mail = 'CassPea <info@casspea.co.uk>'
+        if order.staff_email_sent == 0:
+            context = {
+                "order": order,
+                "STATIC_URL": EMAIL_STATIC_URL,
+                "address": order.shipping_address,
+                "entries": order.cart_entries.all(),
+                "gift_message": order.gift_message,
+                "shipping_cost": order.shipping_cost,
+                "domain": domain,
+            }
 
-            staff_mails_sent = send_mail(
-                subject=subject,
-                message=message,
-                from_email=from_mail,
-                recipient_list=to_mails,
-                fail_silently=False,
-                html_message=html_message
-            )
+            try:
+                subject = 'CassPea.co.uk | New Order'
+                message = render_to_string('mails/orders/new_order_staff.txt', context)
+                html_message = render_to_string('mails/orders/new_order_staff.html', context)
+                to_mails = settings.STAFF_EMAILS
+                from_mail = 'CassPea <info@casspea.co.uk>'
 
-            return staff_mails_sent
-        except Exception as e:
-            # Log the exception using the logger
-            print(f"Error sending email: {e}")
-            pass
+                staff_mails_sent = send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email=from_mail,
+                    recipient_list=to_mails,
+                    fail_silently=False,
+                    html_message=html_message
+                )
 
+                if staff_mails_sent > 0:
+                    order.staff_email_sent = True
+                    order.save()
+                # print("staff_mails_sent")
+                return staff_mails_sent
+            except Exception as e:
+                # Log the exception using the logger
+                print(f"Error sending email: {e}")
+                pass
+        # print("staff_mails_not_sent")
 
 def new_order_client_mail(order_id):
     qs = Order.objects.filter(order_id=order_id)
@@ -55,7 +61,7 @@ def new_order_client_mail(order_id):
             to_mails = [order.user.email]
             from_mail = 'CassPea <info@casspea.co.uk>'
 
-            staff_mails_sent = send_mail(
+            client_mails_sent = send_mail(
                 subject=subject,
                 message=message,
                 from_email=from_mail,
@@ -64,7 +70,7 @@ def new_order_client_mail(order_id):
                 html_message=html_message
             )
 
-            return staff_mails_sent
+            return client_mails_sent
         except:
             pass
     else:
