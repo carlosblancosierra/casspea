@@ -29,7 +29,7 @@ def client_page(request):
 
 @staff_member_required
 def staff_page(request):
-    orders_qs = Order.objects.all()
+    orders_qs = Order.objects.filter(status="paid")
     User = get_user_model()
     users = User.objects.all()
 
