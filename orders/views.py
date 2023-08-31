@@ -406,7 +406,7 @@ def cancel_page(request):
 
 @staff_member_required
 def staff_list_page(request):
-    order_qs = Order.objects.filter(status="paid")
+    order_qs = Order.objects.filter(payment_status="paid")
 
     paginator = Paginator(order_qs, 50)  # Show 25 contacts per page.
 
