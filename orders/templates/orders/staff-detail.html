@@ -27,6 +27,7 @@
       <p class="font-100 my-1"><span class="font-100 bold">Date:</span> {{ order.timestamp }}</p>
       <p class="font-100 my-1"><span class="font-100 bold">Gift Message:</span> {{ order.gift_message }}</p>
       <p class="font-100 my-1"><span class="font-100 bold">Shipping Date:</span> {{ order.shipping_date }}</p>
+      <p class="font-100 my-1"><span class="font-100 bold">Discount:</span> {{ order.discount }}</p>
 
 
     </div>
@@ -79,7 +80,41 @@
       {% include "orders/entry_table.html" %}
 
     </div>
+    <div class="col s6 offset-s6">
+      <table>
+        <tbody>
+        <tr>
+          <td>Products</td>
+          <td class="right">£{{ order.subtotal }} GBP</td>
+        </tr>
+        {% if discount %}
+        <tr>
+          <td>{{ order.discount }}</td>
+          <td class="right red-text">-{{ order.discount_total }} GBP</td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td>
+            <span class="">Shipping</span>
+          </td>
+          <td class="right">
+            {% if shipping_free %}
+            Free
+            {% else %}
+            £{{ order.shipping_cost }} GBP
+            <br>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="">Total</td>
+          <td class="right">£{{ order.total }} GBP</td>
+        </tr>
 
+
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
