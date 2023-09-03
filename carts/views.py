@@ -34,6 +34,10 @@ def home_page(request):
 
     # discount = CartEntry.objects.get_discount(request)
 
+    amount_to_free_shipping = 0
+    if not shipping_free:
+        amount_to_free_shipping = int(45) - int(subtotal)
+
     if request.POST:
         gift_message = request.POST.get('gift_message', None)
         request.session['gift_message'] = gift_message
@@ -57,7 +61,7 @@ def home_page(request):
         "shipping_free": shipping_free,
         "discount_error": discount_error,
         "custom_chocolates": custom_chocolates,
-
+        "amount_to_free_shipping": amount_to_free_shipping,
     }
 
     return render(request, "carts/home.html", context)
