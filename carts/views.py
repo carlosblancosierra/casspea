@@ -22,7 +22,7 @@ def home_page(request):
 
     total = 0
     subtotal = 0
-    shipping_cost = 5.99
+    shipping_cost = 4.99
     shipping_free = False
     if entries:
         subtotal = CartEntry.objects.cart_subtotal(request)
