@@ -241,7 +241,7 @@ class CreateCheckoutSessionView(View):
         shipping_basic = {
             "shipping_rate_data": {
                 "type": "fixed_amount",
-                "fixed_amount": {"amount": 599, "currency": "gbp"},
+                "fixed_amount": {"amount": 499, "currency": "gbp"},
                 "display_name": "Basic Shipping",
                 # "delivery_estimate": {
                 #     "minimum": {"unit": "business_day", "value": 5},
