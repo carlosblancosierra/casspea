@@ -83,7 +83,7 @@ class Order(models.Model):
         if self.shipping_free:
             return 0
         else:
-            return 5.99
+            return 4.99
 
     @property
     def total(self):

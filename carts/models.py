@@ -129,7 +129,7 @@ class CartEntryManager(models.Manager):
         if self.shipping_free(request):
             return 0.00
         else:
-            return 5.99
+            return 4.99
 
     def cart_total(self, request):
         cart_subtotal = float(self.cart_subtotal(request))
