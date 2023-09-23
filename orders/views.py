@@ -222,7 +222,8 @@ class CreateCheckoutSessionView(View):
         order = Order(shipping_address=shipping_address,
                       gift_message=gift_message,
                       shipping_date=shipping_date_obj,
-                      discount=cart.discount
+                      discount=cart.discount,
+                      shipping_type=cart.shipping_type
                       )
         customer_email = None
         if request.user.is_authenticated:
@@ -230,7 +231,6 @@ class CreateCheckoutSessionView(View):
             customer_email = request.user.email
         order.save()
         order.cart_entries.set(cart_entries)
-
         order_id = order.order_id
 
         # request.session['cart_id'] = None
