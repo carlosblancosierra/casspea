@@ -134,14 +134,15 @@
                 {% if shipping_free %}
                 Free
                 {% else %}
-                £{{ shipping_cost|floatformat:2 }} GBP
+                Estimated in next step
                 <br>
                 {% endif %}
+
               </td>
             </tr>
             <tr>
               <td class="bold font-150">Total</td>
-              <td class="right bold font-150">£{{ total|floatformat:2 }} GBP</td>
+              <td class="right bold font-150">£{{ subtotal|floatformat:2 }} GBP</td>
             </tr>
             </tbody>
           </table>

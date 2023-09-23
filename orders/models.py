@@ -5,6 +5,8 @@ from carts.models import CartEntry
 from discounts.models import Discount
 from django.conf import settings
 from django.db.models.signals import post_save
+from shipping.models import ShippingType
+
 import json
 from decimal import *
 # Create your models here.
@@ -34,6 +36,8 @@ class Order(models.Model):
     stripe_data = models.TextField(blank=True, null=True)
     discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
     staff_email_sent = models.BooleanField(default=False)
+    shipping_type = models.ForeignKey(ShippingType, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -80,10 +84,9 @@ class Order(models.Model):
 
     @property
     def shipping_cost(self):
-        if self.shipping_free:
-            return 0
-        else:
-            return 4.99
+        if self.shipping_type:
+            return self.shipping_type.cost
+        return 0
 
     @property
     def total(self):

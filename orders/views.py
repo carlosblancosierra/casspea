@@ -19,6 +19,8 @@ from .emails import new_order_staff_mail
 
 from carts.models import Cart, CartEntry
 from addresses.models import Address
+from shipping.models import ShippingType
+
 import stripe
 
 more_than_15_discount_id_test = 'kNMyLyWK'
@@ -136,6 +138,23 @@ def address_page(request):
 
 
 def confirm_page(request):
+    cart, created = Cart.objects.new_or_get(request)
+
+    if request.method == "POST":
+        selected_shipping_type_id = request.POST.get('shipping_type')
+
+        # Ensure that selected_shipping_type_id is a valid integer
+        try:
+            selected_shipping_type_id = int(selected_shipping_type_id)
+        except ValueError:
+            # Handle the case where the ID is not a valid integer
+            # Redirect or show an error message as needed
+            pass
+
+        # Update the cart's selected shipping type (replace with your logic)
+        cart.shipping_type_id = selected_shipping_type_id
+        cart.save()
+
     address_id = request.session.get("address_id", None)
     gift_message = request.session.get("gift_message", None)
     shipping_date = request.session.get("shipping_date", None)
@@ -144,12 +163,14 @@ def confirm_page(request):
     if not entries.exists():
         return redirect("carts:home")
 
-    cart, created = Cart.objects.new_or_get(request)
     discount = cart.discount
     discount_total = CartEntry.objects.discount_total(request)
     subtotal = CartEntry.objects.cart_subtotal(request)
-    total = CartEntry.objects.cart_total(request)
-    shipping_cost = 4.99
+    total = cart.total
+
+    shipping_types = ShippingType.objects.active()
+
+    # shipping_cost = 4.99
     shipping_free = CartEntry.objects.shipping_free(request)
     if shipping_free:
         shipping_cost = 0
@@ -168,9 +189,11 @@ def confirm_page(request):
         "total": total,
         "shipping_free": shipping_free,
         "gift_message": gift_message,
-        "shipping_cost": shipping_cost,
+        # "shipping_cost": shipping_cost,
         "shipping_date": shipping_date,
         "subtotal": subtotal,
+        "shipping_types": shipping_types,
+        "cart": cart,
     }
 
     return render(request, "orders/confirm.html", context)
@@ -238,11 +261,13 @@ class CreateCheckoutSessionView(View):
             },
         }
 
+        shipping_type = cart.shipping_type
+
         shipping_basic = {
             "shipping_rate_data": {
                 "type": "fixed_amount",
-                "fixed_amount": {"amount": 499, "currency": "gbp"},
-                "display_name": "Basic Shipping",
+                "fixed_amount": {"amount": shipping_type.cents, "currency": "gbp"},
+                "display_name": shipping_type.name,
                 # "delivery_estimate": {
                 #     "minimum": {"unit": "business_day", "value": 5},
                 #     "maximum": {"unit": "business_day", "value": 7},

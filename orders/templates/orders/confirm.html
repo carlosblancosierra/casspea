@@ -101,15 +101,33 @@
                 <td>
                   <span class="">Shipping</span>
                   <br class="">*Free for orders over £45
-
                 </td>
                 <td class="right">
                   {% if shipping_free %}
                   Free
                   {% else %}
-                  £{{ shipping_cost }} GBP
-                  <br>
+                  <form method="POST" action="" id="shippingForm">
+                    {% csrf_token %}
+                    {% for shipping_type in shipping_types %}
+                    <p>
+                      <label>
+                        <input
+                                name="shipping_type"
+                                type="radio"
+                                value="{{ shipping_type.id }}"
+                                {% if shipping_type.id == cart.shipping_type.id %}
+                                    checked
+                                {% endif %}
+                                onclick="submitShippingForm()"
+                        />
+                        <span>{{ shipping_type }}</span>
+                      </label>
+                    </p>
+
+                    {% endfor %}
+                  </form>
                   {% endif %}
+                 
                 </td>
               </tr>
               <tr>
@@ -135,5 +153,11 @@
 
 </section>
 {% include "newsletter-modal.html" %}
+
+<script>
+    function submitShippingForm() {
+        document.getElementById("shippingForm").submit();
+    }
+</script>
 
 {% endblock %}

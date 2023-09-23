@@ -9,8 +9,10 @@ from django.contrib.contenttypes.models import ContentType
 from custom_chocolates.models import UserChocolateDesign
 from discounts.models import Discount
 from decimal import *
+from django.dispatch import receiver
 
 from boxes.models import Box
+from shipping.models import ShippingType
 
 User = settings.AUTH_USER_MODEL
 
@@ -47,10 +49,11 @@ class CartsManager(models.Manager):
 
 class Cart(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    subtotal = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
-    total = models.DecimalField(default=0.00, max_digits=15, decimal_places=2)
     updated = models.DateTimeField(auto_now=True)
     discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
+
+    shipping_type = models.ForeignKey(ShippingType, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
@@ -58,6 +61,36 @@ class Cart(models.Model):
 
     def __unicode__(self):
         return "ID: {}. Total is ${}".format(self.id, self.total)
+
+    @property
+    def subtotal(self):
+        entries = CartEntry.objects.filter(active=True, cart=self)
+        subtotal = Decimal(0)
+        for entry in entries:
+            subtotal += Decimal(entry.total)
+        return subtotal
+
+    @property
+    def shipping_free(self):
+        subtotal = self.subtotal
+        if subtotal >= 45:
+            return True
+        else:
+            return False
+
+    @property
+    def shipping_cost(self):
+        if not self.shipping_free and self.shipping_type:
+            return self.shipping_type.cost
+        else:
+            return 0
+
+    @property
+    def total(self):
+        return round(
+            float(self.subtotal) +
+            float(self.shipping_cost),
+            2)
 
 
 class CartEntryManager(models.Manager):
@@ -241,3 +274,12 @@ class CartEntry(models.Model):
             return self.discounted_price
         else:
             return price
+
+
+@receiver(pre_save, sender=Cart)
+def set_default_shipping_type(sender, instance, **kwargs):
+    if instance.shipping_type is None:
+        # Get the default shipping type (if it exists)
+        default_shipping_type = ShippingType.objects.filter(default=True).first()
+        if default_shipping_type:
+            instance.shipping_type = default_shipping_type
