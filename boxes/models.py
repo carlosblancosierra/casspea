@@ -5,6 +5,7 @@ from imagekit.models import ImageSpecField
 
 from flavours.models import Flavour, PreBuildFlavour, FlavourChoice
 from custom_chocolates.models import UserChocolateDesign
+from django.utils.text import slugify
 
 
 # Create your models here.
@@ -28,6 +29,7 @@ class BoxSize(models.Model):
     custom_price_id = models.CharField(max_length=200, null=True, blank=True)
     active = models.BooleanField(default=True)
     custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
+    slug = models.SlugField(blank=True)
 
     seo_title = models.CharField(max_length=200, blank=True)
     seo_description = models.TextField(blank=True)
@@ -87,6 +89,12 @@ class BoxSize(models.Model):
             images.append(self.image5)
 
         return images
+
+    def save(self, *args, **kwargs):
+        # Generate a slug from the title if one is not provided
+        if not self.slug:
+            self.slug = slugify("Box of {}".format(self.size))
+        super().save(*args, **kwargs)
 
 
 class Box(models.Model):
