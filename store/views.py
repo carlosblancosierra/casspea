@@ -10,7 +10,7 @@ from .models import FLAVOURS, FLAVOUR_FORMAT
 
 # Create your views here.
 def home_page(request):
-    qs = BoxSize.objects.active()
+    qs = BoxSize.objects.filter(active=True, special_box=False)
 
     context = {
         "title": "Build your box of CassPea chocolates.",
@@ -21,17 +21,17 @@ def home_page(request):
     return render(request, "store/home.html", context)
 
 
-def box_page(request, size=None):
+def box_page(request, slug=None):
     prebuilds = PreBuildFlavour.objects.filter(active=True)
     flavours = Flavour.objects.active()
-    box_size_qs = BoxSize.objects.filter(size=size)
+    box_size_qs = BoxSize.objects.filter(slug=slug, special_box=False)
 
     box_obj = None
     if len(box_size_qs) == 1:
         box_obj = box_size_qs.first()
 
     context = {
-        "size": size,
+        "size": box_obj.size,
         "flavours": flavours,
         "prebuilds": prebuilds,
         "PRE_BUILT": Box.PRE_BUILT,
@@ -42,6 +42,26 @@ def box_page(request, size=None):
     }
 
     return render(request, "store/box.html", context)
+
+
+def advent_calendar_page(request):
+    prebuilds = PreBuildFlavour.objects.filter(active=True)
+    box_size_qs = BoxSize.objects.filter(slug="Advent-Calendar")
+
+    box_obj = None
+    if len(box_size_qs) == 1:
+        box_obj = box_size_qs.first()
+
+    context = {
+        "size": box_obj.size,
+        "prebuilds": prebuilds,
+        "PRE_BUILT": Box.PRE_BUILT,
+        "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
+        "title": box_obj.title,
+        "box_obj": box_obj,
+    }
+
+    return render(request, "store/advent-calendar.html", context)
 
 
 def add_box_to_cart(request):
@@ -56,7 +76,7 @@ def add_box_to_cart(request):
         # Check if Size obj exists
         if not size:
             return redirect('store:home')
-        size_qs = BoxSize.objects.filter(active=True, size=size)
+        size_qs = BoxSize.objects.filter(active=True, size=size, special_box=False)
 
         if len(size_qs) != 1:
             return redirect('store:home')
@@ -92,6 +112,71 @@ def add_box_to_cart(request):
             new_box.save()
             new_box.selected_flavours.set(selected_flavours)
         else:
+            return redirect('store:home')
+
+        # create entry
+        box_quantity = form.get('box_quantity', None)
+        cart_entry = CartEntry.objects.new(request, product=new_box, quantity=box_quantity)
+        user_design_id = request.session.get('user_design_id')
+        user_design_qs = UserChocolateDesign.objects.filter(active=True, id=user_design_id)
+        if user_design_qs.count() == 1:
+            cart_entry.user_chocolate_design = user_design_qs.first()
+        cart_entry.save()
+
+    return redirect('carts:home')
+
+
+def add_special_box_to_cart(request):
+    form = request.POST
+    print(form)
+
+    if form:
+        # get box data
+        slug = form.get('slug', None)
+        flavour_format = form.get(FLAVOUR_FORMAT, None)
+
+        # Check if Size obj exists
+        if not slug:
+            print("no slug")
+            return redirect('store:home')
+        slug_qs = BoxSize.objects.filter(active=True, slug=slug)
+
+        if len(slug_qs) != 1:
+            print("no qs")
+            return redirect('store:home')
+        box_size_obj = slug_qs.first()
+
+        if flavour_format == Box.PRE_BUILT:
+            selected_prebuilts = []
+            prebuilds = PreBuildFlavour.objects.filter(active=True)
+            for obj in prebuilds:
+                selected = form.get(obj.slug, None)
+                if selected:
+                    selected_prebuilts.append(obj)
+
+            # create box
+            new_box = Box(size=box_size_obj, flavour_format=flavour_format)
+            new_box.save()
+            new_box.selected_prebuilts.set(selected_prebuilts)
+
+        elif flavour_format == Box.PICK_AND_MIX:
+            flavours = Flavour.objects.active()
+            selected_flavours = []
+            for obj in flavours:
+                quantity = form.get(obj.slug, 0)
+                # print(obj.slug, quantity)
+                if quantity and int(quantity) > 0:
+                    flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
+                    flavour_choice_obj.save()
+                    selected_flavours.append(flavour_choice_obj)
+
+            # print(selected_flavours)
+
+            new_box = Box(size=box_size_obj, flavour_format=flavour_format)
+            new_box.save()
+            new_box.selected_flavours.set(selected_flavours)
+        else:
+            print("no flavour format")
             return redirect('store:home')
 
         # create entry

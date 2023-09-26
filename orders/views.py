@@ -165,13 +165,12 @@ def confirm_page(request):
 
     discount = cart.discount
     discount_total = CartEntry.objects.discount_total(request)
-    subtotal = CartEntry.objects.cart_subtotal(request)
     total = cart.total
+    subtotal = cart.subtotal
 
     shipping_types = ShippingType.objects.active()
 
-    # shipping_cost = 4.99
-    shipping_free = CartEntry.objects.shipping_free(request)
+    shipping_free = cart.shipping_free
     if shipping_free:
         shipping_cost = 0
 

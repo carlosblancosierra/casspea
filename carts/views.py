@@ -20,19 +20,9 @@ def home_page(request):
             if entry.product.custom_design:
                 custom_chocolates = True
 
-    total = 0
-    subtotal = 0
-    shipping_cost = 4.99
-    shipping_free = False
-    if entries:
-        subtotal = CartEntry.objects.cart_subtotal(request)
-        total = CartEntry.objects.cart_total(request)
-
-        shipping_free = CartEntry.objects.shipping_free(request)
-        if shipping_free:
-            shipping_cost = 0
-
-    # discount = CartEntry.objects.get_discount(request)
+    total = cart.total
+    subtotal = cart.subtotal
+    shipping_free = cart.shipping_free
 
     amount_to_free_shipping = 0
     if not shipping_free:
@@ -57,7 +47,7 @@ def home_page(request):
         "gift_message": gift_message,
         "shipping_date": shipping_date,
         "subtotal": subtotal,
-        "shipping_cost": shipping_cost,
+        # "shipping_cost": shipping_cost,
         "shipping_free": shipping_free,
         "discount_error": discount_error,
         "custom_chocolates": custom_chocolates,
