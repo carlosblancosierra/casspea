@@ -23,6 +23,7 @@ class BoxSize(models.Model):
     description = models.TextField(blank=True, null=True)
     color = models.CharField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     price_id = models.CharField(max_length=200, null=True, blank=True)
     custom_price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
@@ -30,7 +31,7 @@ class BoxSize(models.Model):
     active = models.BooleanField(default=True)
     custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
     slug = models.SlugField(blank=True)
-
+    special_box = models.BooleanField(default=False)
     seo_title = models.CharField(max_length=200, blank=True)
     seo_description = models.TextField(blank=True)
 
@@ -64,7 +65,7 @@ class BoxSize(models.Model):
                                  options={'quality': 95})
 
     def __str__(self):
-        return "Box of {}".format(self.size)
+        return self.slug
 
     objects = BoxSizeManager()
 
@@ -152,3 +153,7 @@ class Box(models.Model):
             return self.size.custom_price_id
         else:
             return self.size.price_id
+
+    @property
+    def name(self):
+        return self.size.name
