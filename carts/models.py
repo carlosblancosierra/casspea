@@ -135,12 +135,14 @@ class CartEntryManager(models.Manager):
 
     def discount_total(self, request):
         entries = self.entries(request)
-        raw_total = Decimal(0)
-        cart = entries.first().cart
-        for entry in entries:
-            raw_total_entry = Decimal(entry.raw_total)
-            raw_total += raw_total_entry
-        return float(raw_total) - float(cart.subtotal)
+        if entries:
+            raw_total = Decimal(0)
+            cart = entries.first().cart
+            for entry in entries:
+                raw_total_entry = Decimal(entry.raw_total)
+                raw_total += raw_total_entry
+            return float(raw_total) - float(cart.subtotal)
+        return 0
     #
     # def cart_boxes(self, request):
     #     entries = self.entries(request)
