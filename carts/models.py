@@ -65,10 +65,10 @@ class Cart(models.Model):
     @property
     def subtotal(self):
         entries = CartEntry.objects.filter(active=True, cart=self)
-        subtotal = Decimal(0)
+        subtotal = Decimal('0.00')
         for entry in entries:
             subtotal += Decimal(entry.total)
-        return subtotal
+        return round(subtotal, 2)
 
     @property
     def shipping_free(self):
