@@ -125,66 +125,17 @@ class CartEntryManager(models.Manager):
             return True
         return False
 
-    # def cart_subtotal(self, request):
-    #     entries = self.entries(request)
-    #     total = Decimal(0)
-    #     for entry in entries:
-    #         subtotal = Decimal(entry.total)
-    #         total += subtotal
-    #     return total
-
     def discount_total(self, request):
         entries = self.entries(request)
         if entries:
-            raw_total = Decimal(0)
+            raw_total = Decimal('0.00')
             cart = entries.first().cart
             for entry in entries:
                 raw_total_entry = Decimal(entry.raw_total)
                 raw_total += raw_total_entry
-            return float(raw_total) - float(cart.subtotal)
-        return 0
-    #
-    # def cart_boxes(self, request):
-    #     entries = self.entries(request)
-    #     boxes = 0
-    #     for entry in entries:
-    #         if entry.content_type == ContentType.objects.get_for_model(Box):
-    #             boxes += entry.quantity
-    #
-    #     print(boxes)
-    #     return boxes
-
-    # def shipping_free(self, request):
-    #     cart_subtotal = self.cart_subtotal(request)
-    #     if cart_subtotal >= 45:
-    #         return True
-    #     else:
-    #         return False
-
-    # def cart_shipping_cost(self, request):
-    #     if self.shipping_free(request):
-    #         return 0.00
-    #     else:
-    #         return 4.99
-    #
-    # def cart_total(self, request):
-    #     cart_subtotal = float(self.cart_subtotal(request))
-    #     cart_shipping_cost = float(self.cart_shipping_cost(request))
-    #     total = cart_subtotal + cart_shipping_cost
-    #
-    #     return round(total, 2)
-
-    # def more_than_15(self, request):
-    #     boxes = self.cart_boxes(request)
-    #     if boxes >= 15:
-    #         return True
-    #     return False
-    #
-    # def more_than_30(self, request):
-    #     boxes = self.cart_boxes(request)
-    #     if boxes >= 30:
-    #         return True
-    #     return False
+            discount_total = raw_total - Decimal(cart.subtotal)
+            return round(float(discount_total), 2)
+        return 0.00
 
 
 class CartEntry(models.Model):
@@ -241,16 +192,6 @@ class CartEntry(models.Model):
         boxes = self.cart_boxes
         if boxes >= 30:
             return True
-
-    # @property
-    # def discounted_price(self):
-    #     if isinstance(self.product, Box):
-    #         if self.more_than_30_boxes:
-    #             return float(self.product.price) * 0.85
-    #         elif self.more_than_15_boxes:
-    #             return float(self.product.price) * 0.9
-    #     else:
-    #         return float(self.product.price)
 
     @property
     def discounted_price(self):
