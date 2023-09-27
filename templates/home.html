@@ -13,202 +13,259 @@
 {% url 'contact' as contact_url %}
 
 <section class="row">
-  <div class="col s12 px-0">
-    <div class="center white-text valign-wrapper center" id="home-hero">
-      <div class="w-100">
-        <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
-        <p class="home-hero-description bold">
-          ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
-        </p>
-        {% include "base/navbar-carousel.html" %}
-      </div>
+    <div class="col s12 px-0">
+        <div class="center white-text valign-wrapper center" id="home-hero">
+            <div class="w-100">
+                <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
+                <p class="home-hero-description bold">
+                    ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
+                </p>
+                <p>
+                    <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>
+                    <a class="btn-large red accent-4"
+                       href="/shop-now/luxury-handmade-chocolates/special/advent-calendar">ADVENT CALENDAR</a>
+                </p>
+                {% include "base/navbar-carousel.html" %}
+            </div>
 
+        </div>
     </div>
-  </div>
 </section>
 
 <section>
-  <div class="row">
-    <div class="col s12 my-3">
-      <!-- TrustBox widget - Micro Review Count -->
-      <div class="trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad"
-           data-businessunit-id="63dbb87f683a659a5db03e2e" data-style-height="24px" data-style-width="100%"
-           data-theme="light" data-min-review-count="10" data-style-alignment="center">
-        <a href="" target="_blank" rel="noopener">Trustpilot</a>
-      </div>
-      <!-- End TrustBox widget -->
+    <div class="row">
+        <div class="col s12 my-3">
+            <!-- TrustBox widget - Micro Review Count -->
+            <div class="trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad"
+                 data-businessunit-id="63dbb87f683a659a5db03e2e" data-style-height="24px" data-style-width="100%"
+                 data-theme="light" data-min-review-count="10" data-style-alignment="center">
+                <a href="" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+            <!-- End TrustBox widget -->
+        </div>
     </div>
-  </div>
 </section>
 
 <section class="container">
-  <div class="row">
-    <div class="col s12 m6 center">
-      <p class="font-150 bold">
-        CassPea is a brand that crafts artisan hand-painted chocolate bonbons in a wide variety of delicious flavours.
-      </p>
-      <p class="font-125">We offer the fun experience of choosing your own unique selection with our ‘Pick and Mix’
-        option. Alternatively
-        why not delight and surprise someone with a pre-selected chocolate box of our choosing?
-      </p>
-      <p class="font-125">The colourful gift boxes offer quantities of 9, 15, 24 or 48 and for ultimate freshness we
-        advise you consume
-        the chocolates within 15-30 days of receiving them.</p>
-      <p class="font-125">Have an upcoming event or wedding party?
-        Why not pre-order from CassPea and we will produce and supply your chocolates in time for that special
-        occasion!</p>
-      <p class="font-125">
-        If you’re needing a larger order, we can save you money with our bulk packs. For more information please contact
-        our friendly team today on 07859 790386 or email: info@casspea.co.uk</p>
-      <p><a href="{{ store_url }}" class="btn-large btn-purple bold">ORDER NOW</a></p>
+    <div class="row">
+        <div class="col s12 m6 center">
+            <p class="font-150 bold">
+                CassPea is a brand that crafts artisan hand-painted chocolate bonbons in a wide variety of delicious
+                flavours.
+            </p>
+            <p class="font-125">We offer the fun experience of choosing your own unique selection with our ‘Pick and
+                Mix’
+                option. Alternatively
+                why not delight and surprise someone with a pre-selected chocolate box of our choosing?
+            </p>
+            <p class="font-125">The colourful gift boxes offer quantities of 9, 15, 24 or 48 and for ultimate freshness
+                we
+                advise you consume
+                the chocolates within 15-30 days of receiving them.</p>
+            <p class="font-125">Have an upcoming event or wedding party?
+                Why not pre-order from CassPea and we will produce and supply your chocolates in time for that special
+                occasion!</p>
+            <p class="font-125">
+                If you’re needing a larger order, we can save you money with our bulk packs. For more information please
+                contact
+                our friendly team today on 07859 790386 or email: info@casspea.co.uk</p>
+            <p><a href="{{ store_url }}" class="btn-large btn-purple white-text">ORDER NOW</a></p>
+        </div>
+        <div class="col s12 m6">
+            <picture>
+                <source srcset="{% static 'images/home/section2.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/home/section2.jpg' %}" type="image/jpeg">
+                <img src="{% static 'images/home/section2.jpg' %}" alt="casspea giftbox" class="responsive-img">
+            </picture>
+        </div>
     </div>
-    <div class="col s12 m6">
-      <picture>
-        <source srcset="{% static 'images/home/section2.webp' %}" type="image/webp">
-        <source srcset="{% static 'images/home/section2.jpg' %}" type="image/jpeg">
-        <img src="{% static 'images/home/section2.jpg' %}" alt="casspea giftbox" class="responsive-img">
-      </picture>
-    </div>
-  </div>
 </section>
+<section class="container mt-3">
+    <div class="row">
+        <div class="col s12 m6">
+            <picture>
+                <img src="{{ advent_calendar_obj.store_image.url }}" alt="{{ advent_calendar_obj.name }}"
+                     class="responsive-img">
+            </picture>
+        </div>
+        <div class="col s12 m6 center">
+            <p class="font-150 bold">
+                Advent Calendar
+            </p>
+            <p class="font-125">
+                We find ourselves at the juncture eagerly awaited by many – the advent of the Christmas holidays. It is
+                with
+                great pleasure that we extend an invitation to partake in the festivities, surrounded by dear friends
+                and
+                family, and enhance this experience with our innovative Advent Calendar.
+            </p>
+            <p class="font-125">
+                Our advent calendar is a testament to craftsmanship and holiday spirit. Beyond the mere countdown, it
+                offers
+                an immersive experience, with each door revealing not just numbers and riddles, but a curated selection
+                of
+                novel flavors and exquisite decorations, thoughtfully crafted for this occasion.
+            </p>
+            <p class="font-125">
+                This is an opportunity to elevate your holiday traditions to new heights. Secure your advent calendar by
+                pre-ordering now, and we guarantee timely delivery, allowing you to commence this enchanting journey on
+                December 1st. Prepare to relish the magic of the season, unwrapping a new delight each day.
+            </p>
+            <p class="font-125">
+                May your Christmas season be marked by joy and merriment, and may our Advent Calendar enhance every
+                moment
+                of this cherished time.
+            </p>
+            <p><a href="/shop-now/luxury-handmade-chocolates/special/advent-calendar"
+                  class="btn-large btn-green white-text">ORDER NOW</a></p>
+        </div>
 
+    </div>
+</section>
 <section id="home-section-5">
-  <div class="">
-    <div class="row">
-      <div class="col s12">
-        <p class="center bold font-250">An easy and fun way to order from CassPea Chocolates:
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col s12 m2 offset-m1 center">
-        <picture>
-          <source srcset="{% static 'images/home/process/1.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/process/1.png' %}" type="image/png">
-          <img src="{% static 'images/home/process/1.png' %}" class="responsive-img home-process-img" loading="lazy"
-               alt="Visit our shop and choose your box size"
-          >
-        </picture>
+    <div class="">
+        <div class="row">
+            <div class="col s12">
+                <p class="center bold font-250">An easy and fun way to order from CassPea Chocolates:
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m2 offset-m1 center">
+                <picture>
+                    <source srcset="{% static 'images/home/process/1.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/process/1.png' %}" type="image/png">
+                    <img src="{% static 'images/home/process/1.png' %}" class="responsive-img home-process-img"
+                         loading="lazy"
+                         alt="Visit our shop and choose your box size"
+                    >
+                </picture>
 
-        <p class="bold center font-150 m-0">
-          Visit our shop and choose your box size</p>
-      </div>
-      <div class="col s12 m2 center">
-        <picture>
-          <source srcset="{% static 'images/home/process/2.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/process/2.png' %}" type="image/png">
-          <img src="{% static 'images/home/process/2.png' %}" class="responsive-img home-process-img" loading="lazy"
-               alt="Choose a pre-selected box or why not Pick and Mix your own flavours!"
-          >
-        </picture>
+                <p class="bold center font-150 m-0">
+                    Visit our shop and choose your box size</p>
+            </div>
+            <div class="col s12 m2 center">
+                <picture>
+                    <source srcset="{% static 'images/home/process/2.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/process/2.png' %}" type="image/png">
+                    <img src="{% static 'images/home/process/2.png' %}" class="responsive-img home-process-img"
+                         loading="lazy"
+                         alt="Choose a pre-selected box or why not Pick and Mix your own flavours!"
+                    >
+                </picture>
 
-        <p class="bold center font-150 m-0">
-          Choose a pre-selected box or why not Pick and Mix your own flavours!
-        </p>
-      </div>
-      <div class="col s12 m2 center">
-        <picture>
-          <source srcset="{% static 'images/home/process/3.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/process/3.png' %}" type="image/png">
-          <img src="{% static 'images/home/process/3.png' %}" class="responsive-img home-process-img" loading="lazy"
-               alt="Sending as a gift? Write a message or leave this blank – your choice!"
-          >
-        </picture>
-        <p class="bold center font-150 m-0">
-          Sending as a gift? Write a message or leave this blank – your choice!
-        </p>
-      </div>
-      <div class="col s12 m2 center">
-        <picture>
-          <source srcset="{% static 'images/home/process/4.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/process/4.png' %}" type="image/png">
-          <img src="{% static 'images/home/process/4.png' %}" class="responsive-img home-process-img" loading="lazy"
-               alt="Choose your shipping date, enter your shipping address and pay online securely"
-          >
-        </picture>
-        <p class="bold center font-150 m-0">
-          Choose your shipping date, enter your shipping address and pay online securely
-        </p>
-      </div>
-      <div class="col s12 m2 center">
-        <picture>
-          <source srcset="{% static 'images/home/process/5.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/process/5.png' %}" type="image/png">
-          <img src="{% static 'images/home/process/5.png' %}" class="responsive-img home-process-img" loading="lazy"
-               alt="Receive your box and enjoy your chocolates!"
-          >
-        </picture>
-        <p class="bold center font-150 m-0">
-          Receive your box and enjoy your chocolates!
-        </p>
-      </div>
-    </div>
+                <p class="bold center font-150 m-0">
+                    Choose a pre-selected box or why not Pick and Mix your own flavours!
+                </p>
+            </div>
+            <div class="col s12 m2 center">
+                <picture>
+                    <source srcset="{% static 'images/home/process/3.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/process/3.png' %}" type="image/png">
+                    <img src="{% static 'images/home/process/3.png' %}" class="responsive-img home-process-img"
+                         loading="lazy"
+                         alt="Sending as a gift? Write a message or leave this blank – your choice!"
+                    >
+                </picture>
+                <p class="bold center font-150 m-0">
+                    Sending as a gift? Write a message or leave this blank – your choice!
+                </p>
+            </div>
+            <div class="col s12 m2 center">
+                <picture>
+                    <source srcset="{% static 'images/home/process/4.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/process/4.png' %}" type="image/png">
+                    <img src="{% static 'images/home/process/4.png' %}" class="responsive-img home-process-img"
+                         loading="lazy"
+                         alt="Choose your shipping date, enter your shipping address and pay online securely"
+                    >
+                </picture>
+                <p class="bold center font-150 m-0">
+                    Choose your shipping date, enter your shipping address and pay online securely
+                </p>
+            </div>
+            <div class="col s12 m2 center">
+                <picture>
+                    <source srcset="{% static 'images/home/process/5.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/process/5.png' %}" type="image/png">
+                    <img src="{% static 'images/home/process/5.png' %}" class="responsive-img home-process-img"
+                         loading="lazy"
+                         alt="Receive your box and enjoy your chocolates!"
+                    >
+                </picture>
+                <p class="bold center font-150 m-0">
+                    Receive your box and enjoy your chocolates!
+                </p>
+            </div>
+        </div>
 
-    <div class="row">
-      <div class="col s12">
-        <p class="center">
-          <a href="{{ store_url }}" class="btn-large btn-orange bold">GO TO THE STORE</a>
-        </p>
-      </div>
+        <div class="row">
+            <div class="col s12">
+                <p class="center">
+                    <a href="{{ store_url }}" class="btn-large btn-orange white-text">GO TO THE STORE</a>
+                </p>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 
 <section id="home-section-2" class="my-yellow">
-  <div class="container ">
-    <div class="row">
-      <div class="col s12 m9">
-        <p id="home-section-2-text" class="pt-4">
-          It is not only the high quality of our products that separate us from the competition, it is our fun and
-          efficient <a href="{{ store_url }}" class="text-underline">ordering process</a>.
-        </p>
-      </div>
-      <div class="col s12 m3">
-        <img src="{% static 'images/home/handpick.jpg' %}" alt="" class="responsive-img" loading="lazy">
-      </div>
+    <div class="container ">
+        <div class="row">
+            <div class="col s12 m9">
+                <p id="home-section-2-text" class="pt-4">
+                    It is not only the high quality of our products that separate us from the competition, it is our fun
+                    and
+                    efficient <a href="{{ store_url }}" class="text-underline">ordering process</a>.
+                </p>
+            </div>
+            <div class="col s12 m3">
+                <img src="{% static 'images/home/handpick.jpg' %}" alt="" class="responsive-img" loading="lazy">
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 
 <section class="position-relative">
-  <div class="container" id="home-section-3">
-    <div class="row">
-      <div class="col s12 m7">
-        <p id="home-section-3-text">
-          We have streamlined our ordering experience to make it as simple and fun as possible. Whether you are ordering
-          a single box for a friend or a thousand personalised chocolates for an event, the process for both is just as
-          easy.
-        </p>
-        <p class="center">
-          <a href="{{ contact_url }}" class="text-underline font-150 bold">Contact us for more details</a>
-        </p>
+    <div class="container" id="home-section-3">
+        <div class="row">
+            <div class="col s12 m7">
+                <p id="home-section-3-text">
+                    We have streamlined our ordering experience to make it as simple and fun as possible. Whether you
+                    are ordering
+                    a single box for a friend or a thousand personalised chocolates for an event, the process for both
+                    is just as
+                    easy.
+                </p>
+                <p class="center">
+                    <a href="{{ contact_url }}" class="text-underline font-150 bold">Contact us for more details</a>
+                </p>
 
-      </div>
-      <div class="col s12 m4">
-        <picture>
-          <source srcset="{% static 'images/home/surpise.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/home/surpise.png' %}" type="image/png">
-          <img src="{% static 'images/home/surpise.png' %}" class="responsive-img" loading="lazy"
-               alt="surprise your guests"
-          >
-        </picture>
+            </div>
+            <div class="col s12 m4">
+                <picture>
+                    <source srcset="{% static 'images/home/surpise.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/home/surpise.png' %}" type="image/png">
+                    <img src="{% static 'images/home/surpise.png' %}" class="responsive-img" loading="lazy"
+                         alt="surprise your guests"
+                    >
+                </picture>
 
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <img src="{% static 'images/home/iso-morado.png' %}" id="home-iso-morado" loading="lazy" alt="casspea-isotype">
+    <img src="{% static 'images/home/iso-morado.png' %}" id="home-iso-morado" loading="lazy" alt="casspea-isotype">
 </section>
 
 {% include "newsletter-modal.html" %}
 {% include "newsletter-modal-fab.html" %}
 
 <style>
-  #site-nav {
-   display:none;
-  }
-
+    #site-nav {
+     display:none;
+    }
 
 
 </style>
