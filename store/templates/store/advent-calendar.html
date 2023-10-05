@@ -10,7 +10,20 @@
 {% url 'store:add_boxes' as add_boxes_url %}
 {% url 'store:add_boxes_special' as add_boxes_special_url %}
 
-{% include "base/inner-banner.html" %}
+<section class="row">
+  <div class="col s12 px-0">
+    <div class="inner-banner py-2 valign-wrapper"
+         style="
+         background-image:url({% static 'images/home/banner-1.jpg' %});
+         ">
+      <div class="center w-100 white-text p-3 mt-5">
+        <h1 class="font-150 mt-5"> {{ title }}</h1>
+        <p class="">{{ subtitle }}</p>
+      </div>
+    </div>
+    {% include "base/navbar-carousel.html" %}
+  </div>
+</section>
 
 
 <div class="container">
