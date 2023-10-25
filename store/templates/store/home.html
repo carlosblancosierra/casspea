@@ -8,45 +8,92 @@
 
 
 <div class="container mt-5">
-  <div class="row">
-    <div class="col s12">
-      <h2 class="bold font-200 center">Ordering delicious hand made chocolates from CassPea is simple and fun!</h2>
-      <p class="center mt-2">
-        Choose from our box sizes of 9, 15, 24 or 48. Each colourful yet sturdy box is carefully packaged to retain
-        freshness of flavour and the design makes a fantastic gift for a loved one. We have over 15 flavours to choose
-        from, including alcohol free, nut free and gluten free options (please note
-        we cannot guarantee 100% nut free for those with severe allergies)</p>
-      <ul class="center">
-        <li class="bold my-pink-text">1: Select your box size</li>
-        <li class="bold my-green-text">2: Choose a Pre-Built box or Pick and Mix your own from our 16 succulent flavours</li>
-        <li class="bold my-brown-text">3: Select a shipping date - FREE delivery for orders over £45</li>
-        <li class="bold my-purple-text">4: Pay securely online</li>
-        <li class="bold my-orange-text">5: Receive your chocolates and enjoy!</li>
-      </ul>
+    <div class="row">
+        <div class="col s12">
+            <h2 class="bold font-200 center">Ordering delicious hand made chocolates from CassPea is simple and
+                fun!</h2>
+            <p class="center mt-2">
+                Choose from our box sizes of 9, 15, 24 or 48. Each colourful yet sturdy box is carefully packaged to
+                retain
+                freshness of flavour and the design makes a fantastic gift for a loved one. We have over 15 flavours to
+                choose
+                from, including alcohol free, nut free and gluten free options (please note
+                we cannot guarantee 100% nut free for those with severe allergies)</p>
+            <ul class="center">
+                <li class="bold my-pink-text">1: Select your box size</li>
+                <li class="bold my-green-text">2: Choose a Pre-Built box or Pick and Mix your own from our 16 succulent
+                    flavours
+                </li>
+                <li class="bold my-brown-text">3: Select a shipping date - FREE delivery for orders over £45</li>
+                <li class="bold my-purple-text">4: Pay securely online</li>
+                <li class="bold my-orange-text">5: Receive your chocolates and enjoy!</li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>
 
 <section class="container mt-1">
-  <div class="row">
-    <div class="col s12">
-    </div>
-    {% for obj in qs %}
-    <div class="col s6 m3">
+    <div class="row">
+        <div class="col s12">
+        </div>
+        {% for obj in qs %}
+        <div class="col s6 m3">
 
-      {% if obj.store_image %}
-      <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
-      {% endif %}
-      <p class="center bold">£{{ obj.price }}</p>
-      <p class="center ">
-        <a class="btn btn-outline-{{ obj.color }} w-100" href="{{ obj.get_absolute_url }}">
-          Box of {{ obj.size }} <span class="d-none d-md-inline-block">Chocolates</span>
-        </a>
-      </p>
+            {% if obj.store_image %}
+            <a href="{{ obj.get_absolute_url }}"><img src="{{ obj.store_image.url }}" class="responsive-img"> </a>
+            {% endif %}
+            <p class="center bold">£{{ obj.price }}</p>
+            <p class="center ">
+                <a class="btn btn-outline-{{ obj.color }} w-100" href="{{ obj.get_absolute_url }}">
+                    Box of {{ obj.size }} <span class="d-none d-md-inline-block">Chocolates</span>
+                </a>
+            </p>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 </section>
+
+<section class="container mt-3">
+    <div class="row">
+        <div class="col s12 m6">
+            <picture>
+                <img src="{{ advent_calendar_obj.store_image.url }}" alt="{{ advent_calendar_obj.name }}"
+                     class="responsive-img">
+            </picture>
+        </div>
+        <div class="col s12 m6 center">
+            <p class="font-150 bold">
+                Advent Calendar
+            </p>
+            <p class="font-150 red-text bold">
+                24 Tastes of Christmas
+            </p>
+            <p class="font-125 bold">
+                We find ourselves at the juncture eagerly awaited by many – the advent of the Christmas holidays. It is
+                with great pleasure that we extend an invitation to partake in the festivities, surrounded by dear
+                friends and family, and enhance this experience with our innovative Advent Calendar.
+            </p>
+            <p class="font-125 red-text">
+                Our advent calendar is a testament to craftsmanship and holiday spirit. Beyond the mere countdown, it
+                offers an immersive experience, with each door revealing not just numbers and riddles, but a curated
+                selection
+                of novel flavors and exquisite decorations, thoughtfully crafted for this occasion.
+            </p>
+            <p class="font-125 my-green-text">
+                Prepare to relish the magic of the season, unwrapping a new delight each day.
+            </p>
+            <p class="font-125 my-pink-text bold">
+                May your Christmas season be marked by joy and merriment, and may our Advent Calendar enhance every
+                moment
+                of this cherished time.
+            </p>
+            <p><a href="/shop-now/luxury-handmade-chocolates/special/advent-calendar"
+                  class="btn-large btn-green white-text">ORDER NOW</a></p>
+        </div>
+
+    </div>
+</section>
+
 
 <!--<section class="container my-5">-->
 <!--  <div class="row">-->
