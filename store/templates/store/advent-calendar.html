@@ -122,7 +122,7 @@
                 <input type="hidden" value="{{ PRE_BUILT }}" name="{{ FLAVOUR_FORMAT }}">
 
                 <p class="center">
-                    <button type="submit" id="submit-btn" class="btn-large btn-orange">
+                    <button type="submit" id="submit-btn" class="btn-large btn-orange w-100">
                         Add to Cart
                     </button>
                 </p>
@@ -169,51 +169,56 @@
 </section>
 
 <!--reviews-->
-<div class="container">
-    <div class="row">
-        <div class="col s12 center">
-            <p class="font-150 bold">
-                Customer Experiences
-            </p>
+<div class=" mt-5 reviews-section">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 center">
+                <p class="font-200 bold white-text">
+                    Customer Experiences
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s12 m4 center">
-            <p class="bold red-text">Thank you for the wonderful chocolates!
-            </p>
-            <p>
-                They arrived this morning. They look amazing! I
-                should have
-                ordered a bigger box.
-                I will leave a review later. What a great talent you and your team have! My husband is a major
-                chocoholic!
-                Many thanks again.
-                #Support small businesses
-                Sabrina Crichlow
-            </p>
-        </div>
-        <div class="col s12 m4 center">
-            <p class="bold">Great quality chocolates.
-            </p>
-            <p>
-                They really do look amazing in real life. Taste absolutely divine and a good variety of flavours.
-                Arrived in time for an anniversary present. Love
-                the packaging, expensive quality.
-            </p>
-        </div>
-        <div class="col s12 m4 center">
-            <p class="bold my-green-text">The best purchase I’ve made in a long time
-            </p>
-            <p>
-                I tasted casspea chocolates at a fair and was very very impressed. I purchased a box to take to a dinner
-                party and they were an absolute success. I am now a big fan. I think that the fact that all’s handmade
-                by one person is incredible. The passion, work, knowledge and dedication that goes in the process of
-                making each one is worthy of praise.
-            </p>
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="review-card">
+                    <p class="bold red-text">Thank you for the wonderful chocolates!</p>
+                    <p>
+                        They arrived this morning. They look amazing! I should have ordered a bigger box.
+                        I will leave a review later. What a great talent you and your team have! My husband is a major
+                        chocoholic!
+                        Many thanks again.
+                        #Support small businesses
+                        Sabrina Crichlow
+                    </p>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="review-card">
+                    <p class="bold">Great quality chocolates.</p>
+                    <p>
+                        They really do look amazing in real life. Taste absolutely divine and a good variety of
+                        flavours.
+                        Arrived in time for an anniversary present. Love the packaging, expensive quality.
+                    </p>
+                </div>
+            </div>
+            <div class="col s12 m4">
+                <div class="review-card">
+                    <p class="bold my-green-text">The best purchase I’ve made in a long time</p>
+                    <p>
+                        I tasted casspea chocolates at a fair and was very very impressed. I purchased a box to take to
+                        a dinner party
+                        and they were an absolute success. I am now a big fan. I think that the fact that all's handmade
+                        by one person
+                        is incredible. The passion, work, knowledge and dedication that goes into the process of making
+                        each one is worthy
+                        of praise.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
 <!-- Modal Structure -->
 <div id="allergenModal" class="modal">
     <div class="modal-content">
@@ -260,6 +265,29 @@
     }
 
 
+</style>
+
+<style>
+    .reviews-section {
+        background-image: url('/static/images/advent/advent-reviews-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        padding: 50px 0;
+        background-attachment: fixed;
+
+    }
+
+    .review-card {
+        background: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed (0.8 is semi-transparent) */
+        padding: 20px;
+        border-radius: 5px;
+        margin: 10px;
+        text-align: center;
+    }
+
+    .review-card p {
+        margin: 0;
+    }
 </style>
 {% endblock %}
 
