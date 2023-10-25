@@ -18,6 +18,11 @@ def home_page(request):
         "qs": qs,
     }
 
+    advent_calendar_qs = BoxSize.objects.filter(slug="Advent-Calendar")
+    if advent_calendar_qs.exists():
+        print(advent_calendar_qs.first())
+        context["advent_calendar_obj"] = advent_calendar_qs.first()
+
     return render(request, "store/home.html", context)
 
 
