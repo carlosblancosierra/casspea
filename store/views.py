@@ -56,6 +56,8 @@ def advent_calendar_page(request):
     if len(box_size_qs) == 1:
         box_obj = box_size_qs.first()
 
+    flavours_qs = Flavour.objects.active()
+
     context = {
         "size": box_obj.size,
         "prebuilds": prebuilds,
@@ -63,6 +65,7 @@ def advent_calendar_page(request):
         "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
         "title": box_obj.title,
         "box_obj": box_obj,
+        "flavours_qs": flavours_qs
     }
 
     return render(request, "store/advent-calendar.html", context)
