@@ -402,11 +402,8 @@ def success_page(request):
     request.session['address_id'] = None
     request.session['gift_message'] = None
 
-    json_data = order.stripe_data.json_data
-
-    # Parse the JSON data into a Python dictionary
     import json
-    data = json.loads(json_data)
+    data = json.loads(order.stripe_data)
 
     # Extract payment_intent and amount_total
     transaction_id = data.get('payment_intent')
