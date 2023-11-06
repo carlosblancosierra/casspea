@@ -11,57 +11,67 @@
 {% include "base/inner-banner.html" %}
 
 <div class="container mt-5">
-  <div class="row">
-    <div class="col s12">
-      <h1 class="bold font-200 center">Congratulations</h1>
-      <p class="center font-150">Your order has been successfully processed. We will send you a confirmation email
-        shortly.</p>
+    <div class="row">
+        <div class="col s12">
+            <h1 class="bold font-200 center">Congratulations</h1>
+            <p class="center font-150">Your order has been successfully processed. We will send you a confirmation email
+                shortly.</p>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="col s12 m8 offset-m2">
-      <p class=""><b>Order ID: </b>{{ order.order_id }}</p>
-      {% if order.discount %} <p class=""><b>Discount Code: </b>{{ order.discount }}</p>{% endif %}
-      <p>{% if gift_message %} <b>Gift Message: </b>{{ gift_message }} {% endif %}</p>
-      <p class=""><b>Shipping Address: </b>{{ order.shipping_address.full_address }}</p>
-      <p class=""><b>Shipping Date: </b>{{ order.shipping_date }}</p>
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <p class=""><b>Order ID: </b>{{ order.order_id }}</p>
+            {% if order.discount %} <p class=""><b>Discount Code: </b>{{ order.discount }}</p>{% endif %}
+            <p>{% if gift_message %} <b>Gift Message: </b>{{ gift_message }} {% endif %}</p>
+            <p class=""><b>Shipping Address: </b>{{ order.shipping_address.full_address }}</p>
+            <p class=""><b>Shipping Date: </b>{{ order.shipping_date }}</p>
 
-      <h4 class="font-150 bold">Products:</h4>
+            <h4 class="font-150 bold">Products:</h4>
 
-      {% include "orders/entry_table.html" %}
+            {% include "orders/entry_table.html" %}
 
-      <h4 class="mt-4 font-150 bold">Summary</h4>
+            <h4 class="mt-4 font-150 bold">Summary</h4>
 
-      <div class="row p-0">
-        <div class="col s6">
-          <p class="font-100 mt-2">Shipping:</p>
+            <div class="row p-0">
+                <div class="col s6">
+                    <p class="font-100 mt-2">Shipping:</p>
+                </div>
+
+                <div class="col s6">
+                    <p class="text-right font-100 mt-2">
+                        {% if order.shipping_free %}
+                        Free
+                        {% else %}
+                        £{{ order.shipping_cost }} GBP
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            <div class="row p-0">
+                <div class="col s6">
+                    <p class="font-100 mt-2 font-150 bold">Total:</p>
+                </div>
+                <div class="col s6">
+                    <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
+                </div>
+            </div>
+
+
         </div>
-
-        <div class="col s6">
-          <p class="text-right font-100 mt-2">
-            {% if order.shipping_free %}
-            Free
-            {% else %}
-            £{{ order.shipping_cost }} GBP
-            {% endif %}
-          </p>
-        </div>
-      </div>
-      <div class="row p-0">
-        <div class="col s6">
-          <p class="font-100 mt-2 font-150 bold">Total:</p>
-        </div>
-        <div class="col s6">
-          <p class="text-right font-150 mt-2 bold">£{{ order.total }} GBP</p>
-        </div>
-      </div>
-
-
     </div>
-  </div>
 </div>
+
+<script>
+    ga('require', 'ecommerce');
+    ga('ecommerce:addTransaction', {
+      'id': '{{ transaction_id }}',
+      'revenue': '{{ total_revenue }}',
+      'test': '{{ true }}',
+    });
+    ga('ecommerce:send');
+</script>
 
 {% endblock %}
