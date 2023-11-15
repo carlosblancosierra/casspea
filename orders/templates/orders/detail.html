@@ -70,7 +70,7 @@
             <span class="">Shipping</span>
           </td>
           <td class="right">
-            {% if shipping_free %}
+            {% if order.shipping_free %}
             Free
             {% else %}
             £{{ order.shipping_cost }} GBP

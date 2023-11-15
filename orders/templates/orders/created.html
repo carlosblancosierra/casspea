@@ -64,14 +64,14 @@
     </div>
 </div>
 
+
+
+{% endblock %}
+
+{% block js_extra %}
+
 <script>
-    ga('require', 'ecommerce');
-    ga('ecommerce:addTransaction', {
-      'id': '{{ transaction_id }}',
-      'revenue': '{{ total_revenue }}',
-      'test': '{{ true }}',
-    });
-    ga('ecommerce:send');
+
 </script>
 
 {% endblock %}
