@@ -1,0 +1,10 @@
+<div class="flavours-grid">
+    <div class="row">
+        {% for flavour_choice in entry.product.selected_flavours.all %}
+            {% for i in "x"|ljust:flavour_choice.quantity %}
+                {% block content %}
+                {% endblock %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>

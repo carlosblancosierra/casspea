@@ -1,0 +1,14 @@
+<div class="flavours-grid row">
+    <div class="col s8">
+        <div class="row">
+            {% for flavour_choice in entry.product.selected_flavours.all %}
+                {% for i in "x"|ljust:flavour_choice.quantity %}
+                    <div class="col s2 {% if forloop.parentloop.counter == 5 %} offset-s2{% endif %}">
+                        <img src="{{ flavour_choice.flavour.image.url }}" class="responsive-img">
+                        <p class="m-0 font-075 center">{{ flavour_choice.flavour }}</p>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

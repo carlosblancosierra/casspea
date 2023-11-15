@@ -1,0 +1,11 @@
+{% extends "boxes/grid-base.html" %}
+
+{% block content %}
+
+<div class="col p-0" style="width:12.4%">
+    {% if flavour_choice.flavour.image %}
+    <img src="{{ flavour_choice.flavour.image.url }}" class="responsive-img">
+    {% endif %}
+</div>
+
+{% endblock %}
