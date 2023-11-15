@@ -50,16 +50,6 @@ class Order(models.Model):
     class Meta:
         ordering = ['-timestamp']
 
-    # def subtotal(self):
-    #     subtotal = 0
-    #     for entry in self.cart_entries.all():
-    #         item_total = entry.sku_product.master.costo * entry.quantity
-    #         subtotal += item_total
-    #     return subtotal
-    #
-    # def total(self):
-    #     return self.subtotal()
-
     def get_staff_url(self):
         return f"/orders/staff/{self.order_id}"
 
@@ -69,10 +59,10 @@ class Order(models.Model):
     @property
     def subtotal(self):
         entries = self.cart_entries.all()
-        subtotal = Decimal(0)
+        subtotal = Decimal('0.00')
         for entry in entries:
             subtotal += Decimal(entry.total)
-        return subtotal
+        return round(subtotal, 2)
 
     @property
     def shipping_free(self):
@@ -84,9 +74,10 @@ class Order(models.Model):
 
     @property
     def shipping_cost(self):
-        if self.shipping_type:
+        if not self.shipping_free and self.shipping_type:
             return self.shipping_type.cost
-        return 0
+        else:
+            return 0
 
     @property
     def total(self):
