@@ -57,6 +57,59 @@ def home_page(request):
     return render(request, "carts/home.html", context)
 
 
+def home_page_v2(request):
+    entries = CartEntry.objects.entries(request)
+    empty = CartEntry.objects.empty_cart(request)
+    cart, created = Cart.objects.new_or_get(request)
+    discount = cart.discount
+    discount_total = CartEntry.objects.discount_total(request)
+    gift_message = request.session.get('gift_message', None)
+    shipping_date = request.session.get("shipping_date", None)
+    discount_error = request.session.get("discount_error", None)
+    request.session['discount_error'] = None
+    custom_chocolates = False
+    for entry in entries:
+        if custom_chocolates is False:
+            if entry.product.custom_design:
+                custom_chocolates = True
+
+    total = cart.total
+    subtotal = cart.subtotal
+    shipping_free = cart.shipping_free
+
+    amount_to_free_shipping = 0
+    if not shipping_free:
+        amount_to_free_shipping = int(45) - int(subtotal)
+
+    if request.POST:
+        gift_message = request.POST.get('gift_message', None)
+        request.session['gift_message'] = gift_message
+
+        shipping_date = request.POST.get('shipping_date', None)
+        request.session['shipping_date'] = shipping_date
+
+        return redirect('orders:guess_checkout')
+
+    context = {
+        "title": "Cart",
+        "discount": discount,
+        "discount_total": discount_total,
+        "empty": empty,
+        "entries": entries,
+        "total": total,
+        "gift_message": gift_message,
+        "shipping_date": shipping_date,
+        "subtotal": subtotal,
+        # "shipping_cost": shipping_cost,
+        "shipping_free": shipping_free,
+        "discount_error": discount_error,
+        "custom_chocolates": custom_chocolates,
+        "amount_to_free_shipping": amount_to_free_shipping,
+    }
+
+    return render(request, "carts/home_v2.html", context)
+
+
 @login_required
 def agregar_page(request):
     form = request.POST
