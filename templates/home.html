@@ -12,22 +12,38 @@
 {% url 'custom_chocolates:home' as personalise_url %}
 {% url 'contact' as contact_url %}
 
-<section class="row">
-    <div class="col s12 px-0">
-        <div class="center white-text valign-wrapper center" id="home-hero">
-            <div class="w-100">
-                <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
-                <p class="home-hero-description bold">
-                    ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
-                </p>
-                <p>
-                    <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>
-                    <a class="btn-large red accent-4"
-                       href="/shop-now/luxury-handmade-chocolates/special/advent-calendar">ADVENT CALENDAR</a>
-                </p>
-                {% include "base/navbar-carousel.html" %}
-            </div>
+<!--<section class="row">-->
+<!--    <div class="col s12 px-0">-->
+<!--        <div class="center white-text valign-wrapper center" id="home-hero">-->
+<!--            <div class="w-100">-->
+<!--                <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>-->
+<!--                <p class="home-hero-description bold">-->
+<!--                    ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE-->
+<!--                </p>-->
+<!--                <p>-->
+<!--                    <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>-->
+<!--                    <a class="btn-large red accent-4"-->
+<!--                       href="/shop-now/luxury-handmade-chocolates/special/advent-calendar">ADVENT CALENDAR</a>-->
+<!--                </p>-->
+<!--                {% include "base/navbar-carousel.html" %}-->
+<!--            </div>-->
 
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<section id="home-hero" class="row valign-wrapper">
+    <div class="col s12 center-align white-text">
+        <div class="w-100">
+            <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
+            <p class="home-hero-description bold">
+                ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
+            </p>
+            <p>
+                <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>
+                <a class="btn-large red accent-4" href="/shop-now/luxury-handmade-chocolates/special/advent-calendar">ADVENT CALENDAR</a>
+            </p>
+            {% include "base/navbar-carousel.html" %}
         </div>
     </div>
 </section>
