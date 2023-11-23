@@ -22,6 +22,7 @@ from addresses.models import Address
 from shipping.models import ShippingType
 
 import stripe
+import os
 
 more_than_15_discount_id_test = 'kNMyLyWK'
 more_than_15_discount_id_live = 'lk8ip9No'
@@ -38,9 +39,11 @@ else:
     more_than_15_discount_id = more_than_15_discount_id_live
     more_than_30_discount_id = more_than_30_discount_id_live
 
-endpoint_secret_local = 'whsec_6b5511c942d67d52e2096ba71873235922a895c8d0cd088e50b743cc396f5ed3'
-endpoint_secret_test = 'whsec_ve12rsdRiGfusHPvdJM3BQJGlgo5T9N1'
-endpoint_secret_live = 'whsec_FlObtoSReNkoxj5DCBIZ7L0JGlGTe1sC'
+
+endpoint_secret_local = os.getenv('STRIPE_endpoint_secret_local')
+endpoint_secret_test = os.getenv('STRIPE_endpoint_secret_test')
+endpoint_secret_live = os.getenv('STRIPE_endpoint_secret_live')
+
 
 
 # Create your views here.
