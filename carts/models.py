@@ -219,6 +219,14 @@ class CartEntry(models.Model):
         else:
             return price
 
+    @property
+    def discount_total_str(self):
+        discount = self.cart.discount
+        if discount:
+            return int(discount.amount)
+        else:
+            return None
+
 
 @receiver(pre_save, sender=Cart)
 def set_default_shipping_type(sender, instance, **kwargs):

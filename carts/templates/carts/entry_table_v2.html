@@ -13,9 +13,8 @@
                 {% endif %}
                 {{ entry.product.name }}
             </p>
-
         </div>
-        <div class="col s6 m3">
+        <div class="col s6 l3">
             {% if entry.product.custom_design %}
             <td>
                 {% include "custom_chocolates/table_user_design_picture.html" with design=obj.product.custom_design %}
@@ -26,67 +25,85 @@
             </td>
             {% endif %}
         </div>
-        <div class="col s6 m3">
-            <p class="mt-md-0"><span class="bold">Price:</span>
-                <br>
-                {% if entry.has_discount %}
-                <s>£{{ entry.product.price|floatformat:2 }}</s>
-                <br>
-                <span class="red-text">£{{ entry.discounted_price|floatformat:2 }}</span>
-                {% else %}
-                £{{ entry.product.price|floatformat:2 }}
-                {% endif %}
+        <div class="col s6 l3">
+            <p class="mt-md-0"><span class="bold">Price:</span></p>
+            {% if entry.has_discount %}
+            <p class="red-text bold m-0">
+                £{{ entry.discounted_price|floatformat:2 }}
+                <span class="new badge red white-text center float-none"
+                      data-badge-caption="{{ entry.discount_total_str }}%">-</span>
             </p>
-            <p class=""><span class="bold">Total:</span> <br>£{{ entry.total|floatformat:2 }}</p>
+            <p class="m-0"><s>£{{ entry.product.price|floatformat:2 }}</s></p>
+            {% else %}
+            <p class="m-0">£{{ entry.product.price|floatformat:2 }}</p>
+            {% endif %}
+            <p class="mb-0"><span class="bold">Total:</span> <br>£{{ entry.total|floatformat:2 }}</p>
 
-            {% if entry.product.custom_design %}
-            <p class="bold mb-0">Design:</p>
-            <ul class="m-0">
-                <li class="m-0">Background: {{ obj.product.custom_design.base }}</li>
-                <li class="m-0">
-                    {{ entry.product.custom_design.layer1 }}
-                </li>
+        </div>
+        <div class="col s12 l6">
+            <p class="m-0"><span class="bold">{{ entry.product.get_flavour_format_display }}:</span></p>
 
-                {% if entry.product.custom_design.layer2 %}
-                <li class="m-0">
-                    {{ entry.product.custom_design.layer2 }}
-                </li>
+            {% if entry.product.flavour_format == PICK_AND_MIX %}
+            <a class="modal-trigger" href="#modal-{{ entry.id }}">
+                {% if entry.product.size.size == 48 %}
+                {% include "boxes/box_48.html" %}
+                {% elif entry.product.size.size == 24 %}
+                {% include "boxes/box_24.html" %}
+                {% elif entry.product.size.size == 15 %}
+                {% include "boxes/box_15.html" %}
+                {% else %}
+                <div class="row">
+                    <div class="col s12 m8">
+                        {% include "boxes/box_9.html" %}
+                    </div>
+                </div>
                 {% endif %}
+            </a>
 
-                {% if entry.product.custom_design.layer3 %}
+            <div id="modal-{{ entry.id }}" class="modal">
+                <div class="modal-content">
+                    <div class="row">
+                        <p class="center bold">
+                            {% if entry.quantity > 1%}
+                            {{ entry.quantity }}
+                            {% endif %}
+                            {{ entry.product.name }}
+                        </p>
+                        <ul class="center">
+                            {% for obj in entry.product.flavours.all %}
+                            <li class="m-0">
+                                {{ obj }}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+
+            <ul>
+                {% for obj in entry.product.flavours.all %}
                 <li class="m-0">
-                    {{ entry.product.custom_design.layer3 }}
+                    <span class="new badge left grey darken-3 white-text" data-badge-caption="{{ obj }}"></span>
                 </li>
-                {% endif %}
-
+                {% endfor %}
             </ul>
             {% endif %}
-            <p class="m-0"><span class="bold">Flavour format:</span> {{ entry.product.get_flavour_format_display }}:</p>
-        </div>
-        <div class="col s12 m6">
-            <p class="m-0"><span class="bold">Your Chocolates:</span></p>
-
-            {% if entry.product.size.size == 48 %}
-                {% include "boxes/box_48.html" %}
-            {% elif entry.product.size.size == 24 %}
-                {% include "boxes/box_24.html" %}
-            {% elif entry.product.size.size == 15 %}
-                {% include "boxes/box_15.html" %}
-            {% else %}
-                {% include "boxes/box_9.html" %}
-            {% endif %}
 
         </div>
+
     </div>
 
     <div class="row">
-                <div class="s12 center">
+        <div class="s12 center">
             <form action="{{ remove_boxes_url }}" method="POST" class="mt-3"> {% csrf_token %}
                 <input type="hidden" value="{{ entry.id }}" name="obj_id">
-                <button type="submit">REMOVE</button>
+                <button type="submit" class="cart-remove-item">X</button>
             </form>
         </div>
     </div>
 
 </div>
+
 {% endfor %}

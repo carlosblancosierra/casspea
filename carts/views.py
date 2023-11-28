@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Cart, CartEntry
 from django.contrib.auth.decorators import login_required
 
+from boxes.models import Box
+
 
 # Create your views here.
 def home_page(request):
@@ -105,6 +107,7 @@ def home_page_v2(request):
         "discount_error": discount_error,
         "custom_chocolates": custom_chocolates,
         "amount_to_free_shipping": amount_to_free_shipping,
+        "PICK_AND_MIX": Box.PICK_AND_MIX,
     }
 
     return render(request, "carts/home_v2.html", context)

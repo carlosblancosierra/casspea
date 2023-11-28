@@ -531,3 +531,13 @@ h1,h2{
 .container-80 {
     min-width:80vw!important;
 }
+
+.cart-remove-item {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.float-none{
+    float:unset!important;
+}
