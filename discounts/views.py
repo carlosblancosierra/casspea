@@ -10,7 +10,7 @@ def validate_discount(request):
         discount_code = request.POST.get('discount_code')
 
         if discount_code:
-            discount = Discount.objects.filter(code__iexact=discount_code).first()
+            discount = Discount.objects.filter(code__iexact=discount_code, active=True).first()
             if discount:
                 # Check if the user has already used the discount the maximum number of times
                 if request.user.is_authenticated:
