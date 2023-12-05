@@ -39,11 +39,9 @@ else:
     more_than_15_discount_id = more_than_15_discount_id_live
     more_than_30_discount_id = more_than_30_discount_id_live
 
-
 endpoint_secret_local = os.getenv('STRIPE_endpoint_secret_local')
 endpoint_secret_test = os.getenv('STRIPE_endpoint_secret_test')
 endpoint_secret_live = os.getenv('STRIPE_endpoint_secret_live')
-
 
 
 # Create your views here.
@@ -165,6 +163,11 @@ def confirm_page(request):
     entries = CartEntry.objects.entries(request)
     if not entries.exists():
         return redirect("carts:home")
+
+    if cart.discount and not cart.discount.active:
+        cart.discount = None
+        cart.save()
+        messages.error(request, "Inactive Discount")
 
     discount = cart.discount
     discount_total = CartEntry.objects.discount_total(request)
