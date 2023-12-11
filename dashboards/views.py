@@ -18,7 +18,7 @@ def client_page(request):
     user = request.user
 
     if request.user.is_staff:
-        return redirect('dashboards:staff')
+        return redirect('dashboards:week_orders')
 
     orders_qs = Order.objects.filter(user=user)
 
@@ -48,13 +48,17 @@ def staff_page(request):
 def week_orders_page(request):
     orders_qs = Order.objects.filter(payment_status="paid")
 
-    seven_days_ago = datetime.now() - timedelta(days=7)
-    recent_orders = orders_qs.filter(updated__get=seven_days_ago)
+    today = datetime.now()
+    date_range = [today - timedelta(days=i) for i in range(7)]
 
-    recent_orders_by_day = recent_orders.annotate(updated_date=TruncDate('updated')) \
-        .values('updated_date') \
-        .annotate(order_count=Count('id')) \
-        .order_by('updated_date')
+    recent_orders_by_day = {}
+
+    for date in date_range:
+        day_orders = orders_qs.filter(updated__date=date.date())
+        day = {
+            "orders": list(day_orders)
+        }
+        recent_orders_by_day[date.date()] = day
 
     context = {
         "recent_orders_by_day": recent_orders_by_day

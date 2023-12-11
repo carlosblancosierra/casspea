@@ -1,9 +1,5 @@
 {% extends "base.html" %}
-
 {% load static %}
-
-
-{% block head_title %} {% endblock %}
 
 {% block content %}
 
@@ -16,10 +12,92 @@
     <div class="row">
         <div class="col s12 m6">
             <ul class="collapsible">
-                {% for day in week %}
+                {% for day, data in recent_orders_by_day.items %}
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-                    <div class="collapsible-body"><span>Monday, Dec 11</span></div>
+                    <div class="collapsible-header">{{ day }}
+                        <span class="badge new" data-badge-caption="orders">{{ data.orders|length }}</span>
+                    </div>
+                    <div class="collapsible-body p-0">
+                        {% for order in data.orders %}
+                        <div class="{% if forloop.counter|divisibleby:2 %}grey lighten-2{% endif %} p-2">
+                            <p class="bold text-uppercase center">Order #{{ forloop.counter }}</p>
+                            <div class="ml-2">
+                                <p class="font-100 mb-1">
+                                    <span class="font-100 bold">ID:</span>
+                                    {{ order.order_id }}
+                                </p>
+
+                                <ul>
+                                    {% for entry in order.cart_entries.all %}
+                                    <li>
+                                        <p class="bold text-uppercase">{{ entry.quantity }} {{ entry.product.name }}</p>
+                                        {% if entry.product.image %}
+                                        <img src="{{ entry.product.image.url }}" width="50px" class="">
+                                        {% endif %}
+                                        <p class="m-0 bold">{{ entry.product.get_flavour_format_display }}:</p>
+                                        <ul class="m-0">
+                                            {% for obj in entry.product.flavours.all %}
+                                            <li class="m-0">{{ obj }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <p class="mb-1">
+                                            <span class="font-100 bold">Box price:</span>
+                                            {% if entry.has_discount %}
+                                            <s>£{{ entry.product.price|floatformat:2 }}</s>
+                                            <br>
+                                            <span class="red-text">£{{ entry.discounted_price|floatformat:2 }}</span>
+                                            {% else %}
+                                            £{{ entry.product.price|floatformat:2 }}
+                                            {% endif %}
+                                        </p>
+                                        <hr/>
+                                    </li>
+                                    {% endfor %}
+                                    <p class="font-100 mb-1">
+                                        <span class="font-100 bold">Stripe Description:</span>
+                                        {{ order.stripe_description }}
+                                    </p>
+
+                                    {% if order.gift_message %}
+                                    <p class=" my-1">
+                                        <span class=" bold">Gift Message:</span>
+                                        {{ order.gift_message }}</p>
+                                    {% endif %}
+                                    {% if order.shipping_date %}
+                                    <p class="my-1">
+                                        <span class=" bold">Shipping Date:</span>
+                                        {{ order.shipping_date }}</p>
+                                    {% endif %}
+                                    <p class=" my-1">
+                                        <span class="bold">Discount:</span> {{ order.discount }}
+                                    </p>
+                                    <p class="my-1">
+                                        <span class="font-100 bold">Shipping:</span>
+                                        {% if shipping_free %}
+                                        Free
+                                        {% else %}
+                                        {{ order.shipping_type }}
+                                        <br>
+                                        {% endif %}
+                                    </p>
+                                    <p class=" my-1">
+                                        <span class="bold">Shipping Address:</span>
+                                        {{ order.shipping_address.full_address }}
+                                    </p>
+                                    <p class="my-1">
+                                        <span class="font-100 bold">Order Total:</span>
+                                        {{ order.total }}
+                                    </p>
+                                    <p class="center blue-text"><a href="{{ order.get_staff_url }}">View all
+                                        details</a>
+                                    </p>
+
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
                 </li>
                 {% endfor %}
             </ul>
