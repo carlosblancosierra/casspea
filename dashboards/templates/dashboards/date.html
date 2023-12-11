@@ -89,9 +89,11 @@
                                         <span class=" bold">Shipping Date:</span>
                                         {{ order.shipping_date }}</p>
                                     {% endif %}
+                                    {% if order.discount %}
                                     <p class=" my-1">
                                         <span class="bold">Discount:</span> {{ order.discount }}
                                     </p>
+                                    {% endif %}
                                     <p class="my-1">
                                         <span class="font-100 bold">Shipping:</span>
                                         {% if shipping_free %}
