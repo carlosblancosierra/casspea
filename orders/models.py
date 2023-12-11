@@ -104,6 +104,17 @@ class Order(models.Model):
             raw_total += raw_total_entry
         return float(raw_total) - float(self.subtotal(request))
 
+    @property
+    def stripe_name(self):
+        if self.stripe_data:
+            stripe_data = json.loads(self.stripe_data)
+            return stripe_data['customer_details']['name']
+
+    @property
+    def stripe_email(self):
+        if self.stripe_data:
+            stripe_data = json.loads(self.stripe_data)
+            return stripe_data['customer_details']['email']
 
 def post_save_order_receiver(sender, instance, *args, **kwargs):
     if not instance.order_id:
