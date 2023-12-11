@@ -18,7 +18,7 @@ def client_page(request):
     user = request.user
 
     if request.user.is_staff:
-        return redirect('dashboards:week_orders')
+        return redirect('dashboards:date')
 
     orders_qs = Order.objects.filter(user=user)
 
@@ -72,3 +72,25 @@ def week_orders_page(request):
     }
 
     return render(request, "dashboards/calendar.html", context)
+
+
+@staff_member_required
+def date_orders_page(request):
+    today = datetime.now().date()
+    date_str = request.GET.get("selectedDate", str(today))
+
+    try:
+        # Parse the date parameter into a datetime object
+        date = datetime.strptime(date_str, "%b %d, %Y").date()
+    except ValueError:
+        # Handle the case where the date parameter is not in the expected format
+        date = today
+
+    orders_qs = Order.objects.filter(payment_status="paid", updated__date=date)
+
+    context = {
+        "orders": orders_qs,
+        "current_date": date,
+    }
+
+    return render(request, "dashboards/date.html", context)
