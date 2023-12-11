@@ -3,10 +3,13 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime, timedelta
 from orders.models import Order
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Count
+from django.db.models.functions import TruncDate
 
 from carts.models import Cart, CartEntry
 
 from django.contrib.auth import get_user_model
+
 
 # Create your views here.
 
@@ -39,3 +42,22 @@ def staff_page(request):
     }
 
     return render(request, "dashboards/staff.html", context)
+
+
+@staff_member_required
+def week_orders_page(request):
+    orders_qs = Order.objects.filter(payment_status="paid")
+
+    seven_days_ago = datetime.now() - timedelta(days=7)
+    recent_orders = orders_qs.filter(updated__get=seven_days_ago)
+
+    recent_orders_by_day = recent_orders.annotate(updated_date=TruncDate('updated')) \
+        .values('updated_date') \
+        .annotate(order_count=Count('id')) \
+        .order_by('updated_date')
+
+    context = {
+        "recent_orders_by_day": recent_orders_by_day
+    }
+
+    return render(request, "dashboards/calendar.html", context)
