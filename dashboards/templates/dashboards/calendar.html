@@ -14,8 +14,8 @@
             <ul class="collapsible">
                 {% for day, data in recent_orders_by_day.items %}
                 <li>
-                    <div class="collapsible-header">{{ day }}
-                        <span class="badge new" data-badge-caption="orders">{{ data.orders|length }}</span>
+                    <div class="collapsible-header">{{ data.day_of_week }} {{ day }}
+                        <span class="badge new" data-badge-caption="orders">{{ data.order_count }}</span>
                     </div>
                     <div class="collapsible-body p-0">
                         {% for order in data.orders %}
@@ -108,7 +108,20 @@
 <div class="section">
     <div class="row">
         <div class="col s12">
-            <p>{{ recent_orders_by_day }}</p>
+            <ul class="pagination">
+                <li class="waves-effect">
+                    <a href="?week_offset={{ current_week_offset|add:'1' }}">
+                        <i class="material-icons">chevron_left</i>Previous Week
+                    </a>
+                </li>
+
+                <li class="waves-effect">
+                    <a href="?week_offset={{ current_week_offset|add:'-1' }}">
+                        Next Week<i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            </ul>
+
         </div>
     </div>
 </div>
