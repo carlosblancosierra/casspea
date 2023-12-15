@@ -382,7 +382,7 @@ h1,h2{
     min-height:35vh
 }
 .inner-nav{
-    top:15%
+    top:18vh;
 }
 .boxes-radio-green-btn{
     text-transform:none;
