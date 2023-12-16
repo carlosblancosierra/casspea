@@ -7,15 +7,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
 
-from boxes.models import BoxSize
-
-
 def home_page(request):
     context = {}
-
-    advent_calendar_qs = BoxSize.objects.filter(slug="Advent-Calendar")
-    if advent_calendar_qs.exists():
-        context["advent_calendar_obj"] = advent_calendar_qs.first()
 
     return render(request, "home.html", context)
 
@@ -98,9 +91,8 @@ def faqs_page(request):
 
     return render(request, "faq.html", context)
 
-
-def email_test_page(request):
-    context = {
-    }
-
-    return render(request, "emails/newsletter_subscription.html", context)
+# def email_test_page(request):
+#     context = {
+#     }
+#
+#     return render(request, "emails/newsletter_subscription.html", context)
