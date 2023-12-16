@@ -12,7 +12,6 @@ urlpatterns = [
     path('privacy', views.privacy_page, name="privacy"),
     path('about-us', views.about_us_page, name="about"),
     path('fequently-asked-questions', views.faqs_page, name="faqs"),
-    path('emailtest', views.email_test_page),
 
     path('newsletter_subscribe', newsletter_subscribe, name="subscribe_newsletter"),
 
