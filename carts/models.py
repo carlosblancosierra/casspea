@@ -110,7 +110,11 @@ class CartEntryManager(models.Manager):
         cart_id = request.session.get('cart_id', None)
         if cart_id:
             entries = self.filter(active=True, cart__id=cart_id)
-        return entries
+            for entry in entries:
+                if entry.product.size.sold_out:
+                    entry.active = False
+                    entry.save()
+        return entries.filter(active=True)
 
     def set_inactive(self, request, id):
         qs = self.filter(id=id)
