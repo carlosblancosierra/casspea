@@ -29,6 +29,7 @@ class BoxSize(models.Model):
     custom_price = models.DecimalField(decimal_places=2, max_digits=20, blank=True, null=True)
     custom_price_id = models.CharField(max_length=200, null=True, blank=True)
     active = models.BooleanField(default=True)
+    sold_out = models.BooleanField(default=False)
     custom_chocolates_min = models.PositiveIntegerField(blank=True, null=True, default=1)
     slug = models.SlugField(blank=True)
     special_box = models.BooleanField(default=False)
