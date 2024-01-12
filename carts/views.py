@@ -70,10 +70,11 @@ def home_page_v2(request):
     discount_error = request.session.get("discount_error", None)
     request.session['discount_error'] = None
     custom_chocolates = False
-    for entry in entries:
-        if custom_chocolates is False:
-            if entry.product.custom_design:
-                custom_chocolates = True
+    if entries is not None:
+        for entry in entries:
+            if custom_chocolates is False:
+                if entry.product.custom_design:
+                    custom_chocolates = True
 
     total = cart.total
     subtotal = cart.subtotal
