@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 
 from flavours.models import PreBuildFlavour, Flavour, FlavourChoice
 from boxes.models import Box, BoxSize
@@ -24,11 +25,8 @@ def home_page(request):
 def box_page(request, slug=None):
     prebuilds = PreBuildFlavour.objects.filter(active=True)
     flavours = Flavour.objects.active()
-    box_size_qs = BoxSize.objects.filter(slug=slug, special_box=False)
 
-    box_obj = None
-    if len(box_size_qs) == 1:
-        box_obj = box_size_qs.first()
+    box_obj = get_object_or_404(BoxSize, slug=slug, special_box=False)
 
     context = {
         "size": box_obj.size,

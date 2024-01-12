@@ -48,11 +48,14 @@ class CartsManager(models.Manager):
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(
+        User, blank=True, null=True, on_delete=models.SET_NULL)
     updated = models.DateTimeField(auto_now=True)
-    discount = models.ForeignKey(Discount, null=True, blank=True, on_delete=models.SET_NULL)
+    discount = models.ForeignKey(
+        Discount, null=True, blank=True, on_delete=models.SET_NULL)
 
-    shipping_type = models.ForeignKey(ShippingType, on_delete=models.SET_NULL, default=None, null=True, blank=True)
+    shipping_type = models.ForeignKey(
+        ShippingType, on_delete=models.SET_NULL, default=None, null=True, blank=True)
 
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
@@ -106,15 +109,17 @@ class CartEntryManager(models.Manager):
             )
 
     def entries(self, request):
-        entries = []
+        entries = None
         cart_id = request.session.get('cart_id', None)
         if cart_id:
             entries = self.filter(active=True, cart__id=cart_id)
-            for entry in entries:
-                if entry.product.size.sold_out:
-                    entry.active = False
-                    entry.save()
-        return entries.filter(active=True)
+            if len(entries) > 0:
+                for entry in entries:
+                    if entry.product.size.sold_out:
+                        entry.active = False
+                        entry.save()
+                entries = entries.filter(active=True)
+        return entries
 
     def set_inactive(self, request, id):
         qs = self.filter(id=id)
@@ -236,6 +241,7 @@ class CartEntry(models.Model):
 def set_default_shipping_type(sender, instance, **kwargs):
     if instance.shipping_type is None:
         # Get the default shipping type (if it exists)
-        default_shipping_type = ShippingType.objects.filter(default=True).first()
+        default_shipping_type = ShippingType.objects.filter(
+            default=True).first()
         if default_shipping_type:
             instance.shipping_type = default_shipping_type
