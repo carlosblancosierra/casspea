@@ -53,7 +53,7 @@
 
                     <div class="col s12">
                         <button class="btn my-pink btn-number"
-                                data-type="minus" data-field="box_quantity"
+                                data-type="minus" data-field="box_quantity" data-increment="1"
                         >-
                         </button>
 
@@ -62,7 +62,7 @@
                                required min="0" value="1" max="100">
 
                         <button class="btn btn-green my-pink btn-number"
-                                data-type="plus" data-field="box_quantity"
+                                data-type="plus" data-field="box_quantity" data-increment="1"
                         >+
                         </button>
                     </div>
@@ -72,7 +72,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <p class="bold">Pick your flavours</p>
+                        <p class="bold">Pick your flavours (3 minimun)</p>
                     </div>
 <!--                    <div class="col s12 m6">-->
 <!--                        <p>-->
@@ -138,7 +138,7 @@
                             </div>
                             <div class=" col s6 m5">
                                 <button class="btn btn-green btn-number"
-                                        data-type="minus" data-field="{{ flavour.slug }}"
+                                        data-type="minus" data-field="{{ flavour.slug }}" data-increment="3"
                                 >-
                                 </button>
 
@@ -148,7 +148,7 @@
                                        required min="0" value="0" max="1000">
 
                                 <button class="btn btn-green btn-number flavour-plus-btn"
-                                        data-type="plus" data-field="{{ flavour.slug }}"
+                                        data-type="plus" data-field="{{ flavour.slug }}" data-increment="3"
                                 >+
                                 </button>
                             </div>
@@ -275,29 +275,29 @@
   });
 
 
-  $('.btn-number').click(function(e){
-      e.preventDefault();
+$('.btn-number').click(function(e){
+    e.preventDefault();
 
-      fieldName = $(this).attr('data-field');
-      type      = $(this).attr('data-type');
-      var input = $("input[name='"+fieldName+"']");
-      var currentVal = parseInt(input.val());
-      if (!isNaN(currentVal)) {
-          if(type == 'minus') {
-              if(currentVal > input.attr('min')) {
-                  input.val(currentVal - 3).change();
-              }
+    fieldName = $(this).attr('data-field');
+    type = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    var increment = parseInt($(this).attr('data-increment')) || 3;
 
-          } else if(type == 'plus') {
-
-              if(currentVal < input.attr('max')) {
-                  input.val(currentVal + 3).change();
-              }
-          }
-      } else {
-          input.val(0);
-      }
-  });
+    if (!isNaN(currentVal)) {
+        if (type == 'minus') {
+            if (currentVal > input.attr('min')) {
+                input.val(currentVal - increment).change();
+            }
+        } else if (type == 'plus') {
+            if (currentVal < input.attr('max')) {
+                input.val(currentVal + increment).change();
+            }
+        }
+    } else {
+        input.val(0);
+    }
+});
 
 
   $('.input-number').focusin(function(){
