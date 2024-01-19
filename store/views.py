@@ -64,6 +64,23 @@ def advent_calendar_page(request):
 
     return render(request, "store/advent-calendar.html", context)
 
+def valentines_box_page(request, slug=None):
+    flavours = Flavour.objects.active()
+
+    box_obj = get_object_or_404(BoxSize, slug=slug, special_box=True)
+
+    context = {
+        "size": box_obj.size,
+        "flavours": flavours,
+        "PRE_BUILT": Box.PRE_BUILT,
+        "PICK_AND_MIX": Box.PICK_AND_MIX,
+        "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
+        "title": box_obj.title,
+        "box_obj": box_obj,
+    }
+
+    return render(request, "store/box-valentines.html", context)
+
 
 def add_box_to_cart(request):
     form = request.POST
