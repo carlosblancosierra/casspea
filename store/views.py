@@ -13,11 +13,19 @@ from .models import FLAVOURS, FLAVOUR_FORMAT
 def home_page(request):
     qs = BoxSize.objects.filter(active=True, special_box=False)
 
+    valentines_active = False
+    valentines_boxes_qs = None
+
     context = {
         "title": "Build your box of CassPea chocolates.",
         "subtitle": "Let us surprise you with our own selection, or choose your own flavours with our Pick and Mix option!",
         "qs": qs,
+        "valentines_active": valentines_active,
     }
+
+    if valentines_active:
+        valentines_boxes_qs = BoxSize.objects.filter(active=True, valentines_box=True)
+        context["valentines_boxes_qs"] = valentines_boxes_qs
 
     return render(request, "store/home.html", context)
 
@@ -63,6 +71,7 @@ def advent_calendar_page(request):
     }
 
     return render(request, "store/advent-calendar.html", context)
+
 
 def valentines_box_page(request, slug=None):
     flavours = Flavour.objects.active()

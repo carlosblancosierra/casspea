@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_title %}
+{{ block.super }} Valentines Day
+{% endblock %}
+{% block content %}
+
+{% url 'store:home' as store_url %}
+
+{% include 'base/navbar-dark.html' %}
+<style>
+    .valentines-hero {
+        min-height: 80vh;
+        background-image: url({% static '/images/valentines/hero/bg-1.jpg' %});
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+
+    .valentines-hero-phone-button {
+        position:absolute;
+        bottom:10%;
+    }
+
+    .valentines-content {
+        max-width: 600px;
+    }
+
+    .valentines-about {
+        background:linear-gradient(0deg, rgba(91, 57, 46, 1), rgba(91, 57, 46, 1));
+        background-size: cover;
+        background-position: center;
+        color:white;
+    }
+
+    .valentines-about p {
+        line-height:1.5rem!important;
+    }
+
+
+    @media (min-width: 768px) {
+        .valentines-hero {
+            min-height: 60vh;
+            background-image: url({% static '/images/valentines/hero/desktop/bg-1.jpg' %});
+            align-items: flex-start; /* Reset align-items for larger screens */
+        }
+
+        .valentines-hero-title {
+            font-size:4rem!important;
+            line-height:4rem!important;
+            margin-top:20%;
+        }
+
+        .valentines-hero-subtitle {
+            font-size:1.5rem;
+        }
+
+        .valentines-hero-phone-button {
+            display:none;
+        }
+
+        .valentines-about {
+            min-height: 50vh;
+            background:linear-gradient(90deg, rgba(91, 57, 46, 0.9), rgba(255, 0, 150, 0.0)), url({% static '/images/valentines/about/box-of-24-3.jpg' %})!important;
+            background-size:cover;
+            align-items: flex-start; /* Reset align-items for larger screens */
+            color:white;
+        }
+
+    }
+
+
+    .my-card {
+        border: solid #e7e1e1 1px;
+        cursor:pointer;
+    }
+
+    .shop-item-title {
+        min-height:3rem;
+    }
+
+    .store-item-hr {
+        border-top: solid #e7e1e1 1px;
+    }
+
+    @media (min-width: 768px) {
+        .shop-item-title {
+            min-height:1.5rem;
+        }
+    }
+</style>
+<div class="section valentines-hero pt-md-5">
+    <a class="btn-large btn-purple valentines-hero-phone-button" href="#boxes">SHOP NOW</a>
+    <div class="container pt-md-5">
+        <div class="row my-5">
+            <div class="col s12 m6">
+                <h1 class="font-250 center valentines-hero-title ">Valentine's Day Luxury Bonbons</h1>
+                <p class="center bold valentines-hero-subtitle">Celebrate Valentine's Day with CassPea Chocolates</p>
+                <p class="center valentines-hero-subtitle2">
+                    The perfect gift for your loved ones – our 9 and 15-piece boxes feature special
+                    designs to share the love on this special day.
+                </p>
+                <a class="btn-large btn-purple d-none d-md-inline-block" href="#boxes">SHOP NOW</a>
+
+
+            </div>
+            <!--      <div class="col s12 m6">-->
+            <!--        <img src="{% static 'images/valentines/box-1.png' %}" class="responsive-img"/>-->
+            <!--        <img src="{% static 'images/valentines/box-2.png' %}" class="responsive-img"/>-->
+            <!--      </div>-->
+        </div>
+    </div>
+</div>
+
+<section class="container mt-1" id="boxes">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="font-150 center bold mt-3">Valentine's day boxes</h2>
+        </div>
+        {% for obj in valentines_boxes_qs %}
+        <div class="col s6 m3 px-1 mt-2 my-card-wrapper">
+            <div class="my-card px-1">
+                <a href="{{ obj.get_absolute_url }}">
+                    {% if obj.store_image %}
+                    <img src="{{ obj.store_image.url }}" class="responsive-img">
+                    {% endif %}
+                    <h3 class="font-100 center my-0 shop-item-title">{{ obj.title }}</h3>
+                    <p class="center bold my-1">£{{ obj.price }}</p>
+                    <div class="center py-2 m-0 w-100 store-item-hr">
+                        <a class="red-text bold w-100" href="{{ obj.get_absolute_url }}">
+                            <p class="m-0">
+                                Pick Box
+                            </p>
+                        </a>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col s12 mt-3">
+                <p class="center">Looking for our regular boxes up to 24 pieces?</p>
+                <p class="center">
+                    <a class="btn btn-outline-pink" href="{{ store_url }}">View All our Boxes</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="valentines-about mt-5">
+    <div class="row">
+        <div class="col s12 m5 p-md-5 mt-md-5">
+            <div class="p-3 p-md-5">
+                <h2 class="center bold font-150">About CassPea</h2>
+                <p class="text-justify font-100">
+                    We are a new company, created by a team of dedicated chefs with over a decade of experience in the
+                    chocolate
+                    industry. We have worked in some amazing kitchens around the world, which taught us discipline and
+                    perfection in
+                    our craft. We want you to enjoy eating our chocolates as much as we enjoy making them.</p>
+            </div>
+        </div>
+        <div class="col s12 m6 p-0 d-md-none">
+            <img src="{% static '/images/valentines/about/box-of-24-2.jpg' %}" class="responsive-img">
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="font-150 bold center mt-5">Reviews</h2>
+        </div>
+        <div class="col 12 m3">
+            <p class="">
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+            </p>
+            <p class="bold">Brilliant beautiful chocolates</p>
+            <p>Brilliant chocolates were beautifully packed and always on time. They’ve made gorgeous presents for
+                friends who adored personalized handmade chocolates.</p>
+        </div>
+        <div class="col 12 m3">
+            <p class="">
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+            </p>
+            <p class="bold">B e a u t i f u l !</p>
+            <p>Been looking for a special chocolate for a little while now and I’m so glad I found this company. You can
+                clearly tell how much love and experience goes in to these chocolates, and they’re beyond delicious!
+                Very happy with everything overall, including the quick delivery too!</p>
+        </div>
+        <div class="col 12 m3">
+            <p class="">
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+            </p>
+            <p class="bold">Great quality gift</p>
+            <p>Great quality chocolates. They really do look amazing in real life. Taste absolutely divine and a good
+                variety of flavours. Arrived in time for an anniversary present. Love the packaging, expensive
+                quality.</p>
+        </div>
+        <div class="col 12 m3">
+            <p class="">
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+            </p>
+            <p>Above and beyond</p>
+            <p>I purchased a box of Casspea chocolates for my husband's anniversary gift and sadly they arrived
+                completely destroyed by Royal Mail. I contacted Enrique who was horrified and couldn't have done more to
+                ensure that I received new ones as soon as possible.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="row">
+        <div class="col s12 my-3">
+            <!-- TrustBox widget - Micro Review Count -->
+            <div class="trustpilot-widget" data-locale="en-GB" data-template-id="5419b6a8b0d04a076446a9ad"
+                 data-businessunit-id="63dbb87f683a659a5db03e2e" data-style-height="24px" data-style-width="100%"
+                 data-theme="light" data-min-review-count="10" data-style-alignment="center">
+                <a href="" target="_blank" rel="noopener">Trustpilot</a>
+            </div>
+            <!-- End TrustBox widget -->
+        </div>
+    </div>
+</section>
+
+<section class="pink darken-4 white-text py-3">
+    <div class="row">
+        <div class="col s12 m3">
+            <p class="center m-0 m-md-2">
+                <span class="bold">10% DISCOUNT?</span> ENTER <span class="bold">CASSPEA10</span>
+            </p>
+        </div>
+        <div class="col s12 m3">
+            <p class="center m-0 m-md-2">
+                Or <a class="text-underline modal-trigger bold" href="#newsletter-modal">SUBSCRIBE</a> FOR 15% OFF
+            </p>
+        </div>
+        <div class="col s12 m2">
+            <p class="center m-0 m-md-2">
+                <span class="bold">FREE SHIPPING</span> OVER £45
+            </p>
+        </div>
+        <div class="col s12 m4">
+            <p class="center d-none d-md-block m-0 m-md-2">
+                <span class="bold">Tel:</span> <a href="tel:07859790386">07859 790386</a> /
+                <span class="bold">email:</span> <a href="mailto:info@casspea.co.uk">info@casspea.co.uk</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+{% include 'flavours/mini-section.html' %}
+
+<div class="container">
+    <h1 class="center bold font-125 mt-5">Frequently Asked Questions</h1>
+    <ul class="collapsible">
+        {% if faqs %}
+        {% for faq in faqs %}
+        <li>
+            <div class="collapsible-header">{{ faq.question }}</div>
+            <div class="collapsible-body">{{ faq.answer|safe }}</div>
+        </li>
+        {% endfor %}
+        {% endif %}
+        <li>
+            <div class="collapsible-header">Allergens!</div>
+            <div class="collapsible-body">We are very careful when we handle allergens, especially nuts, wheat, milk, or
+                soy. We cannot guarantee that there is no cross-contamination, so if you have any allergies to these
+                products, we recommend you take that into account.
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+{% endblock %}

@@ -12,8 +12,10 @@ urlpatterns = [
     path('privacy', views.privacy_page, name="privacy"),
     path('about-us', views.about_us_page, name="about"),
     path('fequently-asked-questions', views.faqs_page, name="faqs"),
+    path('valentines-day', views.valentines_day_page, name="valentines"),
 
-    path('newsletter_subscribe', newsletter_subscribe, name="subscribe_newsletter"),
+    path('newsletter_subscribe', newsletter_subscribe,
+         name="subscribe_newsletter"),
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('accounts.passwords.urls')),
@@ -41,5 +43,7 @@ if settings.STATIC_LOCAL:
     # test mode
     from django.conf.urls.static import static
 
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

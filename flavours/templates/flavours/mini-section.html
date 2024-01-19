@@ -1,0 +1,25 @@
+<!--flavours-->
+{% if flavours_qs %}
+<section class="container py-3">
+    <div class="row">
+        {% for obj in flavours_qs %}
+        <div class="col s6 m3">
+            <div class="row">
+                <div class="col s12 center">
+                    {% if obj.image %}
+                    <img src="{{ obj.image.url }}" class="responsive-img w-50"/>
+                    {% endif %}
+                </div>
+                <div class="col s12 center">
+                    <p class="my-red-text pt-0 mb-0 mt-0 bold">{{ obj.name }}</p>
+                    {% if obj.allergens_str %}
+                    <p class="mt-0" style="font-size:0.75rem">*Contains {{ obj.allergens_str }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
