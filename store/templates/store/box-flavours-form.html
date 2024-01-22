@@ -1,0 +1,133 @@
+{% url 'store:add_boxes' as add_boxes_url %}
+
+<form method="POST" action="{{ add_boxes_url }}"> {% csrf_token %}
+    <p class="bold">Quantity</p>
+    <div class="row">
+        <!--            <label for="box_quantity">How many boxes of {{ quantity }} pieces?</label>-->
+
+        <div class="col s12">
+            <button class="btn btn-green btn-number"
+                    data-type="minus" data-field="box_quantity"
+            >-
+            </button>
+
+            <input id="box_quantity" type="number"
+                   name="box_quantity" class="validate center browser-default"
+                   required min="0" value="1" max="100">
+
+            <button class="btn btn-green btn-number"
+                    data-type="plus" data-field="box_quantity"
+            >+
+            </button>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+        <div class="col s12">
+            <p class="bold">Pick your flavour</p>
+        </div>
+        <div class="col s12 m6">
+            <p>
+                <label onclick="showPreBuiltCol()" class="btn boxes-radio-green-btn">
+                    <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PRE_BUILT }}"
+                           required/>
+                    <span>Pre Built</span>
+                </label>
+            </p>
+        </div>
+        <div class="col s12 m6">
+            <p>
+                <label onclick="showPickAndMixCol()" class="btn boxes-radio-green-btn">
+                    <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PICK_AND_MIX }}" required/>
+                    <span>Pick and Mix</span>
+                </label>
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col s12" id="preBuiltCol">
+            <div class="input-field">
+                <select id="prebuiltFlavor" name="prebuiltFlavor">
+                    <option value="" disabled selected>Select a flavour</option>
+                    {% for obj in prebuilds %}
+                    <option value="{{ obj.slug }}">{{ obj.name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="prebuiltFlavor">Choose a Prebuilt Flavour</label>
+            </div>
+        </div>
+
+        <div class="col s12" id="pickAndMixCol">
+            <p class="center">
+                <a class="modal-trigger text-underline my-orange-text" href="#allergenModal">
+                    View Allergen table</a>
+            </p>
+            {% for flavour in flavours %}
+            <div class="row box-flavour-radio">
+                <hr/>
+                <div class="col s2 m2 p-0">
+                    <td width="70px" class="py-0">
+                        {% if flavour.image %}
+                        <img src="{{ flavour.image.url }}" class="responsive-img" width="100px"/>
+                        {% else %}
+                        <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>
+                        {% endif %}
+                    </td>
+                </div>
+                <div class="col s4 m5">
+                    <p class="mt-0 mb-1 bold">
+                        {{ flavour.name }}
+
+                    </p>
+                    {% if flavour.mini_description %}
+                    <p class="font-080 m-0">{{ flavour.mini_description }}</p>
+                    {% endif %}
+                    {% if flavour.allergens_str %}
+                    <p class="font-070 mt-1 mb-0">*Contains {{ flavour.allergens_str }}</p>
+                    {% endif %}
+                </div>
+                <div class=" col s6 m5">
+                    <button class="btn btn-green btn-number"
+                            data-type="minus" data-field="{{ flavour.slug }}"
+                    >-
+                    </button>
+
+                    <input id="{{ flavour.slug }}" type="number"
+
+                           name="{{ flavour.slug }}" class="flavour-input validate center browser-default"
+                           required min="0" value="0" max="1000">
+
+                    <button class="btn btn-green btn-number flavour-plus-btn"
+                            data-type="plus" data-field="{{ flavour.slug }}"
+                    >+
+                    </button>
+                </div>
+            </div>
+
+            {% endfor %}
+
+            <p class="center font-150"><span id="remaining-flavours">{{ size }}</span> Chocolates remaining
+            </p>
+
+        </div>
+    </div>
+
+    <input type="hidden" value="{{ size }}" name="size">
+    <p class="center">
+        {% if not box_obj.sold_out %}
+        <button type="submit" id="submit-btn" class="btn-large btn-orange">
+            Add to Cart
+        </button>
+        {% elif box_obj.sold_out %}
+        <button type="submit" id="" class="btn-large btn-orange disabled">
+            SOLD OUT
+        </button>
+        {% endif %}
+    </p>
+
+</form>
