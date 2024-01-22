@@ -44,28 +44,28 @@ class BoxSize(models.Model):
     store_image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
                                       processors=[ResizeToFill(1500, 1500)],
                                       format='JPEG',
-                                      options={'quality': 95})
+                                      options={'quality': 100})
 
     image = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                processors=[ResizeToFill(1500, 998)],
+                                processors=[ResizeToFill(1500, 1500)],
                                 format='JPEG',
-                                options={'quality': 95})
+                                options={'quality': 100})
     image2 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                 processors=[ResizeToFill(1500, 998)],
+                                 processors=[ResizeToFill(1500, 1500)],
                                  format='JPEG',
-                                 options={'quality': 95})
+                                 options={'quality': 100})
     image3 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                 processors=[ResizeToFill(1500, 998)],
+                                 processors=[ResizeToFill(1500, 1500)],
                                  format='JPEG',
-                                 options={'quality': 95})
+                                 options={'quality': 100})
     image4 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                 processors=[ResizeToFill(1500, 998)],
+                                 processors=[ResizeToFill(1500, 1500)],
                                  format='JPEG',
-                                 options={'quality': 95})
+                                 options={'quality': 100})
     image5 = ProcessedImageField(upload_to=upload_location, null=True, blank=True,
-                                 processors=[ResizeToFill(1500, 998)],
+                                 processors=[ResizeToFill(1500, 1500)],
                                  format='JPEG',
-                                 options={'quality': 95})
+                                 options={'quality': 100})
 
     def __str__(self):
         return self.slug
