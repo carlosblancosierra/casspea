@@ -102,6 +102,9 @@ class PreBuildFlavour(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-updated']
+
 
 def create_flavor_slug(instance, new_slug=None):
     slug = slugify(instance.name)

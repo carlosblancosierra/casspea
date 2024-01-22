@@ -31,7 +31,6 @@ def home_page(request):
 
 
 def box_page(request, slug=None):
-    prebuilds = PreBuildFlavour.objects.filter(active=True)
     flavours = Flavour.objects.active()
 
     box_obj = get_object_or_404(BoxSize, slug=slug, special_box=False)
@@ -39,7 +38,7 @@ def box_page(request, slug=None):
     context = {
         "size": box_obj.size,
         "flavours": flavours,
-        "prebuilds": prebuilds,
+        "prebuilds": box_obj.prebuild_options.all(),
         "PRE_BUILT": Box.PRE_BUILT,
         "PICK_AND_MIX": Box.PICK_AND_MIX,
         "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
@@ -74,9 +73,8 @@ def advent_calendar_page(request):
 
 
 def valentines_box_page(request, slug=None):
-    flavours = Flavour.objects.active()
-
     box_obj = get_object_or_404(BoxSize, slug=slug, special_box=True)
+    flavours = Flavour.objects.active()
 
     context = {
         "size": box_obj.size,
@@ -86,7 +84,11 @@ def valentines_box_page(request, slug=None):
         "FLAVOUR_FORMAT": FLAVOUR_FORMAT,
         "title": box_obj.title,
         "box_obj": box_obj,
+        "prebuilds": box_obj.prebuild_options.all(),
+
     }
+
+    print(context['flavours'])
 
     return render(request, "store/box-valentines.html", context)
 

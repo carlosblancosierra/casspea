@@ -37,6 +37,7 @@ class BoxSize(models.Model):
     valentines_box = models.BooleanField(default=False)
     seo_title = models.CharField(max_length=200, blank=True)
     seo_description = models.TextField(blank=True)
+    prebuild_options = models.ManyToManyField(PreBuildFlavour, blank=True, related_name="prebuild_options")
 
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
