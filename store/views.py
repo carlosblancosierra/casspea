@@ -7,23 +7,22 @@ from carts.models import CartEntry
 from lots.models import Lot, LotSize
 from custom_chocolates.models import UserChocolateDesign
 from .models import FLAVOURS, FLAVOUR_FORMAT
-
+VALENTINES_ACTIVE = True
 
 # Create your views here.
 def home_page(request):
     qs = BoxSize.objects.filter(active=True, special_box=False)
 
-    valentines_active = False
-    valentines_boxes_qs = None
+    valentines_active = True
 
     context = {
         "title": "Build your box of CassPea chocolates.",
         "subtitle": "Let us surprise you with our own selection, or choose your own flavours with our Pick and Mix option!",
         "qs": qs,
-        "valentines_active": valentines_active,
+        "valentines_active": VALENTINES_ACTIVE,
     }
 
-    if valentines_active:
+    if VALENTINES_ACTIVE:
         valentines_boxes_qs = BoxSize.objects.filter(active=True, valentines_box=True)
         context["valentines_boxes_qs"] = valentines_boxes_qs
 
