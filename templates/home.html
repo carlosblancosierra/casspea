@@ -12,12 +12,100 @@
 {% url 'custom_chocolates:home' as personalise_url %}
 {% url 'contact' as contact_url %}
 
+<style>
+    .valentines-hero {
+        min-height: 80vh;
+        background-image: url({% static '/images/valentines/hero/bg-1.jpg' %});
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+
+    .valentines-hero-phone-button {
+        position:absolute;
+        bottom:10%;
+    }
+
+    .valentines-content {
+        max-width: 600px;
+    }
+
+    .valentines-about {
+        background:linear-gradient(0deg, rgba(91, 57, 46, 1), rgba(91, 57, 46, 1));
+        background-size: cover;
+        background-position: center;
+        color:white;
+    }
+
+    .valentines-about p {
+        line-height:1.5rem!important;
+    }
+
+
+    @media (min-width: 768px) {
+        .valentines-hero {
+            min-height: 60vh;
+            background-image: url({% static '/images/valentines/hero/desktop/bg-1.jpg' %});
+            align-items: flex-start; /* Reset align-items for larger screens */
+        }
+
+        .valentines-hero-title {
+            font-size:4rem!important;
+            line-height:4rem!important;
+            margin-top:20%;
+        }
+
+        .valentines-hero-subtitle {
+            font-size:1.5rem;
+        }
+
+        .valentines-hero-phone-button {
+            display:none;
+        }
+
+        .valentines-about {
+            min-height: 50vh;
+            background:linear-gradient(90deg, rgba(91, 57, 46, 0.9), rgba(255, 0, 150, 0.0)), url({% static '/images/valentines/about/box-of-24-3.jpg' %})!important;
+            background-size:cover;
+            align-items: flex-start; /* Reset align-items for larger screens */
+            color:white;
+        }
+
+    }
+
+
+    .my-card {
+        border: solid #e7e1e1 1px;
+        cursor:pointer;
+    }
+
+    .shop-item-title {
+        min-height:3rem;
+    }
+
+    .store-item-hr {
+        border-top: solid #e7e1e1 1px;
+    }
+
+    @media (min-width: 768px) {
+        .shop-item-title {
+            min-height:1.5rem;
+        }
+    }
+</style>
+
 <section id="home-hero" class="row valign-wrapper">
     <div class="col s12 center-align white-text">
         <div class="w-100">
             <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
             <p class="home-hero-description bold">
                 ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
+            </p>
+            <p>
+                <a class="btn-large pink" href="{{ store_url }}#valentines">VALENTINES BOXES</a>
             </p>
             <p>
                 <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>
@@ -64,7 +152,7 @@
                 If you’re needing a larger order, we can save you money with our bulk packs. For more information please
                 contact
                 our friendly team today on 07859 790386 or email: info@casspea.co.uk</p>
-            <p><a href="{{ store_url }}" class="btn-large btn-purple white-text">ORDER NOW</a></p>
+            <p><a href="{{ store_url }}" class="btn btn-purple white-text">ORDER NOW</a></p>
         </div>
         <div class="col s12 m6">
             <picture>
@@ -76,6 +164,21 @@
     </div>
 </section>
 
+<div class="section valentines-hero pt-md-5">
+    <div class="container pt-md-5">
+        <div class="row my-5">
+            <div class="col s12 m6">
+                <h1 class="font-250 center valentines-hero-title ">Valentine's Day Luxury Bonbons</h1>
+                <p class="center bold valentines-hero-subtitle">Celebrate Valentine's Day with CassPea Chocolates</p>
+                <p class="center valentines-hero-subtitle2">
+                    The perfect gift for your loved ones – our 9 and 15-piece boxes feature special
+                    designs to share the love on this special day.
+                </p>
+                <a class="btn btn-purple" href="{{store_url}}#valentines">SHOP NOW</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <section id="home-section-5">
     <div class="">
