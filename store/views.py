@@ -178,10 +178,14 @@ def add_special_box_to_cart(request):
                 if selected:
                     selected_prebuilts.append(obj)
 
-            # create box
-            new_box = Box(size=box_size_obj, flavour_format=flavour_format)
-            new_box.save()
-            new_box.selected_prebuilts.set(selected_prebuilts)
+            selected_prebuild_slug = form.get("prebuiltFlavor", None)
+            selected_prebuild = PreBuildFlavour.objects.filter(active=True, slug=selected_prebuild_slug)
+
+            if selected_prebuild:
+                # create box
+                new_box = Box(size=box_size_obj, flavour_format=flavour_format)
+                new_box.save()
+                new_box.selected_prebuilts.set(selected_prebuild)
 
         elif flavour_format == Box.PICK_AND_MIX:
             flavours = Flavour.objects.active()
