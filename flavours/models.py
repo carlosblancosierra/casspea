@@ -50,6 +50,8 @@ class Flavour(models.Model):
                                 format='JPEG',
                                 options={'quality': 95})
 
+    valentines_flavour = models.BooleanField(default=False)
+
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
