@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '(nj3wa1&0y_cb87f*+$_n9@3dwml1azoa*t
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 STATIC_LOCAL = False
 STRIPE_TEST = False
 
@@ -74,6 +74,7 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'info@casspea.co.uk'
+SERVER_EMAIL = 'errors@casspea.co.uk'
 ADMINS = [('Carlos Blanco', 'carlosblancosierra@gmail.com')]
 STAFF_EMAILS = ['info@casspea.co.uk', 'sandy.gomezc@gmail.com','carlosblancosierra@gmail.com']
 
@@ -225,21 +226,20 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'green',
 }
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'class': 'django.utils.log.AdminEmailHandler',
-#             'include_html': True,  # Include HTML content in the error email
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
