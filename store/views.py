@@ -74,6 +74,7 @@ def advent_calendar_page(request):
 def valentines_box_page(request, slug=None):
     box_obj = get_object_or_404(BoxSize, slug=slug, special_box=True)
     flavours = Flavour.objects.active()
+    valentine_flavours = flavours.filter(valentines_flavour=True)
 
     context = {
         "size": box_obj.size,
@@ -84,6 +85,7 @@ def valentines_box_page(request, slug=None):
         "title": box_obj.title,
         "box_obj": box_obj,
         "prebuilds": box_obj.prebuild_options.all(),
+        "valentine_flavours": valentine_flavours,
 
     }
     return render(request, "store/box-valentines.html", context)
