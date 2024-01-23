@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', '(nj3wa1&0y_cb87f*+$_n9@3dwml1azoa*t
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 STATIC_LOCAL = False
 STRIPE_TEST = False
 
@@ -243,7 +243,3 @@ LOGGING = {
         },
     },
 }
-
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_MANIFEST_STRICT = False
-WHITENOISE_ALLOW_ALL_ORIGINS = True
