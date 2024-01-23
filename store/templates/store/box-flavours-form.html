@@ -1,4 +1,4 @@
-{% url 'store:add_boxes' as add_boxes_url %}
+{% url 'store:add_boxes_special' as add_boxes_url %}
 
 <form method="POST" action="{{ add_boxes_url }}"> {% csrf_token %}
     <p class="bold">Quantity</p>
@@ -117,7 +117,7 @@
         </div>
     </div>
 
-    <input type="hidden" value="{{ size }}" name="size">
+    <input type="hidden" value="{{ box_obj.slug }}" name="slug">
     <p class="center">
         {% if not box_obj.sold_out %}
         <button type="submit" id="submit-btn" class="btn-large btn-orange">

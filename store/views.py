@@ -87,9 +87,6 @@ def valentines_box_page(request, slug=None):
         "prebuilds": box_obj.prebuild_options.all(),
 
     }
-
-    print(context['flavours'])
-
     return render(request, "store/box-valentines.html", context)
 
 
@@ -166,12 +163,10 @@ def add_special_box_to_cart(request):
 
         # Check if Size obj exists
         if not slug:
-            print("no slug")
             return redirect('store:home')
         slug_qs = BoxSize.objects.filter(active=True, slug=slug)
 
         if len(slug_qs) != 1:
-            print("no qs")
             return redirect('store:home')
         box_size_obj = slug_qs.first()
 
@@ -205,7 +200,6 @@ def add_special_box_to_cart(request):
             new_box.save()
             new_box.selected_flavours.set(selected_flavours)
         else:
-            print("no flavour format")
             return redirect('store:home')
 
         # create entry
