@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from leads.forms import ContactForm
 from django.contrib import messages
+from django.views.generic import TemplateView
 
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -109,3 +110,42 @@ def faqs_page(request):
     context = {'faqs': FAQS}
 
     return render(request, "faq.html", context)
+
+
+class SitemapView(TemplateView):
+    template_name = "sitemap.xml"
+
+    def get_context_data(self, **kwargs):
+        current_site_domain = 'www.casspea.co.uk'
+
+        # Define the URLs without the domain
+        urls_without_domain = [
+            {'loc': '/shop-now/', 'changefreq': 'daily', 'priority': 1.0},
+            {'loc': '/valentines-day', 'changefreq': 'daily', 'priority': 0.99},
+            {'loc': '/shop-now/luxury-handmade-chocolates/box-48', 'changefreq': 'weekly', 'priority': 0.99},
+            {'loc': '/shop-now/luxury-handmade-chocolates/box-24', 'changefreq': 'weekly', 'priority': 0.98},
+            {'loc': '/shop-now/valentines-box-of-15-black', 'changefreq': 'monthly', 'priority': 0.8},
+            {'loc': '/shop-now/valentines-box-of-15-red', 'changefreq': 'monthly', 'priority': 0.8},
+            {'loc': '/shop-now/luxury-handmade-chocolates/box-15', 'changefreq': 'monthly', 'priority': 0.75},
+            {'loc': '/flavours/', 'changefreq': 'weekly', 'priority': 0.6},
+            {'loc': '/shop-now/valentines-box-of-9-black', 'changefreq': 'monthly', 'priority': 0.6},
+            {'loc': '/shop-now/valentines-box-of-9-red', 'changefreq': 'monthly', 'priority': 0.6},
+            {'loc': '/shop-now/luxury-handmade-chocolates/box-9', 'changefreq': 'monthly', 'priority': 0.6},
+            {'loc': '/contact-us', 'changefreq': 'monthly', 'priority': 0.5},
+            {'loc': '/fequently-asked-questions', 'changefreq': 'monthly', 'priority': 0.5},
+            {'loc': '/about-us', 'changefreq': 'monthly', 'priority': 0.5},
+            # Add more URLs and their metadata here
+        ]
+
+        # Add the domain to each URL
+        urls = list(map(lambda x: {'loc': f'https://{current_site_domain}{x["loc"]}', 'changefreq': x['changefreq'], 'priority': x['priority']}, urls_without_domain))
+
+        # Order the URLs by priority in descending order
+        urls = sorted(urls, key=lambda x: x['priority'], reverse=True)
+
+        context = {
+            'domain': current_site_domain,
+            'urls': urls,
+        }
+
+        return context

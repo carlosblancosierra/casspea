@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
+from django.views.generic import TemplateView
+
 from accounts.views import login_page, register_page_local
 from leads.views import newsletter_subscribe
 from . import views
@@ -34,6 +36,9 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('login', login_page, name="login"),
     path('register', register_page_local, name="register"),
+
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    path('sitemap.xml', views.SitemapView.as_view(content_type='application/xml'), name='sitemap'),
 
     path('admin/', admin.site.urls),
 
