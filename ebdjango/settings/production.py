@@ -88,6 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'ebdjango.middleware.utm_middleware.UTMMiddleware',
+    'ebdjango.middleware.visited_pages_middleware.VisitedPagesMiddleware',
 ]
 
 ROOT_URLCONF = 'ebdjango.urls'

@@ -232,6 +232,10 @@ class CreateCheckoutSessionView(View):
         utm_content = request.session.get('utm_content')
         utm_id = request.session.get('utm_id')
 
+        visited_pages = request.session.get('visited_pages')
+        if visited_pages:
+            visited_pages = ','.join(visited_pages)
+
         order = Order(shipping_address=shipping_address,
                       gift_message=gift_message,
                       shipping_date=shipping_date_obj,
@@ -242,7 +246,8 @@ class CreateCheckoutSessionView(View):
                       utm_campaign=utm_campaign,
                       utm_term=utm_term,
                       utm_content=utm_content,
-                      utm_id=utm_id
+                      utm_id=utm_id,
+                      visited_pages=visited_pages
                       )
         customer_email = None
         if request.user.is_authenticated:
@@ -252,9 +257,6 @@ class CreateCheckoutSessionView(View):
         order.cart_entries.set(cart_entries)
         order_id = order.order_id
 
-        # request.session['cart_id'] = None
-        # request.session['address_id'] = None
-        # request.session['gift_message'] = None
         request.session['order_id'] = order_id
         line_items = []
         for entry in cart_entries:

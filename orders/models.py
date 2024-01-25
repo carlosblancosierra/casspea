@@ -45,6 +45,8 @@ class Order(models.Model):
     utm_content = models.CharField(max_length=255, blank=True, null=True)
     utm_id = models.CharField(max_length=255, blank=True, null=True)
 
+    visited_pages = models.TextField(blank=True, null=True)
+
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

@@ -111,6 +111,9 @@ def home_page_v2(request):
         "PICK_AND_MIX": Box.PICK_AND_MIX,
     }
 
+    visited_pages = request.session.get('visited_pages', None)
+    print(visited_pages)
+
     return render(request, "carts/home_v2.html", context)
 
 
