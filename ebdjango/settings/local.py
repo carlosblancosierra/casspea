@@ -28,7 +28,6 @@ DEBUG = True
 STATIC_LOCAL = True
 STRIPE_TEST = True
 
-
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -72,7 +71,6 @@ DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'carlosblancosierra@gmail.com'
 STAFF_EMAILS = ['carlosblancosierra@gmail.com']
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ebdjango.middleware.utm_middleware.UTMMiddleware',
 ]
 
 ROOT_URLCONF = 'ebdjango.urls'
@@ -172,3 +171,6 @@ MESSAGE_TAGS = {
     messages.ERROR: 'red',
     messages.SUCCESS: 'green',
 }
+
+UTMMIDDLEWARE_INCLUDE_PARAMETERS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id']
+UTMMIDDLEWARE_SESSION_EXPIRY = 24 * 60 * 60  # Default to 24 hours
