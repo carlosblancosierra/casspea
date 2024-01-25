@@ -224,11 +224,25 @@ class CreateCheckoutSessionView(View):
             shipping_date_obj = shipping_date_obj.date()
         cart, created = Cart.objects.new_or_get(request)
         discount = cart.discount
+
+        utm_source = request.session.get('utm_source')
+        utm_medium = request.session.get('utm_medium')
+        utm_campaign = request.session.get('utm_campaign')
+        utm_term = request.session.get('utm_term')
+        utm_content = request.session.get('utm_content')
+        utm_id = request.session.get('utm_id')
+
         order = Order(shipping_address=shipping_address,
                       gift_message=gift_message,
                       shipping_date=shipping_date_obj,
                       discount=cart.discount,
-                      shipping_type=cart.shipping_type
+                      shipping_type=cart.shipping_type,
+                      utm_source=utm_source,
+                      utm_medium=utm_medium,
+                      utm_campaign=utm_campaign,
+                      utm_term=utm_term,
+                      utm_content=utm_content,
+                      utm_id=utm_id
                       )
         customer_email = None
         if request.user.is_authenticated:

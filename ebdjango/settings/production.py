@@ -87,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.gzip.GZipMiddleware'
+    'ebdjango.middleware.utm_middleware.UTMMiddleware',
 ]
 
 ROOT_URLCONF = 'ebdjango.urls'
@@ -243,3 +244,7 @@ LOGGING = {
         },
     },
 }
+
+
+UTMMIDDLEWARE_INCLUDE_PARAMETERS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id']
+UTMMIDDLEWARE_SESSION_EXPIRY = 24 * 60 * 60  # Default to 24 hours
