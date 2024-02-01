@@ -15,6 +15,7 @@ urlpatterns = [
     path('about-us', views.about_us_page, name="about"),
     path('fequently-asked-questions', views.faqs_page, name="faqs"),
     path('valentines-day', views.valentines_day_page, name="valentines"),
+    path('custom-orders', views.custom_orders_landing_page, name="custom_orders"),
 
     path('newsletter_subscribe', newsletter_subscribe,
          name="subscribe_newsletter"),
