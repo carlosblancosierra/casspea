@@ -30,7 +30,7 @@ def home_page(request):
 
 
 def box_page(request, slug=None):
-    flavours = Flavour.objects.active().filter(valentines_flavour=False)
+    flavours = Flavour.objects.active()
 
     box_obj = get_object_or_404(BoxSize, slug=slug, special_box=False)
 
