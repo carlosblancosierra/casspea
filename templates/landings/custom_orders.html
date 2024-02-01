@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_title %}
+{{ block.super }} Valentines Day
+{% endblock %}
+{% block content %}
+
+{% url 'store:home' as store_url %}
+
+
+{% include 'base/navbar-dark.html' %}
+
+<style>
+    .my-card {
+        border: solid #e7e1e1 1px;
+        cursor:pointer;
+    }
+
+    .shop-item-title {
+        min-height:3rem;
+    }
+
+    .store-item-hr {
+        border-top: solid #e7e1e1 1px;
+    }
+
+    @media (min-width: 768px) {
+        .shop-item-title {
+            min-height:1.5rem;
+        }
+    }
+</style>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12 m6 pt-md-5">
+            <h1 class="bold">{{ content.hero.title }}</h1>
+            <h2 class="font-200 bold">{{ content.hero.subtitle }}</h2>
+            <p class="font">{{ content.hero.description }}</p>
+            {% for obj in content.hero.items %}
+            <p>{{ obj.text }}</p>
+            {% endfor %}
+            <a class="waves-effect waves-light btn-large my-purple">{{ content.hero.cta }}</a>
+
+        </div>
+        <div class="col s12 m6">
+            <img src="{% static '/images/valentines/about/box-of-24.jpg'%}" alt="image-{{ content.hero.title }}"
+                 class="responsive-img">
+        </div>
+    </div>
+</section>
+
+<!--<section class="container mt-5">-->
+<!--    <div class="row">-->
+<!--        <div class="col s12">-->
+<!--            <h2>{{ content.why.title }}</h2>-->
+<!--        </div>-->
+<!--        {% for obj in content.why.items %}-->
+<!--        <div class="col s12 m4">-->
+<!--            <h3>{{ obj.title }}</h3>-->
+<!--            <p>{{ obj.subtitle }}</p>-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    <div class="col s12">-->
+<!--        <p class="center">-->
+<!--            <a class="waves-effect waves-light btn-large">{{ content.why.cta }}</a>-->
+<!--        </p>-->
+<!--    </div>-->
+<!--</section>-->
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="center bold">{{ content.flavours.title }}</h2>
+            <p class="center font-150 bold">{{ content.flavours.subtitle }}</p>
+        </div>
+    </div>
+    <div class="row">
+        {% for obj in flavours_qs %}
+        <div class="col s6 m3">
+            <div class="row">
+                <div class="col s12 center">
+                    {% if obj.image %}
+                    <img src="{{ obj.image.url }}" class="responsive-img w-50"/>
+                    {% endif %}
+                </div>
+                <div class="col s12 center">
+                    <p class="my-red-text pt-0 mb-0 mt-0 bold">{{ obj.name }}</p>
+                    {% if obj.allergens_str %}
+                    <p class="mt-0" style="font-size:0.75rem">*Contains {{ obj.allergens_str }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="center bold">{{ content.design.title }}</h2>
+            <p class="center font-150 bold">{{ content.design.subtitle }}</p>
+        </div>
+    </div>
+    <div class="row">
+        {% for obj in designs_qs %}
+        <div class="col s12 m4">
+            <a href="{{ obj.get_absolute_url }}">
+                <div>
+                    {% if obj.featured_design %}
+                    {% include "custom_chocolates/user_design_pic.html" with design=obj.featured_design %}
+                    {% endif %}
+                </div>
+                <p class="center bold font-200">{{ obj }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="center bold">{{ content.gift.title }}</h2>
+            <p class="center font-150 bold">{{ content.gift.subtitle }}</p>
+        </div>
+    </div>
+    <div class="row my-card-container">
+        {% for obj in giftbox_qs %}
+        <div class="col s6 m3 px-1 mt-2 my-card-wrapper">
+            <div class="my-card px-1">
+                {% if obj.store_image %}
+                <img src="{{ obj.store_image.url }}" class="responsive-img">
+                {% endif %}
+                <h3 class="font-100 center my-0 shop-item-title my-{{obj.color}}-text bold">
+                    {{ obj.size }}-Piece Box
+                </h3>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="bold font-200 center">{{ content.final_cta.btn_text }}</h2>
+            <p class="center">
+                <a class="waves-effect waves-light btn-large my-pink">
+                    {{ content.final_cta.btn_text }}
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2 class="font-150 bold center mt-5">Reviews</h2>
+        </div>
+        {% for obj in content.reviews.items %}
+        <div class="col 12 m3">
+            <p class="">
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+                <i class=" material-icons">star</i>
+            </p>
+            <p class="bold">{{ obj.title }}</p>
+            <p>{{ obj.description }}</p>
+        </div>
+        {% endfor %}
+
+
+    </div>
+</section>
+
+{% endblock %}
