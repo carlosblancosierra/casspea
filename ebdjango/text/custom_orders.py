@@ -5,9 +5,18 @@ CUSTOM_ORDERS_CONTENT = {
         'description': "At CassPea Chocolates, we are dedicated to adding sweetness and sophistication to your events through our exquisite, handcrafted chocolates. Choose from a palette of over 20 signature flavours and personalize the exterior with your preferred colours and designs. Whether you're celebrating a wedding, organizing a corporate event, or hosting a birthday party, we have the perfect chocolates for every occasion. Let us transform your moments into unforgettable experiences.",
         'image_static_url': '/images/valentines/about/box-of-24.jpg',
         'items': [
-            {'text': 'Perfect for corporate events, weddings, and special celebrations'},
-            {'text': 'Endless design possibilities with customizable colours'},
-            {'text': 'Over 20 exquisite flavours to choose from for your event'},
+            {
+                'text': 'Perfect for corporate events, weddings, and special celebrations',
+                'color': 'green',
+            },
+            {
+                'text': 'Endless design possibilities with customizable colours',
+                'color': 'pink',
+            },
+            {
+                'text': 'Over 20 exquisite flavours to choose from for your event',
+                'color': 'purple'
+            },
         ],
         'cta': 'Contact us',
 
@@ -17,7 +26,7 @@ CUSTOM_ORDERS_CONTENT = {
         'subtitle': 'Explore our collection of signature flavours',
     },
     'design': {
-        'title': 'Bespoke Designs',
+        'title': 'Customizable Designs',
         'subtitle': 'Select from our six base designs and tailor the colours to your liking. Select the perfect template to design chocolates that match the theme of your event.',
     },
     'gift': {

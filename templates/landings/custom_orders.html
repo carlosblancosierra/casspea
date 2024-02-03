@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block head_title %}
-{{ block.super }} Valentines Day
+{{ block.super }} Custom Orders
 {% endblock %}
 {% block content %}
 
@@ -31,22 +31,30 @@
             min-height:1.5rem;
         }
     }
+    .container {
+        min-width:95vw;
+    }
+    .font-125 {
+        line-height:2rem!important;
+    }
 </style>
 
-<section class="container">
+<section class="">
     <div class="row">
-        <div class="col s12 m6 pt-md-5">
+        <div class="col s12 m5 pt-md-5 px-5">
             <h1 class="bold">{{ content.hero.title }}</h1>
-            <h2 class="font-200 bold">{{ content.hero.subtitle }}</h2>
-            <p class="font">{{ content.hero.description }}</p>
-            {% for obj in content.hero.items %}
-            <p>{{ obj.text }}</p>
-            {% endfor %}
+            <h2 class="font-200 bold mt-3">{{ content.hero.subtitle }}</h2>
+            <p class="font-125">{{ content.hero.description }}</p>
+            <ul>
+                {% for obj in content.hero.items %}
+                <li class="bold font-150 my-{{ obj.color }}-text">{{ obj.text }}</li>
+                {% endfor %}
+            </ul>
             <a class="waves-effect waves-light btn-large my-purple">{{ content.hero.cta }}</a>
 
         </div>
-        <div class="col s12 m6">
-            <img src="{% static '/images/valentines/about/box-of-24.jpg'%}" alt="image-{{ content.hero.title }}"
+        <div class="col s12 m7 p-0">
+            <img src="{% static '/images/custom_orders/bg-1-long.jpg'%}" alt="image-{{ content.hero.title }}"
                  class="responsive-img">
         </div>
     </div>
@@ -80,7 +88,7 @@
     </div>
     <div class="row">
         {% for obj in flavours_qs %}
-        <div class="col s6 m3">
+        <div class="col s4 m2">
             <div class="row">
                 <div class="col s12 center">
                     {% if obj.image %}
@@ -109,7 +117,7 @@
     </div>
     <div class="row">
         {% for obj in designs_qs %}
-        <div class="col s12 m4">
+        <div class="col s6 m2">
             <a href="{{ obj.get_absolute_url }}">
                 <div>
                     {% if obj.featured_design %}

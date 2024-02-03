@@ -165,7 +165,7 @@ def custom_orders_landing_page(request):
     }
 
     flavours_qs = Flavour.objects.active()
-    context["flavours_qs"] = flavours_qs
+    context["flavours_qs"] = flavours_qs[:12]
 
     designs_qs = ChocolateDesign.objects.filter(active=True)
     context["designs_qs"] = designs_qs
