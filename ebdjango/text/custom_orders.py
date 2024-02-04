@@ -2,7 +2,8 @@ CUSTOM_ORDERS_CONTENT = {
     'hero': {
         'title': 'Custom Orders',
         'subtitle': 'Elevate Your Events with Luxurious, Customizable Bonbons',
-        'description': "At CassPea Chocolates, we are dedicated to adding sweetness and sophistication to your events through our exquisite, handcrafted chocolates. Choose from a palette of over 20 signature flavours and personalize the exterior with your preferred colours and designs. Whether you're celebrating a wedding, organizing a corporate event, or hosting a birthday party, we have the perfect chocolates for every occasion. Let us transform your moments into unforgettable experiences.",
+        'description': "At CassPea Chocolates, we are dedicated to adding sweetness and sophistication to your events through our exquisite, handcrafted chocolates. Choose from a palette of over 20 signature flavours and personalize the exterior with your preferred colours and designs",
+        'description2':  "Whether you're celebrating a wedding, organizing a corporate event, or hosting a birthday party, we have the perfect chocolates for every occasion. Let us transform your moments into unforgettable experiences.",
         'image_static_url': '/images/valentines/about/box-of-24.jpg',
         'items': [
             {

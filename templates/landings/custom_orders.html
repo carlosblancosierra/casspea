@@ -6,6 +6,7 @@
 {{ block.super }} Custom Orders
 {% endblock %}
 {% block content %}
+{% url 'contact' as contact_url %}
 
 {% url 'store:home' as store_url %}
 
@@ -39,47 +40,31 @@
     }
 </style>
 
-<section class="">
+<section class="pb-5">
     <div class="row">
-        <div class="col s12 m5 pt-md-5 px-5">
-            <h1 class="bold">{{ content.hero.title }}</h1>
-            <h2 class="font-200 bold mt-3">{{ content.hero.subtitle }}</h2>
-            <p class="font-125">{{ content.hero.description }}</p>
-            <ul>
-                {% for obj in content.hero.items %}
-                <li class="bold font-150 my-{{ obj.color }}-text">{{ obj.text }}</li>
-                {% endfor %}
-            </ul>
-            <a class="waves-effect waves-light btn-large my-purple">{{ content.hero.cta }}</a>
-
-        </div>
-        <div class="col s12 m7 p-0">
+        <div class="col s12 m6 l7 p-0">
             <img src="{% static '/images/custom_orders/bg-1-long.jpg'%}" alt="image-{{ content.hero.title }}"
                  class="responsive-img">
+        </div>
+        <div class="col s12 m6 l5 pt-md-5 px-5">
+            <h1 class="bold">{{ content.hero.title }}</h1>
+            <h2 class="font-200 bold mt-3">{{ content.hero.subtitle }}</h2>
+            <p class="font-125 d-none d-md-block">{{ content.hero.description }}</p>
+            <p class="font-125 d-none d-md-block">{{ content.hero.description2 }}</p>
+            <ul class="">
+                {% for obj in content.hero.items %}
+                <li class="bold font-150 my-{{ obj.color }}-text mb-3">{{ obj.text }}</li>
+                {% endfor %}
+            </ul>
+            <p>
+                <a class="waves-effect waves-light btn-large my-purple" href="{{ contact_url }}">
+                    {{ content.hero.cta }}</a>
+            </p>
         </div>
     </div>
 </section>
 
-<!--<section class="container mt-5">-->
-<!--    <div class="row">-->
-<!--        <div class="col s12">-->
-<!--            <h2>{{ content.why.title }}</h2>-->
-<!--        </div>-->
-<!--        {% for obj in content.why.items %}-->
-<!--        <div class="col s12 m4">-->
-<!--            <h3>{{ obj.title }}</h3>-->
-<!--            <p>{{ obj.subtitle }}</p>-->
-<!--        </div>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-<!--    <div class="col s12">-->
-<!--        <p class="center">-->
-<!--            <a class="waves-effect waves-light btn-large">{{ content.why.cta }}</a>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--</section>-->
-
-<section class="container">
+<section class="container pb-5">
     <div class="row">
         <div class="col s12">
             <h2 class="center bold">{{ content.flavours.title }}</h2>
@@ -98,7 +83,7 @@
                 <div class="col s12 center">
                     <p class="my-red-text pt-0 mb-0 mt-0 bold">{{ obj.name }}</p>
                     {% if obj.allergens_str %}
-                    <p class="mt-0" style="font-size:0.75rem">*Contains {{ obj.allergens_str }}</p>
+                    <p class="mt-0  d-none d-md-block" style="font-size:0.75rem">*Contains {{ obj.allergens_str }}</p>
                     {% endif %}
                 </div>
             </div>
@@ -108,7 +93,7 @@
     </div>
 </section>
 
-<section class="container">
+<section class="container py-5">
     <div class="row">
         <div class="col s12">
             <h2 class="center bold">{{ content.design.title }}</h2>
@@ -131,7 +116,7 @@
     </div>
 </section>
 
-<section class="container">
+<section class="container py-5">
     <div class="row">
         <div class="col s12">
             <h2 class="center bold">{{ content.gift.title }}</h2>
@@ -155,13 +140,13 @@
 
 </section>
 
-<section class="container">
+<section class="container py-5">
     <div class="row">
         <div class="col s12">
             <h2 class="bold font-200 center">{{ content.final_cta.btn_text }}</h2>
             <p class="center">
-                <a class="waves-effect waves-light btn-large my-pink">
-                    {{ content.final_cta.btn_text }}
+                <a class="waves-effect waves-light btn-large my-pink" href="{{ contact_url }}">
+                    Request a quote
                 </a>
             </p>
         </div>
