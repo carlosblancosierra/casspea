@@ -11,6 +11,7 @@
 {% url 'store:home' as store_url %}
 {% url 'custom_chocolates:home' as personalise_url %}
 {% url 'contact' as contact_url %}
+{% url 'custom_orders' as custom_orders_url %}
 
 <style>
     .valentines-hero {
@@ -100,15 +101,19 @@
 <section id="home-hero" class="row valign-wrapper">
     <div class="col s12 center-align white-text">
         <div class="w-100">
-            <h1 class="home-hero-h1">CREATE YOUR UNIQUE SELECTION OF LUXURY HAND MADE CHOCOLATES</h1>
+            <h1 class="home-hero-h1">Luxurious Handmade Bonbons</h1>
             <p class="home-hero-description bold">
-                ADD <span class="eblue-text">COLOUR</span> AND <span class="pink-text">FUN</span> TO YOUR LIFE
+                🎁  Gift Boxes of 9, 15, 24, and 48 Chocolates <br/>
+                🌈 20+ Signature Flavours <br/>
+                💍 Custom Orders, Corporate Events, Weddings. <br/>
+                🚫 Gluten-Free, Nut-Free, Alcohol-Free options <br/>
             </p>
-            <p>
-                <a class="btn-large pink" href="{{ store_url }}#valentines">VALENTINES BOXES</a>
-            </p>
+
             <p>
                 <a class="btn-large btn-purple" href="{{ store_url }}">SHOP NOW</a>
+            </p>
+                  <p>
+                <a class="btn-large pink" href="{{ custom_orders_url }}#valentines">CUSTOM ORDERS</a>
             </p>
             {% include "base/navbar-carousel.html" %}
         </div>
@@ -168,6 +173,22 @@
     <div class="container pt-md-5">
         <div class="row my-5">
             <div class="col s12 m6">
+                <h1 class="font-250 center bold valentines-hero-title ">Custom Orders</h1>
+                <p class="center valentines-hero-subtitle">Elevate Your Events with Luxurious, Customizable Bonbons</p>
+                <p class="center valentines-hero-subtitle2">Perfect for corporate events, weddings, and special celebrations <br/>
+                    Endless design possibilities with customizable colours <br/>
+                    Over 20 exquisite flavours to choose from for your event <br/>
+                </p>
+                <a class="btn btn-purple" href="{{store_url}}#valentines">Learn more about custom orders</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% comment %} <div class="section valentines-hero pt-md-5">
+    <div class="container pt-md-5">
+        <div class="row my-5">
+            <div class="col s12 m6">
                 <h1 class="font-250 center valentines-hero-title ">Valentine's Day Luxury Bonbons</h1>
                 <p class="center bold valentines-hero-subtitle">Celebrate Valentine's Day with CassPea Chocolates</p>
                 <p class="center valentines-hero-subtitle2">
@@ -178,7 +199,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> {% endcomment %}
 
 <section id="home-section-5">
     <div class="">

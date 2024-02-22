@@ -42,24 +42,22 @@
 
 <section class="pb-5">
     <div class="row">
-        <div class="col s12 m6 l7 p-0">
+        <div class="col s12 m6 xl7 p-0">
             <img src="{% static '/images/custom_orders/bg-1-long.jpg'%}" alt="image-{{ content.hero.title }}"
                  class="responsive-img">
         </div>
-        <div class="col s12 m6 l5 pt-md-5 px-5">
+        <div class="col s12 m6 xl5 pt-md-5 px-5">
             <h1 class="bold">{{ content.hero.title }}</h1>
             <h2 class="font-200 bold mt-3">{{ content.hero.subtitle }}</h2>
             <p class="font-125 d-none d-md-block">{{ content.hero.description }}</p>
             <p class="font-125 d-none d-md-block">{{ content.hero.description2 }}</p>
             <ul class="">
                 {% for obj in content.hero.items %}
-                <li class="bold font-150 my-{{ obj.color }}-text mb-3">{{ obj.text }}</li>
+                <li class="bold font-125 my-{{ obj.color }}-text mb-1">{{ obj.text }}</li>
                 {% endfor %}
             </ul>
-            <p>
-                <a class="waves-effect waves-light btn-large my-purple" href="{{ contact_url }}">
-                    {{ content.hero.cta }}</a>
-            </p>
+            <div data-tf-live="01HQ8XVTCFJ7S38YPJBKMT10AG"></div>
+
         </div>
     </div>
 </section>
@@ -104,14 +102,12 @@
     <div class="row">
         {% for obj in designs_qs %}
         <div class="col s6 m2">
-            <a href="{{ obj.get_absolute_url }}">
-                <div>
-                    {% if obj.featured_design %}
-                    {% include "custom_chocolates/user_design_pic.html" with design=obj.featured_design %}
-                    {% endif %}
-                </div>
-                <p class="center bold font-200">{{ obj }}</p>
-            </a>
+            <div>
+                {% if obj.featured_design %}
+                {% include "custom_chocolates/user_design_pic.html" with design=obj.featured_design %}
+                {% endif %}
+            </div>
+            <p class="center bold font-200">{{ obj }}</p>
         </div>
         {% endfor %}
     </div>
@@ -127,7 +123,7 @@
     <div class="row my-card-container">
         {% for obj in giftbox_qs %}
         <div class="col s6 m3 px-1 mt-2 my-card-wrapper">
-            <div class="my-card px-1">
+            <div class="my-card px-1" style="cursor:unset">
                 {% if obj.store_image %}
                 <img src="{{ obj.store_image.url }}" class="responsive-img">
                 {% endif %}
@@ -146,9 +142,11 @@
         <div class="col s12">
             <h2 class="bold font-200 center">{{ content.final_cta.btn_text }}</h2>
             <p class="center">
-                <a class="waves-effect waves-light btn-large my-pink" href="{{ contact_url }}">
+                {% comment %} <a class="waves-effect waves-light btn-large my-pink" href="{{ contact_url }}">
                     Request a quote
-                </a>
+                </a> {% endcomment %}
+                <div data-tf-live="01HQ8XVTCFJ7S38YPJBKMT10AG" class="text-center"></div>
+                <script src="//embed.typeform.com/next/embed.js"></script>
             </p>
         </div>
     </div>

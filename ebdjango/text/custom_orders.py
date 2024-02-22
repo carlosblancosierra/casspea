@@ -12,7 +12,7 @@ CUSTOM_ORDERS_CONTENT = {
             },
             {
                 'text': 'Endless design possibilities with customizable colours',
-                'color': 'pink',
+                'color': 'orange',
             },
             {
                 'text': 'Over 20 exquisite flavours to choose from for your event',
