@@ -5,7 +5,7 @@ from .models import Flavour
 
 # Create your views here.
 def home_page(request):
-    qs = Flavour.objects.active()
+    qs = Flavour.objects.all()
 
     split_qs = [qs[i:i + 3] for i in range(0, qs.count(), 3)]
     print(split_qs)
