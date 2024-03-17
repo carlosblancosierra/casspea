@@ -167,3 +167,7 @@ class Box(models.Model):
     @property
     def name(self):
         return self.size.name
+
+    @property
+    def sold_out(self):
+        return self.size.sold_out

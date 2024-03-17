@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-
+from products.models import Product
 from flavours.models import PreBuildFlavour, Flavour, FlavourChoice
 from boxes.models import Box, BoxSize
 from carts.models import CartEntry
@@ -10,20 +10,25 @@ from .models import FLAVOURS, FLAVOUR_FORMAT
 VALENTINES_ACTIVE = True
 
 # Create your views here.
+
+
 def home_page(request):
     qs = BoxSize.objects.filter(active=True, special_box=False)
 
     valentines_active = True
+    snacks = Product.objects.filter(type="snacks", active=True)
 
     context = {
         "title": "Build your box of CassPea chocolates.",
         "subtitle": "Let us surprise you with our own selection, or choose your own flavours with our Pick and Mix option!",
         "qs": qs,
         "valentines_active": VALENTINES_ACTIVE,
+        "snacks": snacks,
     }
 
     if VALENTINES_ACTIVE:
-        valentines_boxes_qs = BoxSize.objects.filter(active=True, valentines_box=True)
+        valentines_boxes_qs = BoxSize.objects.filter(
+            active=True, valentines_box=True)
         context["valentines_boxes_qs"] = valentines_boxes_qs
 
     return render(request, "store/home.html", context)
@@ -46,6 +51,14 @@ def box_page(request, slug=None):
     }
 
     return render(request, "store/box.html", context)
+
+
+def snacks_page(request, slug=None):
+    product = get_object_or_404(Product, slug=slug, type="snacks")
+    context = {
+        "obj": product,
+    }
+    return render(request, "store/product.html", context)
 
 
 def advent_calendar_page(request):
@@ -103,7 +116,8 @@ def add_box_to_cart(request):
         # Check if Size obj exists
         if not size:
             return redirect('store:home')
-        size_qs = BoxSize.objects.filter(active=True, size=size, special_box=False)
+        size_qs = BoxSize.objects.filter(
+            active=True, size=size, special_box=False)
 
         if len(size_qs) != 1:
             return redirect('store:home')
@@ -129,7 +143,8 @@ def add_box_to_cart(request):
                 quantity = form.get(obj.slug, 0)
                 # print(obj.slug, quantity)
                 if quantity and int(quantity) > 0:
-                    flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
+                    flavour_choice_obj = FlavourChoice(
+                        quantity=quantity, flavour=obj)
                     flavour_choice_obj.save()
                     selected_flavours.append(flavour_choice_obj)
 
@@ -143,9 +158,11 @@ def add_box_to_cart(request):
 
         # create entry
         box_quantity = form.get('box_quantity', None)
-        cart_entry = CartEntry.objects.new(request, product=new_box, quantity=box_quantity)
+        cart_entry = CartEntry.objects.new(
+            request, product=new_box, quantity=box_quantity)
         user_design_id = request.session.get('user_design_id')
-        user_design_qs = UserChocolateDesign.objects.filter(active=True, id=user_design_id)
+        user_design_qs = UserChocolateDesign.objects.filter(
+            active=True, id=user_design_id)
         if user_design_qs.count() == 1:
             cart_entry.user_chocolate_design = user_design_qs.first()
         cart_entry.save()
@@ -180,7 +197,8 @@ def add_special_box_to_cart(request):
                     selected_prebuilts.append(obj)
 
             selected_prebuild_slug = form.get("prebuiltFlavor", None)
-            selected_prebuild = PreBuildFlavour.objects.filter(active=True, slug=selected_prebuild_slug)
+            selected_prebuild = PreBuildFlavour.objects.filter(
+                active=True, slug=selected_prebuild_slug)
 
             if selected_prebuild:
                 # create box
@@ -195,7 +213,8 @@ def add_special_box_to_cart(request):
                 quantity = form.get(obj.slug, 0)
                 # print(obj.slug, quantity)
                 if quantity and int(quantity) > 0:
-                    flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
+                    flavour_choice_obj = FlavourChoice(
+                        quantity=quantity, flavour=obj)
                     flavour_choice_obj.save()
                     selected_flavours.append(flavour_choice_obj)
 
@@ -209,9 +228,11 @@ def add_special_box_to_cart(request):
 
         # create entry
         box_quantity = form.get('box_quantity', None)
-        cart_entry = CartEntry.objects.new(request, product=new_box, quantity=box_quantity)
+        cart_entry = CartEntry.objects.new(
+            request, product=new_box, quantity=box_quantity)
         user_design_id = request.session.get('user_design_id')
-        user_design_qs = UserChocolateDesign.objects.filter(active=True, id=user_design_id)
+        user_design_qs = UserChocolateDesign.objects.filter(
+            active=True, id=user_design_id)
         if user_design_qs.count() == 1:
             cart_entry.user_chocolate_design = user_design_qs.first()
         cart_entry.save()
@@ -283,7 +304,8 @@ def add_lot_to_cart(request):
                 print(obj.slug, quantity)
 
                 if int(quantity) > 0:
-                    flavour_choice_obj = FlavourChoice(quantity=quantity, flavour=obj)
+                    flavour_choice_obj = FlavourChoice(
+                        quantity=quantity, flavour=obj)
                     flavour_choice_obj.save()
                     selected_flavours.append(flavour_choice_obj)
 
@@ -296,7 +318,8 @@ def add_lot_to_cart(request):
             return redirect('store:home')
 
         # create entry
-        cart_entry = CartEntry.objects.new(request, product=new_lot, quantity=1)
+        cart_entry = CartEntry.objects.new(
+            request, product=new_lot, quantity=1)
         print("cart_entry")
         print(cart_entry)
 
@@ -309,5 +332,23 @@ def remove_box_from_cart(request):
     if form:
         obj_id = form.get('obj_id', None)
         CartEntry.objects.set_inactive(request, id=obj_id)
+
+    return redirect('carts:home')
+
+def add_product_to_cart(request):
+
+    form = request.POST
+
+    if form:
+        slug = form.get('slug', None)
+        quantity = form.get('quantity', 1)
+
+        product_obj = Product.objects.filter(active=True, slug=slug)
+        if product_obj.count() == 1:
+            product_obj = product_obj.first()
+            cart_entry = CartEntry.objects.new(
+                request, product=product_obj, quantity=quantity)
+            cart_entry.save()
+
 
     return redirect('carts:home')

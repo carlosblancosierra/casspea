@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'discounts',
     'flavours',
     'orders',
+    'products',
     'lots',
     'store',
     'shipping',

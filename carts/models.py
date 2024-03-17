@@ -115,7 +115,7 @@ class CartEntryManager(models.Manager):
             entries = self.filter(active=True, cart__id=cart_id)
             if len(entries) > 0:
                 for entry in entries:
-                    if entry.product.size.sold_out:
+                    if entry.product.sold_out:
                         entry.active = False
                         entry.save()
                 entries = entries.filter(active=True)

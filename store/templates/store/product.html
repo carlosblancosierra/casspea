@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head_title %}{{ obj.seo_title }}{% endblock %}
+{% block meta_description %}{{ obj.seo_description }}{% endblock %}
+
+{% block content %}
+
+{% url 'store:add_product' as add_product_url %}
+
+{% include "base/inner-banner.html" %}
+<style>
+    .container {
+        min-width: 80%;
+    }
+</style>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col s12 m6">
+            <div class="owl-carousel owl-theme">
+                {% if obj.images %}
+                {% for obj in obj.images %}
+                <div class="item">
+                    <a class="modal-trigger" href="#modal{{ forloop.counter }}">
+                        <img src="{{ obj.url }}" alt="" class="">
+                    </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+
+            <ul id='box-carousel-dots' class='owl-dots'>
+                {% for obj in obj.images %}
+                <button role="button" class="owl-dot active">
+                    <img src="{{ obj.url }}" alt="" class="responsive-img" width="50px">
+                </button>
+                {% endfor %}
+
+            </ul>
+        </div>
+
+        <div class="col s12 m6">
+            <h1 class="font-150 bold">{{ obj.seo_title }}</h1>
+            <p class=" my-orange-text font-150">£{{ obj.price }}</p>
+            {% if obj.description %}
+            <p>{{ obj.description }}</p>
+            {% endif %}
+            <p>For allergen information please <a class="modal-trigger text-underline my-orange-text"
+                    href="#allergenModal">
+                    Click Here</a></p>
+            <form method="POST" action="{{ add_product_url }}"> {% csrf_token %}
+                <p class="bold">Quantity</p>
+                <div class="row">
+
+                    <div class="col s12">
+                        <button class="btn btn-green btn-number" data-type="minus" data-field="box_quantity">-
+                        </button>
+
+                        <input id="box_quantity" type="number" name="box_quantity"
+                            class="validate center browser-default" required min="1" value="1" max="100">
+
+                        <button class="btn btn-green btn-number" data-type="plus" data-field="box_quantity">+
+                        </button>
+                    </div>
+
+                    <div class="col s12 mt-3">
+                        {% if not box_obj.sold_out %}
+                        <button type="submit" id="submit-btn" class="btn-large btn-orange">
+                            Add to Cart
+                        </button>
+                        {% else %}
+                        <button type="submit" id="" class="btn-large btn-orange disabled">
+                            SOLD OUT
+                        </button>
+                        {% endif %}
+                    </div>
+                    <input type="hidden" name="slug" value="{{ obj.slug }}">
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="allergenModal" class="modal">
+    <div class="modal-content">
+        <h4>Allergens</h4>
+        <img src="{% static 'images/flavours/allergen-table.jpg' %}" alt="allergens" class="responsive-img">
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col s12">
+        {% if obj.images %}
+        {% for obj in obj.images %}
+        <div id="modal{{ forloop.counter }}" class="modal">
+            <img src="{{ obj.url }}" alt="" class="responsive-img">
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .modal {
+        width: 100% !important;
+        max-height: unset !important;
+        top: 20% !important;
+        box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        background: none !important;
+    }
+
+    @media (min-width: 800px) {
+        .modal {
+            width: 48% !important;
+            max-height: unset !important;
+            top: 2% !important;
+            box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            background: none !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block js_extra %}
+
+<script>
+
+    $('.btn-number').click(function (e) {
+        e.preventDefault();
+
+        fieldName = $(this).attr('data-field');
+        type = $(this).attr('data-type');
+        var input = $("input[name='" + fieldName + "']");
+        var currentVal = parseInt(input.val());
+        if (!isNaN(currentVal)) {
+            if (type == 'minus') {
+                if (currentVal > input.attr('min')) {
+                    input.val(currentVal - 1).change();
+                }
+
+            } else if (type == 'plus') {
+
+                if (currentVal < input.attr('max')) {
+                    input.val(currentVal + 1).change();
+                }
+            }
+        } else {
+            input.val(0);
+        }
+    });
+
+
+    $('.input-number').focusin(function () {
+        $(this).data('oldValue', $(this).val());
+    });
+    $('.input-number').change(function () {
+
+        minValue = parseInt($(this).attr('min'));
+        maxValue = parseInt($(this).attr('max'));
+        valueCurrent = parseInt($(this).val());
+
+        name = $(this).attr('name');
+        if (valueCurrent >= minValue) {
+            $(".btn-number[data-type='minus'][data-field='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the minimum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+        if (valueCurrent <= maxValue) {
+            $(".btn-number[data-type='plus'][data-field='" + name + "']").removeAttr('disabled')
+        } else {
+            alert('Sorry, the maximum value was reached');
+            $(this).val($(this).data('oldValue'));
+        }
+
+
+    });
+
+
+</script>
+
+{% endblock %}
