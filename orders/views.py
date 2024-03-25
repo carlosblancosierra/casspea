@@ -424,21 +424,12 @@ def success_page(request):
     request.session['address_id'] = None
     request.session['gift_message'] = None
 
-    import json
-    data = json.loads(order.stripe_data)
-
-    # Extract payment_intent and amount_total
-    transaction_id = data.get('payment_intent')
-    total_revenue = data.get('amount_total')
-
     context = {
         "order": order,
         "address": order.shipping_address,
         "entries": order.cart_entries.all,
         "gift_message": order.gift_message,
         "shipping_cost": order.shipping_cost,
-        'transaction_id': transaction_id,
-        'total_revenue': total_revenue
     }
 
     return render(request, "orders/created.html", context)
