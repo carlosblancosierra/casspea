@@ -340,7 +340,7 @@ class CreateCheckoutSessionView(View):
             )
         else:
             checkout_session = stripe.checkout.Session.create(
-                payment_method_types=['card'],
+                payment_method_types=['card','klarna'],
                 line_items=line_items,
                 customer_email=customer_email,
                 currency='GBP',
