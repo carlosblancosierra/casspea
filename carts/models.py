@@ -215,7 +215,7 @@ class CartEntry(models.Model):
 
     @property
     def has_discount(self):
-        if self.cart.discount and self.product.size not in self.cart.discount.box_exclusions.all():
+        if self.cart.discount:
             return True
         else:
             return False
