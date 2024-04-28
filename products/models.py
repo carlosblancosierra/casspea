@@ -67,3 +67,20 @@ class Product(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    @property
+    def images(self):
+        images = []
+
+        if self.image:
+            images.append(self.image)
+        if self.image2:
+            images.append(self.image2)
+        if self.image3:
+            images.append(self.image3)
+        if self.image4:
+            images.append(self.image4)
+        if self.image5:
+            images.append(self.image5)
+
+        return images
