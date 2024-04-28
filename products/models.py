@@ -84,3 +84,11 @@ class Product(models.Model):
             images.append(self.image5)
 
         return images
+
+    @property
+    def get_price_id(self):
+            return self.price_id
+
+    @property
+    def name (self):
+        return self.title
