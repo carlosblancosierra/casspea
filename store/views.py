@@ -7,7 +7,7 @@ from carts.models import CartEntry
 from lots.models import Lot, LotSize
 from custom_chocolates.models import UserChocolateDesign
 from .models import FLAVOURS, FLAVOUR_FORMAT
-VALENTINES_ACTIVE = True
+VALENTINES_ACTIVE = False
 
 # Create your views here.
 
@@ -15,7 +15,6 @@ VALENTINES_ACTIVE = True
 def home_page(request):
     qs = BoxSize.objects.filter(active=True, special_box=False)
 
-    valentines_active = True
     snacks = Product.objects.filter(type="snacks", active=True)
 
     context = {

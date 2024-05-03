@@ -120,6 +120,36 @@
     </div>
 </section>
 
+<section class="container mt-1" style="width:98%">
+    <div class="row">
+        <h2 class="bold font-150 center py-3">Signature Boxes</h2>
+    </div>
+    <div class="row my-card-container">
+        {% for obj in shop_qs %}
+        <div class="col s6 m3 px-1 mt-2 my-card-wrapper">
+            <div class="my-card px-1">
+                <a href="{{ obj.get_absolute_url }}">
+                    {% if obj.store_image %}
+                    <img src="{{ obj.store_image.url }}" class="responsive-img">
+                    {% endif %}
+                    <h3 class="font-100 center my-0 shop-item-title">Box of {{ obj.size }} Hand Made Chocolates ({{ obj.weight }}g)</h3>
+                    <p class="center bold my-1">£{{ obj.price }}</p>
+                    <div class="center py-2 m-0 w-100 store-item-hr">
+                        <a class="{{ obj.color }}-text bold w-100" href="{{ obj.get_absolute_url }}">
+                            <p class="m-0">
+                                Pick Box
+                            </p>
+                        </a>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
 <section>
     <div class="row">
         <div class="col s12 my-3">
@@ -133,6 +163,28 @@
         </div>
     </div>
 </section>
+
+<div class="sectionpt-md-5">
+    <div class="container pt-md-5">
+        <div class="row my-5">
+            <div class="col s12 m6">
+                <h1 class="font-250 center bold valentines-hero-title ">Introducing Snacks</h1>
+                {% comment %} <p class="center valentines-hero-subtitle">Elevate Your Events with Luxurious, Customizable Bonbons</p> {% endcomment %}
+                <p class="center valentines-hero-subtitle2">
+                    Crunchy Cinnamon Cookie<br/>
+                    Tropical Island Snack<br/>
+                    Maple Caramel<br/>
+                    Popping Hazelnuts
+                </p>
+                <p class="text-center"><a class="btn btn-purple text-white" href="{{store_url}}#snacks">View Snacks</a></p>
+
+            </div>
+            <div class="col s12 m6">
+                <img src="{% static 'images/snacks.jpg' %}" alt="casspea snacks" class="responsive-img">
+            </div>
+        </div>
+    </div>
+</div>
 
 <section class="container">
     <div class="row">
@@ -168,6 +220,8 @@
         </div>
     </div>
 </section>
+
+
 
 <div class="section valentines-hero pt-md-5">
     <div class="container pt-md-5">

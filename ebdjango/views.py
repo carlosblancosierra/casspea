@@ -48,7 +48,9 @@ FAQS = [
 
 
 def home_page(request):
-    context = {}
+    shop_qs = BoxSize.objects.filter(active=True, special_box=False)
+
+    context = {"shop_qs": shop_qs}
 
     return render(request, "home.html", context)
 
