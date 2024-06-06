@@ -56,16 +56,7 @@ def home_page(request):
 
 
 def valentines_day_page(request):
-    context = {}
-
-    valentines_boxes_qs = BoxSize.objects.filter(active=True, valentines_box=True)
-    context["valentines_boxes_qs"] = valentines_boxes_qs
-    context["faqs"] = FAQS
-
-    flavours_qs = Flavour.objects.active()
-    context["flavours_qs"] = flavours_qs
-
-    return render(request, "valentines_day.html", context)
+    return redirect('/shop-now')
 
 
 def contact_us_page(request):
