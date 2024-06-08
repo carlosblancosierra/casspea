@@ -38,6 +38,8 @@ urlpatterns = [
     path('login', login_page, name="login"),
     path('register', register_page_local, name="register"),
 
+    path('send_test_email', views.send_test_email, name="mail_test"),
+
     path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
     path('sitemap.xml', views.SitemapView.as_view(content_type='application/xml'), name='sitemap'),
 
