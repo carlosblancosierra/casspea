@@ -68,7 +68,7 @@ LOGIN_URL_REDIRECT = '/'
 LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/login'
 
-EMAIL_HOST = 'smtp-relay.sendinblue.com'
+EMAIL_HOST = 'smtp-relay.brevo.com'
 EMAIL_HOST_USER = 'casspea.sistemas@gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')

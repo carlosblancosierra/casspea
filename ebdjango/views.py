@@ -12,6 +12,7 @@ from flavours.models import PreBuildFlavour, Flavour, FlavourChoice
 from custom_chocolates.models import ChocolateDesignLayer, ChocolateDesign, UserChocolateDesign
 
 from .text.custom_orders import CUSTOM_ORDERS_CONTENT
+from django.contrib.auth.decorators import user_passes_test
 
 FAQS = [
     {"question": "They are too pretty to eat.",
@@ -164,3 +165,13 @@ def custom_orders_landing_page(request):
     context["designs_qs"] = designs_qs
 
     return render(request, 'landings/custom_orders.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def send_test_email(request):
+    # Code to send test email
+    subject = 'Test Email'
+    message = 'This is a test email.'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    to_email = [request.user.email]
+    send_mail(subject, message, from_email, to_email)
+    return redirect('/')
