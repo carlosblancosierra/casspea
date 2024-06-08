@@ -68,8 +68,8 @@ LOGIN_URL_REDIRECT = '/'
 LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/login'
 
-EMAIL_HOST = 'smtp-relay.brevo.com'
-EMAIL_HOST_USER = 'casspea.sistemas@gmail.com'
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_PORT = 587
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
