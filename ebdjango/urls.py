@@ -5,7 +5,7 @@ from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView
 
 from accounts.views import login_page, register_page_local
-from leads.views import newsletter_subscribe
+from leads.views import newsletter_subscribe, download_subscribers
 from . import views
 
 urlpatterns = [
@@ -19,6 +19,8 @@ urlpatterns = [
 
     path('newsletter_subscribe', newsletter_subscribe,
          name="subscribe_newsletter"),
+    path('download_subscribers', download_subscribers,name="download_subscribers"),
+
 
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('accounts.passwords.urls')),

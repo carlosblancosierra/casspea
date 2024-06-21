@@ -7,6 +7,9 @@ from .models import NewsletterSubscriber
 from django.template.loader import render_to_string
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.html import strip_tags
+from django.http import HttpResponse
+import csv
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def newsletter_subscribe(request):
@@ -31,3 +34,17 @@ def newsletter_subscribe(request):
             messages.error(request, 'Invalid email. Please enter a valid email address.')
 
     return redirect('/')
+
+@staff_member_required
+def download_subscribers(request):
+    subscribers = NewsletterSubscriber.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="subscribers.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Email'])
+
+    for subscriber in subscribers:
+        writer.writerow([subscriber.email])
+
+    return response
