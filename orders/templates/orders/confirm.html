@@ -141,9 +141,9 @@
 
 
             <form action="{{ checkout_session_url }}" method="POST"> {% csrf_token %}
-              <p class="pink-text lighten-2">
+              {% comment %} <p class="pink-text lighten-2">
                  Thanks so much for all your orders, we'll be back on the 30th, orders placed from now on until then we'll be shipped out on the 30th.
-              </p>
+              </p> {% endcomment %}
               <button class="waves-effect waves-light btn-large btn-orange w-100 text-capitalize font-150"
                       type="submit" id="checkout-button">Proceed to Payment
               </button>
