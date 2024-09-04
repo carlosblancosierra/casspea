@@ -9,397 +9,384 @@
 
 {% url 'store:add_boxes' as add_boxes_url %}
 
-{% include "base/inner-banner.html" %}
-<style>
-    .container {
-        min-width:80%;
-    }
-</style>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+{% include "base/navbar-dark.html" %}
 
-<div class="container">
-    <div class="row mt-5">
-        <div class="col s12 m6">
-            <div class="owl-carousel owl-theme">
-                {% if box_obj.images %}
-                {% for obj in box_obj.images %}
-                <div class="item">
-                    <a class="modal-trigger" href="#modal{{ forloop.counter }}">
-                        <img src="{{ obj.url }}" alt="" class="">
-                    </a>
-                </div>
-                {% endfor %}
-                {% endif %}
+<div class="bg-white d-none d-md-block">
+  <div class="pt-6">
+
+    <!-- Image gallery -->
+    <div class="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+      <!-- First image -->
+      <div class="aspect-h-4 aspect-w-3 hidden overflow-hidden rounded-lg lg:block">
+        <img
+          src="https://casspea-static-eu.s3-accelerate.amazonaws.com/static/box-size-img/2/CassPea-Chocolate-52_copy.jpg"
+          alt="Two each of gray, white, and black shirts laying flat." class="h-full w-full object-cover object-center">
+      </div>
+      <!-- Second image -->
+      <div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+        <div class="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+          <img src="https://casspea-static-eu.s3-accelerate.amazonaws.com/static/box-size-img/2/IMG_8825-Edit.jpg"
+            alt="Model wearing plain black basic tee." class="h-full w-full object-cover object-center">
+        </div>
+        <!-- Third image -->
+        <div class="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg">
+          <img
+            src="https://casspea-static-eu.s3-accelerate.amazonaws.com/static/box-size-img/2/CassPea-2023-JDPIX8of21.jpg"
+            alt="Model wearing plain gray basic tee." class="h-full w-full object-cover object-center">
+        </div>
+      </div>
+      <!-- Fourth image -->
+      <div class="aspect-h-5 aspect-w-4 lg:aspect-h-4 lg:aspect-w-3 sm:overflow-hidden sm:rounded-lg">
+        <img
+          src="https://casspea-static-eu.s3-accelerate.amazonaws.com/static/box-size-img/2/CassPea-Chocolate-23_1.jpg"
+          alt="Model wearing plain white basic tee." class="h-full w-full object-cover object-center">
+      </div>
+    </div>
+
+    <!-- Product info -->
+    <!-- <div
+      class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+      <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+        <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ box_obj.title }}</h1>
+      </div>
+      <div class="mt-4 lg:row-span-3 lg:mt-0">
+        <h2 class="sr-only">Product information</h2>
+        <p class="text-3xl tracking-tight text-gray-900">£{{ box_obj.price }}</p>
+
+        <div class="mt-6">
+          <h3 class="sr-only">Reviews</h3>
+          <div class="flex items-center">
+            <div class="flex items-center">
+              <svg class="h-5 w-5 flex-shrink-0 text-gray-900" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg class="h-5 w-5 flex-shrink-0 text-gray-900" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg class="h-5 w-5 flex-shrink-0 text-gray-900" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg class="h-5 w-5 flex-shrink-0 text-gray-900" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                  clip-rule="evenodd" />
+              </svg>
+              <svg class="h-5 w-5 flex-shrink-0 text-gray-200" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z"
+                  clip-rule="evenodd" />
+              </svg>
             </div>
+            <p class="sr-only">4 out of 5 stars</p>
+            <a href="https://uk.trustpilot.com/review/www.casspea.co.uk?utm_medium=trustbox&utm_source=MicroReviewCount"
+              target="_blank" class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">Reviews</a>
+          </div>
+        </div>
 
-            <ul id='box-carousel-dots' class='owl-dots'>
-                {% for obj in box_obj.images %}
-                <button role="button" class="owl-dot active">
-                    <img src="{{ obj.url }}" alt=""
-                         class="responsive-img" width="50px">
-                </button>
-                {% endfor %}
+        <form class="mt-10">
+          <div class="mt-10">
+            <fieldset aria-label="Choose a size" class="mt-4">
+              <div class="grid grid-cols-1">
+                <label
+                  class="group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 shadow-sm hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6">
+                  <input type="radio" name="size-choice" value="XS" class="sr-only">
+                  <span>Pick and Mix</span>
+                  <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
+                </label>
+                <label
+                  class="group mt-2 relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 shadow-sm hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6">
+                  <input type="radio" name="size-choice" value="S" class="sr-only">
+                  <span>Pre Build</span>
+                  <span class="pointer-events-none absolute -inset-px rounded-md" aria-hidden="true"></span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+          <button type="submit"
+            class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
+            to bag</button>
+        </form>
+      </div>
 
+      <div class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
+        <div>
+          <h3 class="sr-only">Description</h3>
+          <div class="space-y-6">
+            <p class="text-base text-gray-900">{{ box_obj.description }}</p>
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <h3 class="text-sm font-medium text-gray-900">Highlights</h3>
+          <div class="mt-4">
+            <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
+              <li class="text-gray-400"><span class="text-gray-600">Hand cut and sewn locally</span></li>
+              <li class="text-gray-400"><span class="text-gray-600">Dyed with our proprietary colors</span></li>
+              <li class="text-gray-400"><span class="text-gray-600">Pre-washed &amp; pre-shrunk</span></li>
+              <li class="text-gray-400"><span class="text-gray-600">Ultra-soft 100% cotton</span></li>
             </ul>
+          </div>
         </div>
 
-        <div class="col s12 m6">
-            <h1 class="font-150 bold">{{ box_obj.seo_title }}</h1>
-            <p class=" my-orange-text font-150">£{{ box_obj.price }}</p>
-            {% if box_obj.description %}
-            <p>{{ box_obj.description }}</p>
-            {% endif %}
-            <p>For allergen information please <a class="modal-trigger text-underline my-orange-text"
-                                                  href="#allergenModal">
-                Click Here</a></p>
-            <form method="POST" action="{{ add_boxes_url }}"> {% csrf_token %}
-                <p class="bold">Quantity</p>
-                <div class="row">
-                    <!--            <label for="box_quantity">How many boxes of {{ quantity }} pieces?</label>-->
-
-                    <div class="col s12">
-                        <button class="btn btn-green btn-number"
-                                data-type="minus" data-field="box_quantity"
-                        >-
-                        </button>
-
-                        <input id="box_quantity" type="number"
-                               name="box_quantity" class="validate center browser-default"
-                               required min="0" value="1" max="100">
-
-                        <button class="btn btn-green btn-number"
-                                data-type="plus" data-field="box_quantity"
-                        >+
-                        </button>
-                    </div>
-
-
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <p class="bold">Pick your flavour</p>
-                    </div>
-                    <div class="col s12 m6">
-                        <p>
-                            <label onclick="showPreBuiltCol()" class="btn boxes-radio-green-btn">
-                                <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PRE_BUILT }}"
-                                       required/>
-                                <span>Pre Built</span>
-                            </label>
-                        </p>
-                    </div>
-                    <div class="col s12 m6">
-                        <p>
-                            <label onclick="showPickAndMixCol()" class="btn boxes-radio-green-btn">
-                                <input name="{{ FLAVOUR_FORMAT }}" type="radio" value="{{ PICK_AND_MIX }}" required/>
-                                <span>Pick and Mix</span>
-                            </label>
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="row">
-                    <div class="col s12" id="preBuiltCol">
-                        {% for obj in prebuilds %}
-                        <p class="box-flavour-radio">
-                            <label>
-                                <input class="prebuild-input" name="{{ obj.slug }}" type="checkbox"/>
-                                <span>{{ obj.name }}</span>
-                            </label>
-                        </p>
-                        {% endfor %}
-
-
-                    </div>
-                    <div class="col s12" id="pickAndMixCol">
-                        <!--            <p class="center font-150"><span id="remaining-flavours">{{ size }}</span> Chocolates remaining</p>-->
-                        <p class="center">
-                            <a class="modal-trigger text-underline my-orange-text" href="#allergenModal">
-                                View Allergen table</a>
-                        </p>
-                        {% for flavour in flavours %}
-                        <div class="row box-flavour-radio">
-                            <hr/>
-                            <div class="col s2 m2 p-0">
-                                <td width="70px" class="py-0">
-                                    {% if flavour.image %}
-                                    <img src="{{ flavour.image.url }}" class="responsive-img" width="100px"/>
-                                    {% else %}
-                                    <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>
-                                    {% endif %}
-                                </td>
-                            </div>
-                            <div class="col s4 m5">
-                                <p class="mt-0 mb-1 bold">
-                                    {{ flavour.name }}
-                                    <!--                    {% for obj in flavour.allergens.all %}-->
-                                    <!--                    <i class="tooltipped" data-position="bottom" data-tooltip="{{ obj}}">I</i>-->
-                                    <!--                    {% endfor %}-->
-                                </p>
-                                {% if flavour.mini_description %}
-                                <p class="font-080 m-0">{{ flavour.mini_description }}</p>
-                                {% endif %}
-                                {% if flavour.allergens_str %}
-                                <p class="font-070 mt-1 mb-0">*Contains {{ flavour.allergens_str }}</p>
-                                {% endif %}
-                            </div>
-                            <div class=" col s6 m5">
-                                <button class="btn btn-green btn-number"
-                                        data-type="minus" data-field="{{ flavour.slug }}"
-                                >-
-                                </button>
-
-                                <input id="{{ flavour.slug }}" type="number"
-
-                                       name="{{ flavour.slug }}" class="flavour-input validate center browser-default"
-                                       required min="0" value="0" max="1000">
-
-                                <button class="btn btn-green btn-number flavour-plus-btn"
-                                        data-type="plus" data-field="{{ flavour.slug }}"
-                                >+
-                                </button>
-                            </div>
-                        </div>
-
-                        <!--              <div class="row">-->
-                        <!--                <div class="input-field col s10">-->
-                        <!--                  <input id="{{ flavour.slug }}" type="number" name="{{ flavour.alug }}">-->
-                        <!--                  <label for="{{ flavour.slug }}">{{ flavour.name }}</label>-->
-                        <!--                </div>-->
-                        <!--              </div>-->
-                        {% endfor %}
-                        <!--            <table>-->
-                        <!--              <thead>-->
-                        <!--              <tr>-->
-                        <!--                <th></th>-->
-                        <!--                <th>Flavour</th>-->
-                        <!--                <th class="center">Quantity</th>-->
-                        <!--              </tr>-->
-                        <!--              </thead>-->
-
-                        <!--              <tbody>-->
-                        <!--              {% for flavour in flavours %}-->
-                        <!--              <tr>-->
-                        <!--                <td width="70px" class="py-0">-->
-                        <!--                  {% if flavour.image %}-->
-                        <!--                  <img src="{{ flavour.image.url }}" class="responsive-img" width="50px"/>-->
-                        <!--                  {% else %}-->
-                        <!--                  <img src="/media/flavour-img/7/Maracuya.jpg" class="responsive-img"/>-->
-                        <!--                  {% endif %}-->
-                        <!--                </td>-->
-                        <!--                <td class="py-0">{{ flavour.name }}</td>-->
-                        <!--                <td class="py-0">-->
-                        <!--                  <div class="row">-->
-                        <!--                    <div class="col s3 m2 d-none d-md-block">-->
-                        <!--                      <button class="btn-small btn-green btn-number"-->
-                        <!--                              data-type="minus" data-field="{{ flavour.slug }}"-->
-                        <!--                      >- -->
-                        <!--                      </button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col s8 m8">-->
-                        <!--                      <input id="{{ flavour.slug }}" type="number" value="0" min="0" max="10000"-->
-                        <!--                             name="{{ flavour.slug }}" class="flavour-input validate center">-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col s3 m2 d-none d-md-block">-->
-                        <!--                      <button class="btn-small btn-green btn-number flavour-plus-btn"-->
-                        <!--                              data-type="plus" data-field="{{ flavour.slug }}"-->
-                        <!--                      >+-->
-                        <!--                      </button>-->
-                        <!--                    </div>-->
-                        <!--                  </div>-->
-                        <!--                </td>-->
-                        <!--              </tr>-->
-                        <!--              {% endfor %}-->
-                        <!--              </tbody>-->
-                        <!--            </table>-->
-
-                        <p class="center font-150"><span id="remaining-flavours">{{ size }}</span> Chocolates remaining
-                        </p>
-
-                    </div>
-                </div>
-
-                <input type="hidden" value="{{ size }}" name="size">
-                <p class="center">
-                    {% if not box_obj.sold_out %}
-                    <button type="submit" id="submit-btn" class="btn-large btn-orange">
-                        Add to Cart
-                    </button>
-                    {% elif box_obj.sold_out %}
-                    <button type="submit" id="" class="btn-large btn-orange disabled">
-                        SOLD OUT
-                    </button>
-                    {% endif %}
-                </p>
-
-            </form>
+        <div class="mt-10">
+          <h2 class="text-sm font-medium text-gray-900">Details</h2>
+          <div class="mt-4 space-y-6">
+            <p class="text-sm text-gray-600">The 6-Pack includes two black, two white, and two heather gray Basic Tees.
+              Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming
+              &quot;Charcoal Gray&quot; limited release.</p>
+          </div>
         </div>
-    </div>
-</div>
-</div>
-
-<!-- Modal Structure -->
-<div id="allergenModal" class="modal">
-    <div class="modal-content">
-        <h4>Allergens</h4>
-        <img src="{% static 'images/flavours/allergen-table.jpg' %}" alt="allergens" class="responsive-img">
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
-    </div>
+      </div>
+    </div> -->
+  </div>
 </div>
 
-
-<div class="row">
-    <div class="col s12">
+<div class="container mx-auto mt-5 px-4 sm:px-6 lg:px-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 d">
+    <div class=" d-md-none">
+      <div class="owl-carousel owl-theme">
         {% if box_obj.images %}
         {% for obj in box_obj.images %}
-        <div id="modal{{ forloop.counter }}" class="modal">
-            <img src="{{ obj.url }}" alt="" class="responsive-img">
+        <div class="item">
+          <a class="modal-trigger" href="#modal{{ forloop.counter }}">
+            <img src="{{ obj.url }}" alt="" class="w-full h-full object-cover">
+          </a>
         </div>
         {% endfor %}
         {% endif %}
+      </div>
+
+      <ul id='box-carousel-dots' class='owl-dots flex space-x-2 mt-4'>
+        {% for obj in box_obj.images %}
+        <button role="button" class="owl-dot active">
+          <img src="{{ obj.url }}" alt="" class="w-12 h-12 object-cover rounded-md">
+        </button>
+        {% endfor %}
+      </ul>
     </div>
+
+    <div>
+      <h1 class="text-2xl font-bold">{{ box_obj.seo_title }}</h1>
+      <p class="text-xl text-orange-600">£{{ box_obj.price }}</p>
+      {% if box_obj.description %}
+      <p class="mt-4 text-gray-700">{{ box_obj.description }}</p>
+      {% endif %}
+      <p class="mt-4 text-gray-600">For allergen information please <a class="modal-trigger text-orange-600 underline"
+          href="#allergenModal">Click Here</a></p>
+
+      <form method="POST" action="{{ add_boxes_url }}" class="mt-6">
+        {% csrf_token %}
+        <p class="font-bold">Quantity</p>
+        <div class="flex items-center space-x-3 mt-2">
+          <button type="button" class="btn-number rounded-md text-xl bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-200 focus:bg-gray-200"
+            data-type="minus"
+            data-field="box_quantity">-</button>
+
+          <input id="box_quantity" type="number" name="box_quantity" class="w-16 text-center border-gray-300 rounded-md"
+            required min="0" value="1" max="100">
+          <button type="button" class="btn-number rounded-md text-xl border bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-200 focus:bg-gray-200" data-type="plus"
+            data-field="box_quantity">+</button>
+        </div>
+
+        <div class="mt-4">
+          <p class="font-bold">Pick your flavour</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <label onclick="showPreBuiltCol()"
+              class="boxes-radio-green-btn rounded-md border bg-white px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50">
+              <input type="radio" name="{{ FLAVOUR_FORMAT }}" value="{{ PRE_BUILT }}" required class="hidden" />
+              <span>Pre Built Boxes</span>
+            </label>
+            <label onclick="showPickAndMixCol()"
+              class="boxes-radio-green-btn rounded-md border bg-white px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50">
+              <input type="radio" name="{{ FLAVOUR_FORMAT }}" value="{{ PICK_AND_MIX }}" required class="hidden" />
+              <span>Pick and Mix</span>
+            </label>
+          </div>
+        </div>
+
+        <div id="preBuiltCol" class="mt-4 hidden">
+          {% for obj in prebuilds %}
+            <p class="box-flavour-radio py-2 pl-4 rounded border shadow-sm my-1 text-center">
+              <label>
+                <input
+                class=""
+                name="{{ obj.slug }}" type="checkbox" />
+                <span class="text-left text-xl">{{ obj.name }}</span>
+              </label>
+            </p>
+          {% endfor %}
+        </div>
+
+        <div id="pickAndMixCol" class="mt-4 hidden">
+          <div style="max-height: 55vh; overflow-y: scroll;" class="p-4 border">
+          <p class="text-center text-gray-600">
+            <a class="modal-trigger text-orange-600 underline" href="#allergenModal">View Allergen table</a>
+          </p>
+          {% for flavour in flavours %}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center mt-4">
+            <div class="flex items-center">
+              {% if flavour.image %}
+              <img src="{{ flavour.image.url }}" class="w-24 h-24 object-cover rounded-md">
+              {% else %}
+              <img src="/media/flavour-img/7/Maracuya.jpg" class="w-24 h-24 object-cover rounded-md">
+              {% endif %}
+              <div class="ml-4">
+                <p class="font-bold">{{ flavour.name }}</p>
+                {% if flavour.mini_description %}
+                <p class="text-sm text-gray-600">{{ flavour.mini_description }}</p>
+                {% endif %}
+                {% if flavour.allergens_str %}
+                <p class="text-xs text-gray-600">*Contains {{ flavour.allergens_str }}</p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="flex items-center justify-end space-x-3">
+              <button type="button" class="btn-number rounded-md border bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-200 focus:bg-gray-200" data-type="minus"
+                data-field="{{ flavour.slug }}">-</button>
+              <input id="{{ flavour.slug }}" type="number" name="{{ flavour.slug }}"
+                class="w-16 text-center border-gray-300 rounded-md flavour-input" required min="0" value="0" max="1000">
+              <button type="button" class="btn-number rounded-md border bg-gray-100 px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-200 focus:bg-gray-200"
+                data-type="plus" data-field="{{ flavour.slug }}">+</button>
+            </div>
+          </div>
+          {% endfor %}
+          </div>
+          <p class="text-center text-xl font-bold mt-4">Chocolates remaining: <span id="remaining-flavours">{{ size }}</span></p>
+        </div>
+
+        <input type="hidden" value="{{ size }}" name="size">
+        <div class="text-center mt-6">
+          {% if not box_obj.sold_out %}
+          <button type="submit" id="submit-btn" class="bg-indigo-600 text-2xl text-white rounded-md border px-4 py-3 font-medium text-gray-900 shadow-sm hover:bg-indigo-800 w-80">Add to Cart</button>
+          {% elif box_obj.sold_out %}
+          <button type="button" class="bg-gray-500 rounded-md border bg-white px-4 py-3 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50" disabled>SOLD
+            OUT</button>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
-<style>
-    .modal {
-        width:100%!important;
-        max-height:unset!important;
-        top:20%!important;
-        box-shadow:none!important;
-        -webkit-box-shadow:none!important;
-        background:none!important;
-    }
+<!-- Modal Structure -->
+<div id="allergenModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+  <div class="bg-white rounded-lg p-6">
+    <h4 class="text-lg font-medium text-gray-900">Allergens</h4>
+    <img src="{% static 'images/flavours/allergen-table.jpg' %}" alt="allergens"
+      class="w-full h-full object-cover mt-4">
+    <div class="mt-6 text-right">
+      <button class="modal-close bg-gray-100 px-4 py-2 rounded-md text-gray-900">Close</button>
+    </div>
+  </div>
+</div>
 
-    @media (min-width: 800px) {
-        .modal {
-            width:48%!important;
-            max-height:unset!important;
-            top:2%!important;
-            box-shadow:none!important;
-            -webkit-box-shadow:none!important;
-            background:none!important;
-        }
-    }
-
-
-</style>
 {% endblock %}
 
 {% block js_extra %}
-
 <script>
-    const preBuiltCol = document.getElementById('preBuiltCol')
-    const pickAndMixCol = document.getElementById('pickAndMixCol')
-    preBuiltCol.style.display = 'none';
+  const preBuiltCol = document.getElementById('preBuiltCol');
+  const pickAndMixCol = document.getElementById('pickAndMixCol');
+  preBuiltCol.style.display = 'none';
+  pickAndMixCol.style.display = 'none';
+
+  function showPreBuiltCol() {
     pickAndMixCol.style.display = 'none';
-
-    function showPreBuiltCol() {
-        pickAndMixCol.style.display = 'none';
-        preBuiltCol.style.display = 'block';
-    }
-
-    function showPickAndMixCol() {
-      preBuiltCol.style.display = 'none';
-      pickAndMixCol.style.display = 'block';
-    }
-
-  const max = parseInt({{ size }})
-  const flavourInputs = $('.flavour-input');
-  const flavourPlusBtns = $('.flavour-plus-btn');
-  const flavoursRemaining = $('#remaining-flavours');
-  const submitBtn = $('#submit-btn');
-  const prebuildInputs = $('.prebuild-input');
-
-  submitBtn.prop("disabled",true);
-
-  prebuildInputs.change(function() {
-    console.log($(this));
-    submitBtn.prop("disabled",false);
-  });
-
-  var remaining = max
-
-  function sumInputs() {
-    var sum = 0;
-    for (let i = 0; i < flavourInputs.length; i++) {
-      if (flavourInputs[i].value) {
-        sum += parseInt(flavourInputs[i].value);
-        }
-    }
-    return sum
+    preBuiltCol.style.display = 'block';
   }
 
-  flavourInputs.change(function() {
-    sum = sumInputs()
-    submitBtn.prop("disabled",true);
+  function showPickAndMixCol() {
+    preBuiltCol.style.display = 'none';
+    pickAndMixCol.style.display = 'block';
+  }
 
-    if (sum === max) {
-      flavourPlusBtns.prop("disabled",true);
-      submitBtn.prop("disabled",false);
-    } else {
-      flavourPlusBtns.prop("disabled",false);
-    }
-    remaining = max - sum;
-    flavoursRemaining.text(remaining);
+  const max = parseInt('{{ size }}');
+  const flavourInputs = document.querySelectorAll('.flavour-input');
+  const flavourPlusBtns = document.querySelectorAll('.flavour-plus-btn');
+  const flavoursRemaining = document.getElementById('remaining-flavours');
+  const submitBtn = document.getElementById('submit-btn');
+  const prebuildInputs = document.querySelectorAll('.prebuild-input');
+
+  submitBtn.disabled = true;
+
+  prebuildInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      submitBtn.disabled = false;
+    });
   });
 
+  let remaining = max;
 
-  $('.btn-number').click(function(e){
+  function sumInputs() {
+    let sum = 0;
+    flavourInputs.forEach(input => {
+      if (input.value) {
+        sum += parseInt(input.value);
+      }
+    });
+    return sum;
+  }
+
+  flavourInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      let sum = sumInputs();
+      submitBtn.disabled = true;
+
+      if (sum === max) {
+        flavourPlusBtns.forEach(btn => btn.disabled = true);
+        submitBtn.disabled = false;
+      } else {
+        flavourPlusBtns.forEach(btn => btn.disabled = false);
+      }
+      remaining = max - sum;
+      flavoursRemaining.textContent = remaining;
+    });
+  });
+
+  document.querySelectorAll('.btn-number').forEach(button => {
+    button.addEventListener('click', function (e) {
       e.preventDefault();
 
-      fieldName = $(this).attr('data-field');
-      type      = $(this).attr('data-type');
-      var input = $("input[name='"+fieldName+"']");
-      var currentVal = parseInt(input.val());
+      let fieldName = this.dataset.field;
+      let type = this.dataset.type;
+      let input = document.querySelector(`input[name='${fieldName}']`);
+      let currentVal = parseInt(input.value);
       if (!isNaN(currentVal)) {
-          if(type == 'minus') {
-              if(currentVal > input.attr('min')) {
-                  input.val(currentVal - 1).change();
-              }
-
-          } else if(type == 'plus') {
-
-              if(currentVal < input.attr('max')) {
-                  input.val(currentVal + 1).change();
-              }
-          }
+        if (type === 'minus' && currentVal > parseInt(input.min)) {
+          input.value = currentVal - 1;
+          input.dispatchEvent(new Event('change'));
+        } else if (type === 'plus' && currentVal < parseInt(input.max)) {
+          input.value = currentVal + 1;
+          input.dispatchEvent(new Event('change'));
+        }
       } else {
-          input.val(0);
+        input.value = 0;
       }
+    });
   });
 
-
-  $('.input-number').focusin(function(){
-     $(this).data('oldValue', $(this).val());
-  });
-  $('.input-number').change(function() {
-
-      minValue =  parseInt($(this).attr('min'));
-      maxValue =  parseInt($(this).attr('max'));
-      valueCurrent = parseInt($(this).val());
-
-      name = $(this).attr('name');
-      if(valueCurrent >= minValue) {
-          $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
-      } else {
-          alert('Sorry, the minimum value was reached');
-          $(this).val($(this).data('oldValue'));
-      }
-      if(valueCurrent <= maxValue) {
-          $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
-      } else {
-          alert('Sorry, the maximum value was reached');
-          $(this).val($(this).data('oldValue'));
-      }
-
-
+  document.querySelectorAll('.modal-trigger').forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.querySelector(this.getAttribute('href')).classList.remove('hidden');
+    });
   });
 
-
+  document.querySelectorAll('.modal-close').forEach(button => {
+    button.addEventListener('click', function () {
+      this.closest('.modal').classList.add('hidden');
+    });
+  });
 </script>
-
 {% endblock %}

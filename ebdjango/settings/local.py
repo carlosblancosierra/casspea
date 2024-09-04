@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'rest_framework',
+
 
     'accounts',
     'addresses',
@@ -63,10 +65,10 @@ LOGIN_URL_REDIRECT = '/'
 LOGOUT_URL = '/logout'
 LOGOUT_REDIRECT_URL = '/login'
 
-EMAIL_HOST = 'smtp-relay.sendinblue.com'
-EMAIL_HOST_USER = 'casspea.sistemas@gmail.com'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_HOST_USER = 'AKIARBFJSQ6R3YPGNYVV'
 EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD = 'IzGdtwJfFBNS7jXn'
+EMAIL_HOST_PASSWORD = 'BK3z54gLsCFmWh/pzJk2hRbCsQvN8Y84pOPTpjRH+Kww'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'info@casspea.co.uk'
 CONTACT_EMAIL = 'carlosblancosierra@gmail.com'

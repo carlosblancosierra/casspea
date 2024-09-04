@@ -13,6 +13,7 @@ from custom_chocolates.models import ChocolateDesignLayer, ChocolateDesign, User
 
 from .text.custom_orders import CUSTOM_ORDERS_CONTENT
 from django.contrib.auth.decorators import user_passes_test
+from django.http import JsonResponse
 
 FAQS = [
     {"question": "They are too pretty to eat.",
@@ -166,12 +167,14 @@ def custom_orders_landing_page(request):
 
     return render(request, 'landings/custom_orders.html', context)
 
-@user_passes_test(lambda u: u.is_superuser)
 def send_test_email(request):
     # Code to send test email
-    subject = 'Test Email'
+    subject = 'Test info'
     message = 'This is a test email.'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    to_email = [request.user.email]
-    send_mail(subject, message, from_email, to_email)
-    return redirect('/')
+    from_email = 'info@casspea.co.uk'
+    to_email = ['carlosblancosierra@gmail.com']
+    mail_sent = send_mail(subject, message, from_email, to_email, fail_silently=False)
+    if mail_sent:
+        return JsonResponse({'message': 'Email sent successfully'})
+    else:
+        return JsonResponse({'message': 'Failed to send email'})

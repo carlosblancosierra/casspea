@@ -7,6 +7,7 @@ from django.views.generic import TemplateView
 from accounts.views import login_page, register_page_local
 from leads.views import newsletter_subscribe, download_subscribers
 from . import views
+from flavours.urls import api_urls
 
 urlpatterns = [
     path('', views.home_page, name='home'),
@@ -46,6 +47,8 @@ urlpatterns = [
     path('sitemap.xml', views.SitemapView.as_view(content_type='application/xml'), name='sitemap'),
 
     path('admin/', admin.site.urls),
+
+    path('api/flavours/', include(api_urls)),
 
 ]
 

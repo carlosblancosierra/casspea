@@ -1,7 +1,7 @@
 from django.shortcuts import render
-
 from .models import Flavour
-
+from rest_framework import generics
+from .serializers import FlavourSerializer
 
 # Create your views here.
 def home_page(request):
@@ -17,3 +17,8 @@ def home_page(request):
     }
 
     return render(request, "flavours/home.html", context)
+
+
+class FlavourListView(generics.ListAPIView):
+    queryset = Flavour.objects.filter(active=True)
+    serializer_class = FlavourSerializer
